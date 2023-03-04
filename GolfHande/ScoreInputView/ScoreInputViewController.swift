@@ -43,11 +43,19 @@ class ScoreInputViewController: UIViewController {
     // MARK: ACTIONS
 
     @objc private func submitButtonAction() {
-        viewModel.courseRating = contentView.courseRatingTextField.text ?? ""
-        viewModel.totalScore = contentView.totalScoreTextField.text ?? ""
-        viewModel.slopeRating = contentView.slopeRatingTextField.text ?? ""
+        guard let courseName = contentView.courseNameTextField.text,
+              let courseRating = contentView.courseRatingTextField.text,
+              let totalScore = contentView.totalScoreTextField.text,
+              let slopeRating = contentView.slopeRatingTextField.text else {
+            // TODO: Need to handle error case for when some of text field are not filled out by user.
+            return
+        }
         print("Submit Button Tapped\nCourse Rating: \(viewModel.courseRating)\nTotal Score: \(viewModel.totalScore)\nSlope Rating: \(viewModel.slopeRating)")
-        viewModel.addScoreToDatabase()
+        let scoreData = ScoreData(courseName: courseName,
+                                  totalScore: totalScore,
+                                  slopeRating: slopeRating,
+                                  courseRating: courseRating)
+        viewModel.addScoreToDatabase(scoreData: scoreData)
     }
 }
 

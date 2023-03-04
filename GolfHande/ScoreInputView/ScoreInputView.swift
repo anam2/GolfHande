@@ -21,6 +21,7 @@ class ScoreInputView: UIView {
     }
 
     private func setupUI() {
+        addSubview(courseNameTextField)
         addSubview(totalScoreTextField)
         addSubview(courseRatingTextField)
         addSubview(slopeRatingTextField)
@@ -28,15 +29,23 @@ class ScoreInputView: UIView {
     }
 
     private func setupConstraints() {
+        setupConstraintsForCourseNameTextField()
         setupConstraintsForTotalScoreTextField()
         setupConstraintsForCourseRatingTextField()
         setupConstraintsForSlopeRatingTextField()
         setupConstraintsForSubmitButton()
     }
 
+    private func setupConstraintsForCourseNameTextField() {
+        NSLayoutConstraint.activate([
+            courseNameTextField.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            courseNameTextField.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+        ])
+    }
+
     private func setupConstraintsForTotalScoreTextField() {
         NSLayoutConstraint.activate([
-            totalScoreTextField.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            totalScoreTextField.topAnchor.constraint(equalTo: courseNameTextField.bottomAnchor, constant: 20),
             totalScoreTextField.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
     }
@@ -76,6 +85,10 @@ class ScoreInputView: UIView {
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         return textField
     }
+
+    lazy var courseNameTextField: UITextField = {
+        getTextFieldView(text: "Course Name")
+    }()
 
     lazy var courseRatingTextField: UITextField = {
         getTextFieldView(text: "Course Rating")

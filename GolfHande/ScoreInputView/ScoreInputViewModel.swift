@@ -20,12 +20,13 @@ class ScoreInputViewModel {
     /*
      Will overwrite data at specific location, including any child nodes.
      */
-    func addScoreToDatabase() {
+    func addScoreToDatabase(scoreData: ScoreData) {
         let childString = "scores"
         let objectValue: [String: String] = [
-            "courseRating": courseRating,
-            "slopeRating": slopeRating,
-            "totalScore": totalScore
+            "courseRating": scoreData.courseRating,
+            "slopeRating": scoreData.slopeRating,
+            "totalScore": scoreData.totalScore,
+            "courseName": scoreData.courseName
         ]
         database.child(childString).child(UUID().uuidString).setValue(objectValue)
     }

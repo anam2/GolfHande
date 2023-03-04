@@ -2,9 +2,9 @@ import FirebaseDatabase
 
 struct ScoreData {
     var courseName: String
-    var totalScore: Int
-    var slopeRating: Int
-    var courseRating: Double
+    var totalScore: String
+    var slopeRating: String
+    var courseRating: String
 }
 
 class MainViewModel {
@@ -37,9 +37,9 @@ class MainViewModel {
                   let totalScore = currentScore["totalScore"],
                   let courseName = currentScore["courseName"] else { return }
             let newScoreData = ScoreData(courseName: courseName,
-                                         totalScore: Int(totalScore) ?? 0,
-                                         slopeRating: Int(slopeRating) ?? 0,
-                                         courseRating:  Double(courseRating) ?? 0.0)
+                                         totalScore: totalScore,
+                                         slopeRating: slopeRating,
+                                         courseRating:  courseRating)
             scoresData.append(newScoreData)
         }
     }
