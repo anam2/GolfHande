@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>745799381274-kpb3bg49lkd7mo589gmr5b0di9v1kt12.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.745799381274-kpb3bg49lkd7mo589gmr5b0di9v1kt12</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCe7yhUmDPtUKjIM7ZLbIMyIN5ubQ2EUuU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>745799381274</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>anam.GolfHande</string>
+	<key>PROJECT_ID</key>
+	<string>golfhande</string>
+	<key>STORAGE_BUCKET</key>
+	<string>golfhande.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:745799381274:ios:11cfc483cf4e02aba83ca3</string>
+</dict>
+</plist>
