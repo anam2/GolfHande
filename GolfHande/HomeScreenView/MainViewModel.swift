@@ -11,9 +11,8 @@ class MainViewModel {
 
     private let database = Database.database().reference()
 
-    var allScores = [[String: String]]()
-
     var scoresData = [ScoreData]()
+    var handicapArray = ["9", "+1", "49", "32", "4"]
     /*
      Fetches all scores from DB and populates `scoreData`.
      */

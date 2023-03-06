@@ -22,6 +22,7 @@ class MainViewController: UIViewController {
         self.setupButtonActions()
         self.setupUI()
         // Constraint Setups
+        self.setupDelegates()
         self.setupConstraintsForContentView()
     }
 
@@ -29,17 +30,15 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.getScoresFromDatabase {
-            self.updateValuesForView()
+            self.contentView.scoresTableView.reloadData() 
             self.hideActivityIndicator()
         }
         self.showActivityIndicator()
     }
 
-    private func updateValuesForView() {
-        contentView.courseNameLabel.text?.append(String(viewModel.scoresData[0].courseName))
-        contentView.totalScoreLabel.text?.append(String(viewModel.scoresData[0].totalScore))
-        contentView.courseSlopeLabel.text?.append(String(viewModel.scoresData[0].slopeRating))
-        contentView.courseRatingLabel.text?.append(String(viewModel.scoresData[0].courseRating))
+    private func setupDelegates() {
+        contentView.scoresTableView.delegate = self
+        contentView.scoresTableView.dataSource = self
     }
 
     // MARK: SETUP UI
@@ -89,6 +88,25 @@ class MainViewController: UIViewController {
 
     @objc func navBarDoneAction() {
         print("done clicked")
+    }
+}
+
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.scoresData.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: ScoresTableViewCell = tableView.dequeueReusableCell(withIdentifier: "scoresTableViewCell",
+                                                                            for: indexPath) as? ScoresTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.setupCellData(with: viewModel.scoresData[indexPath.row])
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 
