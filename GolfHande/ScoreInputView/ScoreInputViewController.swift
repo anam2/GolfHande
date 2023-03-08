@@ -51,11 +51,13 @@ class ScoreInputViewController: UIViewController {
             return
         }
         print("Submit Button Tapped\nCourse Rating: \(viewModel.courseRating)\nTotal Score: \(viewModel.totalScore)\nSlope Rating: \(viewModel.slopeRating)")
-        let scoreData = ScoreData(courseName: courseName,
+        let scoreData = ScoreData(scoreId: UUID().uuidString,
+                                  courseName: courseName,
                                   totalScore: totalScore,
                                   slopeRating: slopeRating,
                                   courseRating: courseRating)
         viewModel.addScoreToDatabase(scoreData: scoreData)
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 

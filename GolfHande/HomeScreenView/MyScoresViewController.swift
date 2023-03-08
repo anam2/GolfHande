@@ -1,13 +1,13 @@
 import FirebaseDatabase
 import UIKit
 
-class MainViewController: UIViewController {
-    private var viewModel: MainViewModel
-    private let contentView: MainView
+class MyScoresViewController: UIViewController {
+    private var viewModel: MyScoresViewModel
+    private let contentView: MyScoresView
 
     public init() {
-        viewModel = MainViewModel()
-        contentView = MainView(viewModel: viewModel)
+        viewModel = MyScoresViewModel()
+        contentView = MyScoresView(viewModel: viewModel)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -19,21 +19,11 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigation()
-        self.setupButtonActions()
         self.setupUI()
         // Constraint Setups
         self.setupDelegates()
         self.setupConstraintsForContentView()
-    }
 
-    /// Will be called everytime view appears.
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.getScoresFromDatabase {
-            self.contentView.scoresTableView.reloadData() 
-            self.hideActivityIndicator()
-        }
-        self.showActivityIndicator()
     }
 
     private func setupDelegates() {
@@ -41,10 +31,41 @@ class MainViewController: UIViewController {
         contentView.scoresTableView.dataSource = self
     }
 
+    /// Will be called everytime view appears.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetchData()
+    }
+
+    private func fetchData() {
+        ServiceCalls.getScores { allScoreData in
+            for scoreData in allScoreData {
+                if !self.viewModel.scoresData.contains(where: { $0.scoreId == scoreData.scoreId}) {
+                    self.viewModel.scoresData.append(scoreData)
+                }
+            }
+            self.contentView.scoresTableView.reloadData()
+            self.hideActivityIndicator()
+        }
+        self.showActivityIndicator()
+    }
+
     // MARK: SETUP UI
 
+    private lazy var MyScoresPlusButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                            target: self,
+                                            action: #selector(myScoresPlusButtonClicked(_:)))
+        return barButtonItem
+    }()
+
+    @objc private func myScoresPlusButtonClicked(_ selector: UIBarButtonItem) {
+        NSLog("Print Button Clicked:\n")
+        navigationController?.pushViewController(ScoreInputViewController(), animated: true)
+    }
+
     private func setupNavigation() {
-        self.navigationController?.navigationBar.barTintColor = .white
+        navigationItem.rightBarButtonItem = MyScoresPlusButton
     }
 
     private func setupUI() {
@@ -62,10 +83,6 @@ class MainViewController: UIViewController {
         ])
     }
 
-    private func setupButtonActions() {
-        contentView.scoreInputViewButton.addTarget(self, action: #selector(scoreInputButtonAction), for: .touchUpInside)
-    }
-
     // MARK: SPINNING INDICATOR
 
     var activityView = UIActivityIndicatorView(style: .large)
@@ -79,19 +96,9 @@ class MainViewController: UIViewController {
     func hideActivityIndicator(){
         activityView.stopAnimating()
     }
-
-    // MARK: ACTIONS
-
-    @objc private func scoreInputButtonAction() {
-        self.navigationController?.pushViewController(ScoreInputViewController(), animated: true)
-    }
-
-    @objc func navBarDoneAction() {
-        print("done clicked")
-    }
 }
 
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+extension MyScoresViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.scoresData.count
     }

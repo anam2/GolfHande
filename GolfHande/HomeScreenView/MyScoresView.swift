@@ -1,9 +1,9 @@
 import UIKit
 
-class MainView: UIView {
-    private let viewModel: MainViewModel
+class MyScoresView: UIView {
+    private let viewModel: MyScoresViewModel
 
-    init(viewModel: MainViewModel) {
+    init(viewModel: MyScoresViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         setupMainView()
@@ -13,14 +13,9 @@ class MainView: UIView {
     @available (*, unavailable) required init? (coder aDecoder: NSCoder) { nil }
 
     private func setupUI() {
-        addSubview(scoreInputViewButton)
-        scoreInputViewButton.constrain(to: self, constraints: [.top(20), .centerX(0)])
-
         addSubview(scoresTableView)
-        scoresTableView.constrain(to: scoreInputViewButton,
-                                  constraints: [.topToBottom(20)])
         scoresTableView.constrain(to: self,
-                                  constraints: [.leading(20), .trailing(-20), .bottom(0)])
+                                  constraints: [.top(20), .leading(20), .trailing(-20), .bottom(0)])
     }
 
     private func setupMainView() {
@@ -39,13 +34,5 @@ class MainView: UIView {
         tableView.showsVerticalScrollIndicator = false
         tableView.tableFooterView = UIView()
         return tableView
-    }()
-
-    lazy var scoreInputViewButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .blue
-        button.setTitle("Score Input View", for: .normal)
-        return button
     }()
 }

@@ -1,15 +1,8 @@
 import FirebaseDatabase
 
-//struct ScoreData {
-//    var courseRating: String = ""
-//    var slopeRating: String = ""
-//    var totalScore: String = ""
-//}
-
 class ScoreInputViewModel {
 
     private var database = Database.database().reference()
-//    var scoreDatas = [ScoreData]
 
     var courseRating: String = ""
     var slopeRating: String = ""
