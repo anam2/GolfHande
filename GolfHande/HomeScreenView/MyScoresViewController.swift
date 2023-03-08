@@ -38,16 +38,13 @@ class MyScoresViewController: UIViewController {
     }
 
     private func fetchData() {
-        ServiceCalls.getScores { allScoreData in
-            for scoreData in allScoreData {
-                if !self.viewModel.scoresData.contains(where: { $0.scoreId == scoreData.scoreId}) {
-                    self.viewModel.scoresData.append(scoreData)
-                }
-            }
-            self.contentView.scoresTableView.reloadData()
-            self.hideActivityIndicator()
-        }
         self.showActivityIndicator()
+        viewModel.fetchScores { success in
+            if success {
+                self.contentView.scoresTableView.reloadData()
+                self.hideActivityIndicator()
+            }
+        }
     }
 
     // MARK: SETUP UI

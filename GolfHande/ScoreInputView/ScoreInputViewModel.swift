@@ -15,7 +15,8 @@ class ScoreInputViewModel {
      */
     func addScoreToDatabase(scoreData: ScoreData) {
         let childString = "scores"
-        let objectValue: [String: String] = [
+        let objectValue: [String: Any] = [
+            "dateTimeAdded": ServerValue.timestamp(),
             "courseRating": scoreData.courseRating,
             "slopeRating": scoreData.slopeRating,
             "totalScore": scoreData.totalScore,

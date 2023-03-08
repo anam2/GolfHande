@@ -8,6 +8,7 @@ target 'GolfHande' do
   # Pods for GolfHande
   pod 'Firebase/Core'
   pod 'Firebase/Database'
+  pod 'Firebase/Firestore'
 
   target 'GolfHandeTests' do
     inherit! :search_paths
