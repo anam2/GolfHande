@@ -13,7 +13,7 @@ class TabBar: UITabBarController {
     func setupVCs() {
         viewControllers = [
             createNavController(for: MyScoresViewController(), title: "My Scores", image: UIImage(systemName: "folder") ?? UIImage()),
-            createNavController(for: ScoreInputViewController(), title: "Score Input", image: UIImage(systemName: "pencil") ?? UIImage())
+//            createNavController(for: ScoreInputViewController(), title: "Score Input", image: UIImage(systemName: "pencil") ?? UIImage())
         ]
     }
 

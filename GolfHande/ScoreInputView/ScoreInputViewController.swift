@@ -17,6 +17,7 @@ class ScoreInputViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraintsForContentView()
+        setupTextFieldDelegates()
         setupButtonAction()
     }
 
@@ -35,9 +36,15 @@ class ScoreInputViewController: UIViewController {
         ])
     }
 
+    private func setupTextFieldDelegates() {
+        contentView.courseNameTextField.delegate = self
+        contentView.courseRatingTextField.delegate = self
+        contentView.courseSlopeTextField.delegate = self
+        contentView.totalScoreTextField.delegate = self
+    }
+
     private func setupButtonAction() {
-        contentView.submitButton.addTarget(self, action: #selector(submitButtonAction),
-                                           for: .touchUpInside)
+        contentView.submitButton.addTarget(self, action: #selector(submitButtonAction), for: .touchUpInside)
     }
 
     // MARK: ACTIONS
@@ -46,11 +53,11 @@ class ScoreInputViewController: UIViewController {
         guard let courseName = contentView.courseNameTextField.text,
               let courseRating = contentView.courseRatingTextField.text,
               let totalScore = contentView.totalScoreTextField.text,
-              let slopeRating = contentView.slopeRatingTextField.text else {
+              let slopeRating = contentView.courseSlopeTextField.text else {
             // TODO: Need to handle error case for when some of text field are not filled out by user.
             return
         }
-        print("Submit Button Tapped\nCourse Rating: \(viewModel.courseRating)\nTotal Score: \(viewModel.totalScore)\nSlope Rating: \(viewModel.slopeRating)")
+        NSLog("Submit Button Pressed:\nCourse Name: \(courseName)\nCourse Rating: \(courseRating)\nTotal Score: \(totalScore)\nSlope Rating: \(slopeRating)")
         let scoreData = ScoreData(scoreId: UUID().uuidString,
                                   courseName: courseName,
                                   totalScore: totalScore,
@@ -65,13 +72,72 @@ class ScoreInputViewController: UIViewController {
 
 extension ScoreInputViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        switch(textField) {
-        case contentView.courseRatingTextField:
-            viewModel.courseRating = contentView.courseRatingTextField.text ?? ""
-        case contentView.totalScoreTextField:
-            viewModel.totalScore = contentView.totalScoreTextField.text ?? ""
-        default:
+        if let textFieldText = textField.text,
+           textFieldText.isEmpty {
+            textField.displayError(true)
             return
         }
+        textField.displayError(false)
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        switch textField {
+        // Can ONLY be numbers
+        // Need to limit between 55 and 155 ( Need to be done when enable / disable submit button )
+        // Limit to 3 characters
+        case contentView.courseSlopeTextField:
+            let containsNumbersOnly = containsDecimalDigitOnly(inputString: string)
+            let limitStringLength = limitTextFieldLength(maxLength: 3,
+                                                         textField: textField,
+                                                         range: range,
+                                                         inputString: string)
+            return containsNumbersOnly && limitStringLength ? true : false
+        case contentView.totalScoreTextField:
+            let containsNumbersOnly = containsDecimalDigitOnly(inputString: string)
+            let limitStringLength = limitTextFieldLength(maxLength: 3,
+                                                         textField: textField,
+                                                         range: range,
+                                                         inputString: string)
+            return containsNumbersOnly && limitStringLength ? true : false
+        case contentView.courseRatingTextField:
+            // Need to define case that only allows one ".".
+            // Maybe some formatting as well.
+            let allowedChars =  setAllowedChars(as: "1234567890.", inputString: string)
+            let limitStringLength = limitTextFieldLength(maxLength: 4,
+                                                         textField: textField,
+                                                         range: range,
+                                                         inputString: string)
+            return allowedChars && limitStringLength ? true : false
+        default:
+            return true
+        }
+    }
+
+    /// Returns a BOOL value that indicates whether `inputString` contains only `CharacterSet.decimalDeigits`.
+    private func containsDecimalDigitOnly(inputString: String) -> Bool {
+        let allowedCharacters = CharacterSet.decimalDigits
+        let characterSet = CharacterSet(charactersIn: inputString)
+        return allowedCharacters.isSuperset(of: characterSet)
+    }
+
+    /// Returns a BOOL value that indicates whether `inputString` contains only `as characters: String`.
+    private func setAllowedChars(as characters: String, inputString: String) -> Bool {
+        let set = NSCharacterSet(charactersIn: characters).inverted
+        return inputString.rangeOfCharacter(from: set) == nil
+    }
+
+    /// Limits the character length in UITextField.
+    private func limitTextFieldLength(maxLength: Int,
+                                      minLength: Int = 0,
+                                      textField: UITextField,
+                                      range: NSRange,
+                                      inputString: String) -> Bool {
+        guard let textFieldText = textField.text,
+              let rangeOfTextToReplace = Range(range, in: textFieldText)
+        else { return false }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + inputString.count
+        let lengthRange = minLength...maxLength
+        return lengthRange.contains(count) ? true : false
     }
 }

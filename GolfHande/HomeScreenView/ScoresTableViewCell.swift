@@ -9,7 +9,7 @@ class ScoresTableViewCell: UITableViewCell {
     @available (*, unavailable) required init? (coder aDecoder: NSCoder) { nil }
 
     func setupCellData(with scoresData: ScoreData) {
-        dateAddedLabel.text = scoresData.dateAdded ?? ""
+        dateAddedLabel.text = scoresData.dateAdded
         courseNameLabel.text = scoresData.courseName
         courseRatingLabel.text = "Rating: " + scoresData.courseRating
         courseSlopeLabel.text = "Slope: " + scoresData.courseRating
@@ -56,7 +56,7 @@ class ScoresTableViewCell: UITableViewCell {
 
     private lazy var dateAddedLabel: UILabel = {
         let label = CoreUI.defaultUILabel(fontSize: 14)
-        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
         return label
     }()
 

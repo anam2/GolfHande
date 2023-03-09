@@ -2,13 +2,14 @@ import UIKit
 
 class ScoreInputView: UIView {
 
+    var textFields = [UITextField]()
+
     // MARK: INITIAZLIER
 
     init() {
         super.init(frame: .zero)
         setupView()
         setupUI()
-        setupConstraints()
     }
 
     @available (*, unavailable) required init? (coder aDecoder: NSCoder) { nil }
@@ -21,95 +22,97 @@ class ScoreInputView: UIView {
     }
 
     private func setupUI() {
-        addSubview(courseNameTextField)
-        addSubview(totalScoreTextField)
-        addSubview(courseRatingTextField)
-        addSubview(slopeRatingTextField)
+        addSubview(courseNameView)
+        courseNameView.constrain(to: self, constraints: [.top(20), .leading(20), .trailing(-20)])
+
+        addSubview(numericInputsStackView)
+        numericInputsStackView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
+        numericInputsStackView.constrain(to: courseNameView, constraints: [.topToBottom(30)])
+
         addSubview(submitButton)
-    }
-
-    private func setupConstraints() {
-        setupConstraintsForCourseNameTextField()
-        setupConstraintsForTotalScoreTextField()
-        setupConstraintsForCourseRatingTextField()
-        setupConstraintsForSlopeRatingTextField()
-        setupConstraintsForSubmitButton()
-    }
-
-    private func setupConstraintsForCourseNameTextField() {
-        NSLayoutConstraint.activate([
-            courseNameTextField.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            courseNameTextField.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-        ])
-    }
-
-    private func setupConstraintsForTotalScoreTextField() {
-        NSLayoutConstraint.activate([
-            totalScoreTextField.topAnchor.constraint(equalTo: courseNameTextField.bottomAnchor, constant: 20),
-            totalScoreTextField.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-        ])
-    }
-
-    private func setupConstraintsForCourseRatingTextField() {
-        NSLayoutConstraint.activate([
-            courseRatingTextField.topAnchor.constraint(equalTo: totalScoreTextField.bottomAnchor, constant: 20),
-            courseRatingTextField.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-        ])
-    }
-
-    private func setupConstraintsForSlopeRatingTextField() {
-        NSLayoutConstraint.activate([
-            slopeRatingTextField.topAnchor.constraint(equalTo: courseRatingTextField.bottomAnchor, constant: 20),
-            slopeRatingTextField.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-        ])
-    }
-
-    private func setupConstraintsForSubmitButton() {
-        NSLayoutConstraint.activate([
-            submitButton.topAnchor.constraint(equalTo: slopeRatingTextField.bottomAnchor, constant: 20),
-            submitButton.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-        ])
+        submitButton.constrain(to: numericInputsStackView, constraints: [.topToBottom(40)])
+        submitButton.constrain(to: self, constraints: [.centerX(.zero)])
     }
 
     // MARK: UI COMPONENTS
 
-    private func getTextFieldView(text: String) -> UITextField {
-        let textField = UITextField(frame: .zero)
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = text
-        textField.textAlignment = .center
-        textField.borderStyle = UITextField.BorderStyle.roundedRect
-        textField.autocorrectionType = UITextAutocorrectionType.no
-        textField.keyboardType = UIKeyboardType.default
-        textField.returnKeyType = UIReturnKeyType.done
-        textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        return textField
-    }
+    private lazy var numericInputsStackView: UIStackView = {
+        let stackView: UIStackView = UIStackView(arrangedSubviews: [totalScoreView, courseSlopeView, courseRatingView])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        stackView.spacing = 10.0
+        return stackView
+    }()
+
+    private lazy var courseNameView: UIView = {
+        CoreUI.createLabelTextFieldView(labelText: "Course Name", textField: courseNameTextField)
+    }()
+
+    private lazy var totalScoreView: UIView = {
+        CoreUI.createLabelTextFieldView(labelText: "Score", labelAlignment: .center, textField: totalScoreTextField)
+    }()
+
+    private lazy var courseSlopeView: UIView = {
+        CoreUI.createLabelTextFieldView(labelText: "Course Slope", labelAlignment: .center, textField: courseSlopeTextField)
+    }()
+
+    private lazy var courseRatingView: UIView = {
+        CoreUI.createLabelTextFieldView(labelText: "Course Rating", labelAlignment: .center, textField: courseRatingTextField)
+    }()
 
     lazy var courseNameTextField: UITextField = {
-        getTextFieldView(text: "Course Name")
-    }()
-
-    lazy var courseRatingTextField: UITextField = {
-        getTextFieldView(text: "Course Rating")
-    }()
-
-    lazy var slopeRatingTextField: UITextField = {
-        getTextFieldView(text: "Slope Rating")
+        let textField = CoreUI.textFieldView()
+        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
+        return textField
     }()
 
     lazy var totalScoreTextField: UITextField = {
-        getTextFieldView(text: "Total Score")
+        let textField = CoreUI.textFieldView()
+        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
+        return textField
+    }()
+
+    lazy var courseSlopeTextField: UITextField = {
+        let textField = CoreUI.textFieldView()
+        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
+        return textField
+    }()
+
+    lazy var courseRatingTextField: UITextField = {
+        let textField = CoreUI.textFieldView()
+        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
+        return textField
     }()
 
     lazy var submitButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitleColor(UIColor.gray, for: .disabled)
+        button.isEnabled = false
         button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
         button.backgroundColor = .blue
-        button.setTitle("Enter", for: .normal)
+        button.setTitle("Submit", for: .normal)
         button.layer.cornerRadius = 5
         return button
     }()
+
+    @objc func textFieldsIsNotEmpty(sender: UITextField) {
+
+        sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
+
+        guard
+            let courseName = courseNameTextField.text, !courseName.isEmpty,
+            let courseSlope = courseSlopeTextField.text, !courseSlope.isEmpty,
+            let courseRating = courseRatingTextField.text, !courseRating.isEmpty,
+            let userScore = totalScoreTextField.text, !userScore.isEmpty
+        else {
+          self.submitButton.isEnabled = false
+          return
+        }
+        // Enable submit button if all UITextField is populated.
+        self.submitButton.isEnabled = true
+       }
 
 }
