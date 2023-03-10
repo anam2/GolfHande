@@ -40,13 +40,15 @@ struct CoreUI {
         labelView.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         labelView.text = labelText
         labelView.textAlignment = labelAlignment
+
         labelTextFieldView.addSubview(labelView)
         labelView.constrain(to: labelTextFieldView, constraints: [.top(.zero), .leading(.zero), .trailing(.zero)])
 
         labelTextFieldView.addSubview(textField)
-        textField.constrain(to: labelTextFieldView, constraints: [.leading(5), .trailing(.zero), .bottom(.zero)])
+        textField.constrain(to: labelTextFieldView, constraints: [.leading(5),
+                                                                  .trailing(.zero),
+                                                                  .bottom(.zero)])
         textField.constrain(to: labelView, constraints: [.topToBottom(5)])
-
         return labelTextFieldView
     }
 }

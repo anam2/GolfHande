@@ -74,10 +74,10 @@ extension ScoreInputViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let textFieldText = textField.text,
            textFieldText.isEmpty {
-            textField.displayError(true)
+            textField.setupStringErrorDisplay("Cannot be empty.")
             return
         }
-        textField.displayError(false)
+        textField.hideErrorDisplay()
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
