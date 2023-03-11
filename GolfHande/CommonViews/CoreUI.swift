@@ -19,7 +19,7 @@ struct CoreUI {
         return label
     }
 
-    static func textFieldView(informationButtonIsEnabled: Bool = false) -> UITextField {
+    static func textFieldView(informationButtonIsEnabled: Bool = false, buttonAction: Selector? = nil) -> UITextField {
         let textField = UITextField(frame: .zero)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.textAlignment = .left
@@ -30,8 +30,13 @@ struct CoreUI {
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
 
         if informationButtonIsEnabled {
+            guard let buttonAction = buttonAction else {
+                NSLog("Need to provide button action if setting `informationButtonIsEnabled` to TRUE.")
+                return UITextField()
+            }
             let button = UIButton(type: .infoDark)
             button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+            button.addTarget(self, action: buttonAction, for: .touchUpInside)
             textField.rightView = button
             textField.rightViewMode = .always
         }

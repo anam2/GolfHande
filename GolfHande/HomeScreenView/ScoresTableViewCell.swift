@@ -12,7 +12,7 @@ class ScoresTableViewCell: UITableViewCell {
         dateAddedLabel.text = scoresData.dateAdded
         courseNameLabel.text = scoresData.courseName
         courseRatingLabel.text = "Rating: " + scoresData.courseRating
-        courseSlopeLabel.text = "Slope: " + scoresData.courseRating
+        courseSlopeLabel.text = "Slope: " + scoresData.courseSlope
     }
 
     private func setupUI() {

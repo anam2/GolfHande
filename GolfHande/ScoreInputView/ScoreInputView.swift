@@ -26,7 +26,8 @@ class ScoreInputView: UIView {
         courseNameView.constrain(to: self, constraints: [.top(20), .leading(20), .trailing(-20)])
 
         addSubview(golfHoleButtonView)
-        golfHoleButtonView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
+//        golfHoleButtonView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
+        golfHoleButtonView.constrain(to: self, constraints: [.centerX(.zero)])
         golfHoleButtonView.constrain(to: courseNameView, constraints: [.topToBottom(30)])
 
         addSubview(userScoreView)
@@ -48,23 +49,30 @@ class ScoreInputView: UIView {
 
     // MARK: UI COMPONENTS
 
-    private lazy var golfHoleButtonView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [eightTeenHoleButton, nineHoleButton])
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 0.0
-        return stackView
+    private lazy var golfHoleButtonView: UIView = {
+        let buttonView = UIView()
+
+        buttonView.addSubview(eightTeenHoleButton)
+        eightTeenHoleButton.constrain(to: buttonView, constraints: [.top(.zero), .leading(.zero), .bottom(.zero)])
+
+        buttonView.addSubview(nineHoleButton)
+        nineHoleButton.constrain(to: buttonView, constraints: [.top(.zero), .trailing(.zero), .bottom(.zero)])
+        nineHoleButton.constrain(to: eightTeenHoleButton, constraints: [.leadingToTrailing(5)])
+        return buttonView
     }()
 
     private lazy var eightTeenHoleButton: UIButton = {
         let button = CoreUI.selectionButton(text: "18 Hole", isSelected: true,
                                             action: #selector(golfHoleSelectionClicked))
+        button.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return button
     }()
 
     private lazy var nineHoleButton: UIButton = {
         let button = CoreUI.selectionButton(text: "9 Hole", isSelected: false,
                                             action: #selector(golfHoleSelectionClicked))
+        button.widthAnchor.constraint(equalToConstant: 150).isActive = true
         return button
     }()
 
@@ -88,7 +96,7 @@ class ScoreInputView: UIView {
     }()
 
     private lazy var userScoreView: UIView = {
-        CoreUI.createLabelTextFieldView(labelText: "Score", textField: totalScoreTextField)
+        CoreUI.createLabelTextFieldView(labelText: "Score", textField: userScoreTextField)
     }()
 
     private lazy var courseSlopeView: UIView = {
@@ -99,26 +107,31 @@ class ScoreInputView: UIView {
         CoreUI.createLabelTextFieldView(labelText: "Course Rating", textField: courseRatingTextField)
     }()
 
+    @objc private func testButtonClicked(_ sender: UIButton) {
+        print("Information button clicked")
+    }
+
     lazy var courseNameTextField: UITextField = {
-        let textField = CoreUI.textFieldView(informationButtonIsEnabled: true)
+        let textField = CoreUI.textFieldView()
         textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
         return textField
     }()
 
-    lazy var totalScoreTextField: UITextField = {
-        let textField = CoreUI.textFieldView()
+
+    lazy var userScoreTextField: UITextField = {
+        let textField = CoreUI.textFieldView(informationButtonIsEnabled: true, buttonAction: #selector(testButtonClicked))
         textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
         return textField
     }()
 
     lazy var courseSlopeTextField: UITextField = {
-        let textField = CoreUI.textFieldView()
+        let textField = CoreUI.textFieldView(informationButtonIsEnabled: true, buttonAction: #selector(testButtonClicked))
         textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
         return textField
     }()
 
     lazy var courseRatingTextField: UITextField = {
-        let textField = CoreUI.textFieldView()
+        let textField = CoreUI.textFieldView(informationButtonIsEnabled: true, buttonAction: #selector(testButtonClicked))
         textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
         return textField
     }()
@@ -136,19 +149,83 @@ class ScoreInputView: UIView {
         return button
     }()
 
-    @objc func textFieldsIsNotEmpty(sender: UITextField) {
-        sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
+    @objc func textFieldsIsNotEmpty(_ sender: UITextField) {
         guard let courseName = courseNameTextField.text, !courseName.isEmpty,
               let courseSlope = courseSlopeTextField.text, !courseSlope.isEmpty,
               let courseRating = courseRatingTextField.text, !courseRating.isEmpty,
-              let userScore = totalScoreTextField.text, !userScore.isEmpty,
-              sender.isEnabled == false
+              let userScore = userScoreTextField.text, !userScore.isEmpty,
+              intIsInbetween(range: (40...140), for: courseSlope),
+              doubleIsInbetween(range: (40.0...95.0), for: courseRating),
+              intIsInbetween(range: (40...140), for: userScore)
         else {
-          self.submitButton.isEnabled = false
-          return
+            showEmptyTextFieldError(for: sender)
+            showTextFieldError(for: sender)
+            self.submitButton.isEnabled = false
+            return
         }
-        // Enable submit button if all UITextField is populated.
+        // Hide any error and enable submit button if all UITextField is populated.
+        sender.hideError()
         self.submitButton.isEnabled = true
-       }
+    }
+
+    private func showEmptyTextFieldError(for textField: UITextField) {
+        textField.hideError()
+        if let textFieldText = textField.text, textFieldText.isEmpty {
+            textField.showError(with: "Cannot be empty")
+        }
+    }
+
+    private func showTextFieldError(for textField: UITextField) {
+        // Hide any previous errors.
+        textField.hideError()
+        switch textField {
+        case userScoreTextField:
+            guard let userScoreString = userScoreTextField.text,
+                  let userScoreInt = Int(userScoreString) else {
+                textField.showError(with: "Input needs to be a number")
+                return
+            }
+            if !(40...140).contains(userScoreInt) {
+                textField.showError(with: "Score needs to be between 40 and 140")
+                return
+            }
+        case courseSlopeTextField:
+            guard let courseSlopeString = courseSlopeTextField.text,
+                  let courseSlopeInt = Int(courseSlopeString) else {
+                textField.showError(with: "Input needs to be a number.")
+                return
+            }
+            if !(40...140).contains(courseSlopeInt) {
+                textField.showError(with: "Slope needs to be between 40 and 140")
+                return
+            }
+        case courseRatingTextField:
+            guard let courseRatingString = courseRatingTextField.text,
+                  let courseRatingDouble = Double(courseRatingString) else {
+                textField.showError(with: "Input needs to be a decimal number")
+                return
+            }
+            if !(40.0...95.0).contains(courseRatingDouble) {
+                textField.showError(with: "Slope needs to be between 40.0 and 95.0")
+                return
+            }
+        default:
+            textField.hideError()
+            return
+        }
+    }
+
+
+    private func intIsInbetween(range: ClosedRange<Int>, for num: String) -> Bool {
+        guard let intNum = Int(num),
+              range.contains(intNum) else { return false }
+        return true
+    }
+
+    private func doubleIsInbetween(range: ClosedRange<Double>, for num: String) -> Bool {
+        guard let doubleNum = Double(num),
+              range.contains(doubleNum) else { return false }
+        return true
+    }
 
 }

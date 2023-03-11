@@ -2,7 +2,7 @@ import UIKit
 
 extension UITextField {
 
-    func setupStringErrorDisplay(_ displayErrorString: String) {
+    func showError(with displayErrorString: String) {
         // Constraints UILabel to UITextField.
         let errorLabel = UILabel()
         errorLabel.tag = 1
@@ -20,7 +20,7 @@ extension UITextField {
         self.layer.borderColor = UIColor.red.cgColor
     }
 
-    func hideErrorDisplay() {
+    func hideError() {
         // Removes error label.
         for subview in self.subviews {
             // Tag == 1 -> Error Label

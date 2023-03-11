@@ -18,7 +18,7 @@ class ScoreInputViewModel {
         let objectValue: [String: Any] = [
             "dateTimeAdded": ServerValue.timestamp(),
             "courseRating": scoreData.courseRating,
-            "slopeRating": scoreData.slopeRating,
+            "slopeRating": scoreData.courseSlope,
             "totalScore": scoreData.totalScore,
             "courseName": scoreData.courseName
         ]

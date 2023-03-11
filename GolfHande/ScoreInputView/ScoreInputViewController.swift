@@ -40,7 +40,7 @@ class ScoreInputViewController: UIViewController {
         contentView.courseNameTextField.delegate = self
         contentView.courseRatingTextField.delegate = self
         contentView.courseSlopeTextField.delegate = self
-        contentView.totalScoreTextField.delegate = self
+        contentView.userScoreTextField.delegate = self
     }
 
     private func setupButtonAction() {
@@ -52,7 +52,7 @@ class ScoreInputViewController: UIViewController {
     @objc private func submitButtonAction() {
         guard let courseName = contentView.courseNameTextField.text,
               let courseRating = contentView.courseRatingTextField.text,
-              let totalScore = contentView.totalScoreTextField.text,
+              let totalScore = contentView.userScoreTextField.text,
               let slopeRating = contentView.courseSlopeTextField.text else {
             // TODO: Need to handle error case for when some of text field are not filled out by user.
             return
@@ -61,7 +61,7 @@ class ScoreInputViewController: UIViewController {
         let scoreData = ScoreData(scoreId: UUID().uuidString,
                                   courseName: courseName,
                                   totalScore: totalScore,
-                                  slopeRating: slopeRating,
+                                  courseSlope: slopeRating,
                                   courseRating: courseRating)
         viewModel.addScoreToDatabase(scoreData: scoreData)
         navigationController?.popToRootViewController(animated: true)
@@ -71,20 +71,17 @@ class ScoreInputViewController: UIViewController {
 // MARK: TEXT FIELD DELEGATE
 
 extension ScoreInputViewController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if let textFieldText = textField.text,
-           textFieldText.isEmpty {
-            textField.setupStringErrorDisplay("Cannot be empty.")
-            return
-        }
-        textField.hideErrorDisplay()
-    }
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        if let textFieldText = textField.text,
+//           textFieldText.isEmpty {
+//            textField.showError(with: "Cannot be empty")
+//            return
+//        }
+//    }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         switch textField {
         // Can ONLY be numbers
-        // Need to limit between 55 and 155 ( Need to be done when enable / disable submit button )
-        // Limit to 3 characters
         case contentView.courseSlopeTextField:
             let containsNumbersOnly = containsDecimalDigitOnly(inputString: string)
             let limitStringLength = limitTextFieldLength(maxLength: 3,
@@ -92,7 +89,7 @@ extension ScoreInputViewController: UITextFieldDelegate {
                                                          range: range,
                                                          inputString: string)
             return containsNumbersOnly && limitStringLength ? true : false
-        case contentView.totalScoreTextField:
+        case contentView.userScoreTextField:
             let containsNumbersOnly = containsDecimalDigitOnly(inputString: string)
             let limitStringLength = limitTextFieldLength(maxLength: 3,
                                                          textField: textField,

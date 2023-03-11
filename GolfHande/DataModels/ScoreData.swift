@@ -6,7 +6,7 @@ struct ScoreData {
     var scoreId: String
     var courseName: String
     var totalScore: String
-    var slopeRating: String
+    var courseSlope: String
     var courseRating: String
     var dateTimeAdded: Date = Date()
 
@@ -28,7 +28,7 @@ struct ScoreData {
         let newScoreData = ScoreData(scoreId: scoreId,
                                      courseName: courseName,
                                      totalScore: totalScore,
-                                     slopeRating: slopeRating,
+                                     courseSlope: slopeRating,
                                      courseRating: courseRating,
                                      dateTimeAdded: Date(timeIntervalSince1970: TimeInterval(timeStamp)/1000))
         return newScoreData
