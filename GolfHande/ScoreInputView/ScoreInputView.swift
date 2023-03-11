@@ -25,44 +25,82 @@ class ScoreInputView: UIView {
         addSubview(courseNameView)
         courseNameView.constrain(to: self, constraints: [.top(20), .leading(20), .trailing(-20)])
 
-        addSubview(numericInputsStackView)
-        numericInputsStackView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
-        numericInputsStackView.constrain(to: courseNameView, constraints: [.topToBottom(30)])
+        addSubview(golfHoleButtonView)
+        golfHoleButtonView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
+        golfHoleButtonView.constrain(to: courseNameView, constraints: [.topToBottom(30)])
+
+        addSubview(userScoreView)
+        userScoreView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
+        userScoreView.constrain(to: golfHoleButtonView, constraints: [.topToBottom(30)])
+
+        addSubview(courseSlopeView)
+        courseSlopeView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
+        courseSlopeView.constrain(to: userScoreView, constraints: [.topToBottom(30)])
+
+        addSubview(courseRatingView)
+        courseRatingView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
+        courseRatingView.constrain(to: courseSlopeView, constraints: [.topToBottom(30)])
 
         addSubview(submitButton)
-        submitButton.constrain(to: numericInputsStackView, constraints: [.topToBottom(40)])
+        submitButton.constrain(to: courseRatingView, constraints: [.topToBottom(40)])
         submitButton.constrain(to: self, constraints: [.centerX(.zero)])
     }
 
     // MARK: UI COMPONENTS
 
-    private lazy var numericInputsStackView: UIStackView = {
-        let stackView: UIStackView = UIStackView(arrangedSubviews: [totalScoreView, courseSlopeView, courseRatingView])
+    private lazy var golfHoleButtonView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [eightTeenHoleButton, nineHoleButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-        stackView.alignment = .fill
-        stackView.spacing = 10.0
+        stackView.spacing = 0.0
         return stackView
     }()
+
+    private lazy var eightTeenHoleButton: UIButton = {
+        let button = CoreUI.selectionButton(text: "18 Hole", isSelected: true,
+                                            action: #selector(golfHoleSelectionClicked))
+        return button
+    }()
+
+    private lazy var nineHoleButton: UIButton = {
+        let button = CoreUI.selectionButton(text: "9 Hole", isSelected: false,
+                                            action: #selector(golfHoleSelectionClicked))
+        return button
+    }()
+
+    @objc private func golfHoleSelectionClicked(_ sender: UIButton) {
+        switch sender {
+        case eightTeenHoleButton:
+            sender.isEnabled = false
+            nineHoleButton.isEnabled = true
+            return
+        case nineHoleButton:
+            sender.isEnabled = false
+            eightTeenHoleButton.isEnabled = true
+            return
+        default:
+            return
+        }
+    }
 
     private lazy var courseNameView: UIView = {
         CoreUI.createLabelTextFieldView(labelText: "Course Name", textField: courseNameTextField)
     }()
 
-    private lazy var totalScoreView: UIView = {
-        CoreUI.createLabelTextFieldView(labelText: "Score", labelAlignment: .center, textField: totalScoreTextField)
+    private lazy var userScoreView: UIView = {
+        CoreUI.createLabelTextFieldView(labelText: "Score", textField: totalScoreTextField)
     }()
 
     private lazy var courseSlopeView: UIView = {
-        CoreUI.createLabelTextFieldView(labelText: "Course Slope", labelAlignment: .center, textField: courseSlopeTextField)
+        CoreUI.createLabelTextFieldView(labelText: "Course Slope", textField: courseSlopeTextField)
     }()
 
     private lazy var courseRatingView: UIView = {
-        CoreUI.createLabelTextFieldView(labelText: "Course Rating", labelAlignment: .center, textField: courseRatingTextField)
+        CoreUI.createLabelTextFieldView(labelText: "Course Rating", textField: courseRatingTextField)
     }()
 
     lazy var courseNameTextField: UITextField = {
-        let textField = CoreUI.textFieldView()
+        let textField = CoreUI.textFieldView(informationButtonIsEnabled: true)
         textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
         return textField
     }()
@@ -99,14 +137,12 @@ class ScoreInputView: UIView {
     }()
 
     @objc func textFieldsIsNotEmpty(sender: UITextField) {
-
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
-
-        guard
-            let courseName = courseNameTextField.text, !courseName.isEmpty,
-            let courseSlope = courseSlopeTextField.text, !courseSlope.isEmpty,
-            let courseRating = courseRatingTextField.text, !courseRating.isEmpty,
-            let userScore = totalScoreTextField.text, !userScore.isEmpty
+        guard let courseName = courseNameTextField.text, !courseName.isEmpty,
+              let courseSlope = courseSlopeTextField.text, !courseSlope.isEmpty,
+              let courseRating = courseRatingTextField.text, !courseRating.isEmpty,
+              let userScore = totalScoreTextField.text, !userScore.isEmpty,
+              sender.isEnabled == false
         else {
           self.submitButton.isEnabled = false
           return

@@ -19,15 +19,23 @@ struct CoreUI {
         return label
     }
 
-    static func textFieldView() -> UITextField {
+    static func textFieldView(informationButtonIsEnabled: Bool = false) -> UITextField {
         let textField = UITextField(frame: .zero)
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.textAlignment = .center
+        textField.textAlignment = .left
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.keyboardType = UIKeyboardType.default
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
+
+        if informationButtonIsEnabled {
+            let button = UIButton(type: .infoDark)
+            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+            textField.rightView = button
+            textField.rightViewMode = .always
+        }
+
         return textField
     }
 
@@ -50,5 +58,19 @@ struct CoreUI {
                                                                   .bottom(.zero)])
         textField.constrain(to: labelView, constraints: [.topToBottom(5)])
         return labelTextFieldView
+    }
+
+    static func selectionButton(text: String, isSelected: Bool, action: Selector) -> UIButton {
+        let button = UIButton()
+        // Flipped. If button is disabled = SELECTED. If button is enabled = NOT selected.
+        button.setTitleColor(UIColor.gray, for: .normal)
+        button.setTitleColor(UIColor.white, for: .disabled)
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        button.isEnabled = !isSelected
+        button.backgroundColor = .blue
+        button.setTitle(text, for: .normal)
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: action, for: .touchUpInside)
+        return button
     }
 }
