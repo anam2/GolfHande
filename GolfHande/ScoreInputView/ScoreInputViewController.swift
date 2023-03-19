@@ -51,19 +51,17 @@ class ScoreInputViewController: UIViewController {
 
     @objc private func submitButtonAction() {
         guard let courseName = contentView.courseNameTextField.text,
-              let courseRating = contentView.courseRatingTextField.text,
               let totalScore = contentView.userScoreTextField.text,
-              let slopeRating = contentView.courseSlopeTextField.text else {
-            // TODO: Need to handle error case for when some of text field are not filled out by user.
+              let courseSlope = contentView.courseSlopeTextField.text,
+              let courseRating = contentView.courseRatingTextField.text
+        else {
+            NSLog("A text field with empty string got passed")
             return
         }
-        NSLog("Submit Button Pressed:\nCourse Name: \(courseName)\nCourse Rating: \(courseRating)\nTotal Score: \(totalScore)\nSlope Rating: \(slopeRating)")
-        let scoreData = ScoreData(scoreId: UUID().uuidString,
-                                  courseName: courseName,
-                                  totalScore: totalScore,
-                                  courseSlope: slopeRating,
-                                  courseRating: courseRating)
-        viewModel.addScoreToDatabase(scoreData: scoreData)
+        let courseData = GolfCourseData(name: courseName,
+                                        rating: courseRating,
+                                        slope: courseSlope)
+        ServiceCalls.addScore(score: totalScore, courseData: courseData)
         navigationController?.popToRootViewController(animated: true)
     }
 }
@@ -71,14 +69,6 @@ class ScoreInputViewController: UIViewController {
 // MARK: TEXT FIELD DELEGATE
 
 extension ScoreInputViewController: UITextFieldDelegate {
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        if let textFieldText = textField.text,
-//           textFieldText.isEmpty {
-//            textField.showError(with: "Cannot be empty")
-//            return
-//        }
-//    }
-
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         switch textField {
         // Can ONLY be numbers

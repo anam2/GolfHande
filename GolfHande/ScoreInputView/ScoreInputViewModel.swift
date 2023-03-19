@@ -2,26 +2,13 @@ import FirebaseDatabase
 
 class ScoreInputViewModel {
 
-    private var database = Database.database().reference()
+    private var ref = Database.database().reference()
+
+    private let userChildString: String = NSLocalizedString("childString", comment: "childString")
 
     var courseRating: String = ""
     var slopeRating: String = ""
     var totalScore: String = ""
     var courseName: String = ""
     var teePosition: String = ""
-
-    /*
-     Will overwrite data at specific location, including any child nodes.
-     */
-    func addScoreToDatabase(scoreData: ScoreData) {
-        let childString = "scores"
-        let objectValue: [String: Any] = [
-            "dateTimeAdded": ServerValue.timestamp(),
-            "courseRating": scoreData.courseRating,
-            "slopeRating": scoreData.courseSlope,
-            "totalScore": scoreData.totalScore,
-            "courseName": scoreData.courseName
-        ]
-        database.child(childString).child(UUID().uuidString).setValue(objectValue)
-    }
 }
