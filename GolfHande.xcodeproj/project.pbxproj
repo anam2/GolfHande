@@ -27,8 +27,10 @@
 		72671C9929B668C200D8FBD3 /* CoreUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671C9829B668C200D8FBD3 /* CoreUI.swift */; };
 		72671C9D29B6AB0600D8FBD3 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671C9C29B6AB0600D8FBD3 /* TabBar.swift */; };
 		72671C9F29B6C0C300D8FBD3 /* ServiceCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671C9E29B6C0C300D8FBD3 /* ServiceCalls.swift */; };
-		72671CA229B6D58A00D8FBD3 /* ScoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671CA129B6D58A00D8FBD3 /* ScoreData.swift */; };
 		72671CA429BA495100D8FBD3 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671CA329BA495100D8FBD3 /* UITextFieldExtension.swift */; };
+		7285F65E29BD2FA400B95589 /* GolfCourseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7285F65D29BD2FA400B95589 /* GolfCourseData.swift */; };
+		7285F66329C1315700B95589 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7285F66529C1315700B95589 /* Localizable.strings */; };
+		72C942A729C42B7600A913AB /* UserScoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C942A629C42B7600A913AB /* UserScoreData.swift */; };
 		83039927C3B6E1D65EA96C70 /* Pods_GolfHande.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51598585A46C60E0AFFB191F /* Pods_GolfHande.framework */; };
 		90CB5C617B9838C2FEFA8706 /* Pods_GolfHandeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B681BD9E17B10EBB3D517D19 /* Pods_GolfHandeTests.framework */; };
 /* End PBXBuildFile section */
@@ -83,8 +85,10 @@
 		72671C9829B668C200D8FBD3 /* CoreUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreUI.swift; sourceTree = "<group>"; };
 		72671C9C29B6AB0600D8FBD3 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		72671C9E29B6C0C300D8FBD3 /* ServiceCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCalls.swift; sourceTree = "<group>"; };
-		72671CA129B6D58A00D8FBD3 /* ScoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreData.swift; sourceTree = "<group>"; };
 		72671CA329BA495100D8FBD3 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
+		7285F65D29BD2FA400B95589 /* GolfCourseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GolfCourseData.swift; sourceTree = "<group>"; };
+		7285F66429C1315700B95589 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		72C942A629C42B7600A913AB /* UserScoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScoreData.swift; sourceTree = "<group>"; };
 		B681BD9E17B10EBB3D517D19 /* Pods_GolfHandeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GolfHandeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E89EFB8DE1BB5C24E49C5A /* Pods-GolfHande-GolfHandeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GolfHande-GolfHandeUITests.debug.xcconfig"; path = "Target Support Files/Pods-GolfHande-GolfHandeUITests/Pods-GolfHande-GolfHandeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -201,6 +205,7 @@
 				7228312E29B193F50099AC1A /* ScoreInputViewController.swift */,
 				7228313029B1BF5B0099AC1A /* ScoreInputView.swift */,
 				7228313529B1C7FF0099AC1A /* ScoreInputViewModel.swift */,
+				7285F66529C1315700B95589 /* Localizable.strings */,
 			);
 			path = ScoreInputView;
 			sourceTree = "<group>";
@@ -229,7 +234,8 @@
 		72671CA029B6D57F00D8FBD3 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
-				72671CA129B6D58A00D8FBD3 /* ScoreData.swift */,
+				7285F65D29BD2FA400B95589 /* GolfCourseData.swift */,
+				72C942A629C42B7600A913AB /* UserScoreData.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -364,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7205CEDF29B05C9B00316B08 /* LaunchScreen.storyboard in Resources */,
+				7285F66329C1315700B95589 /* Localizable.strings in Resources */,
 				7228312729B05E650099AC1A /* GoogleService-Info.plist in Resources */,
 				7205CEDC29B05C9B00316B08 /* Assets.xcassets in Resources */,
 			);
@@ -493,13 +500,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72671CA229B6D58A00D8FBD3 /* ScoreData.swift in Sources */,
 				7228312C29B192090099AC1A /* UIViewExtension.swift in Sources */,
 				7205CED429B05C9A00316B08 /* MyScoresViewController.swift in Sources */,
+				72C942A729C42B7600A913AB /* UserScoreData.swift in Sources */,
 				7228313429B1C2100099AC1A /* MyScoresViewModel.swift in Sources */,
 				7228312F29B193F50099AC1A /* ScoreInputViewController.swift in Sources */,
 				7205CED029B05C9A00316B08 /* AppDelegate.swift in Sources */,
 				72671C9F29B6C0C300D8FBD3 /* ServiceCalls.swift in Sources */,
+				7285F65E29BD2FA400B95589 /* GolfCourseData.swift in Sources */,
 				72671CA429BA495100D8FBD3 /* UITextFieldExtension.swift in Sources */,
 				72671C9529B2DAD700D8FBD3 /* ScoresTableViewCell.swift in Sources */,
 				7205CEDA29B05C9A00316B08 /* GolfHande.xcdatamodeld in Sources */,
@@ -550,6 +558,14 @@
 				7205CEDE29B05C9B00316B08 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		7285F66529C1315700B95589 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7285F66429C1315700B95589 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
