@@ -47,32 +47,4 @@ class MyScoresViewModel {
         guard let golfCourse = golfCourseArray.first(where: { $0.id == courseID }) else { return nil }
         return golfCourse
     }
-
-    // MARK: EXTRA UNUSED BUT FUTURE NEEDED FUNCTIONS
-
-//    var getHandicap: String {
-//        var handicap = 0.0
-//
-//        guard let userScore = Double(totalScore),
-//              let courseSlope = Double(courseSlope),
-//              let courseRating = Double(courseRating) else {
-//            return "0.0"
-//        }
-//        let topNum = (userScore-courseRating) * 113
-//        let bottomNum = courseSlope
-//        handicap = round((topNum/bottomNum) * 10) / 10.0
-//        return "\(handicap)"
-//    }
-//    var dateAdded: String {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "MM-dd-yy"
-//        return dateFormatter.string(from: dateTimeAdded)
-//    }
-//
-//    let newScoreData = ScoreData(scoreId: scoreId,
-//                                 courseName: courseName,
-//                                 totalScore: totalScore,
-//                                 courseSlope: slopeRating,
-//                                 courseRating: courseRating,
-//                                 dateTimeAdded: Date(timeIntervalSince1970: TimeInterval(timeStamp)/1000))
 }
