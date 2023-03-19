@@ -234,6 +234,7 @@
 		72671CA029B6D57F00D8FBD3 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
+				72C942A829C6C9EF00A913AB /* Requests */,
 				7285F65D29BD2FA400B95589 /* GolfCourseData.swift */,
 				72C942A629C42B7600A913AB /* UserScoreData.swift */,
 			);
@@ -246,6 +247,13 @@
 				72671C9E29B6C0C300D8FBD3 /* ServiceCalls.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		72C942A829C6C9EF00A913AB /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Requests;
 			sourceTree = "<group>";
 		};
 		B7547DD4092069B02DCF09DC /* Pods */ = {
