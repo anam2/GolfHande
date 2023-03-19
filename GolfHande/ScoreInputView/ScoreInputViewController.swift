@@ -61,7 +61,9 @@ class ScoreInputViewController: UIViewController {
             NSLog("A text field with empty string got passed")
             return
         }
-        let userScoreData = UserScoreData(score: userScore, handicap: scoreHandicap)
+        let userScoreData = UserScoreData(dateAdded: viewModel.getCurrentDateAsString(),
+                                          score: userScore,
+                                          handicap: scoreHandicap)
         let courseData = GolfCourseData(name: courseName,
                                         rating: courseRating,
                                         slope: courseSlope)

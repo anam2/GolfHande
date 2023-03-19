@@ -23,4 +23,10 @@ class ScoreInputViewModel {
         let handicap = round((numerator/denominator) * 10) / 10.0
         return "\(handicap)"
     }
+    
+    func getCurrentDateAsString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        return dateFormatter.string(from: Date())
+    }
 }

@@ -31,19 +31,18 @@ class MyScoresViewController: UIViewController {
     /// Called ONCE when view is first loaded.
     override func viewDidLoad() {
         super.viewDidLoad()
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
         self.setupNavigationBar()
         self.setupUI()
         self.setupDelegates()
         // Make service calls to populate view model.
         self.showActivityIndicator()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.showActivityIndicator()
         viewModel.loadViewModel {
             self.contentView.scoresTableView.reloadData()
-            dispatchGroup.leave()
-
-        }
-        dispatchGroup.notify(queue: .main) {
             self.hideActivityIndicator()
         }
     }
@@ -108,11 +107,11 @@ extension MyScoresViewController: UITableViewDataSource {
               let courseInfo = viewModel.getCourseInfo(for: courseID)
         else { return UITableViewCell() }
 
-        cell.setupCellData(dateAdded: "MM/DD/YY",
+        cell.setupCellData(dateAdded: viewModel.userScoreArray[indexPath.row].dateAdded,
                            courseName: courseInfo.name,
                            courseRating: courseInfo.rating,
                            courseSlope: courseInfo.slope,
-                           handicapValue: "T.E")
+                           handicapValue: viewModel.userScoreArray[indexPath.row].handicap)
         return cell
     }
 }

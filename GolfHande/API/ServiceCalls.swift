@@ -76,19 +76,13 @@ class ServiceCalls {
         ]
 
         let scoreRefValues: [String: String] = [
-            "courseID": courseRef.key!,
-            "dateAdded": Self.getCurrentDateAsString(),
+            "courseID": courseRef.key ?? "",
+            "dateAdded": userScoreData.dateAdded,
             "score": userScoreData.score,
             "handicap": userScoreData.handicap
         ]
 
         courseRef.setValue(courseRefValues)
         scoresRef.setValue(scoreRefValues)
-    }
-
-    private static func getCurrentDateAsString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy"
-        return dateFormatter.string(from: Date())
     }
 }
