@@ -8,11 +8,17 @@ class ScoresTableViewCell: UITableViewCell {
 
     @available (*, unavailable) required init? (coder aDecoder: NSCoder) { nil }
 
-    func setupCellData(with scoresData: ScoreData) {
-        dateAddedLabel.text = scoresData.dateAdded
-        courseNameLabel.text = scoresData.courseName
-        courseRatingLabel.text = "Rating: " + scoresData.courseRating
-        courseSlopeLabel.text = "Slope: " + scoresData.courseSlope
+    func setupCellData(dateAdded: String,
+                       courseName: String,
+                       courseRating: String,
+                       courseSlope: String,
+                       handicapValue: String) {
+        dateAddedLabel.text = dateAdded
+        courseNameLabel.text = courseName
+        courseRatingLabel.text = "Rating: " + courseRating
+        courseSlopeLabel.text = "Slope: " + courseSlope
+        handicapValueLabel.text = handicapValue
+        setupUI()
     }
 
     private func setupUI() {
@@ -35,6 +41,10 @@ class ScoresTableViewCell: UITableViewCell {
     private lazy var containerView: UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
+        dateAddedLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        courseNameLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+        courseSlopeLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        courseRatingLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
 
         container.addSubview(dateAddedLabel)
         dateAddedLabel.constrain(to: container, constraints: [.top(10), .leading(10)])
@@ -91,7 +101,6 @@ class ScoresTableViewCell: UITableViewCell {
 
     private lazy var handicapValueLabel: UILabel = {
         let label = UILabel()
-        label.text = "9.2"
         label.font = label.font.withSize(18)
         return label
     }()
