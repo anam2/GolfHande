@@ -5,6 +5,19 @@ class MyScoresViewController: UIViewController {
     private var viewModel: MyScoresViewModel
     private let contentView: MyScoresView
 
+    // MARK: UI COMPONENTS
+
+    private var activityView = UIActivityIndicatorView(style: .large)
+
+    private lazy var MyScoresPlusButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                            target: self,
+                                            action: #selector(myScoresPlusButtonClicked(_:)))
+        return barButtonItem
+    }()
+
+    // MARK: INITIALIZER
+
     public init() {
         viewModel = MyScoresViewModel()
         contentView = MyScoresView(viewModel: viewModel)
@@ -18,50 +31,26 @@ class MyScoresViewController: UIViewController {
     /// Called ONCE when view is first loaded.
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigation()
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        self.setupNavigationBar()
         self.setupUI()
-        // Constraint Setups
         self.setupDelegates()
-        self.setupConstraintsForContentView()
-
-    }
-
-    private func setupDelegates() {
-        contentView.scoresTableView.delegate = self
-        contentView.scoresTableView.dataSource = self
-    }
-
-    /// Will be called everytime view appears.
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.fetchData()
-    }
-
-    private func fetchData() {
+        // Make service calls to populate view model.
         self.showActivityIndicator()
-        viewModel.fetchScores { success in
-            if success {
-                self.contentView.scoresTableView.reloadData()
-                self.hideActivityIndicator()
-            }
+        viewModel.loadViewModel {
+            self.contentView.scoresTableView.reloadData()
+            dispatchGroup.leave()
+
+        }
+        dispatchGroup.notify(queue: .main) {
+            self.hideActivityIndicator()
         }
     }
 
     // MARK: SETUP UI
 
-    private lazy var MyScoresPlusButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
-                                            target: self,
-                                            action: #selector(myScoresPlusButtonClicked(_:)))
-        return barButtonItem
-    }()
-
-    @objc private func myScoresPlusButtonClicked(_ selector: UIBarButtonItem) {
-        NSLog("Print Button Clicked:\n")
-        navigationController?.pushViewController(ScoreInputViewController(), animated: true)
-    }
-
-    private func setupNavigation() {
+    private func setupNavigationBar() {
         navigationItem.rightBarButtonItem = MyScoresPlusButton
     }
 
@@ -69,20 +58,24 @@ class MyScoresViewController: UIViewController {
         self.edgesForExtendedLayout = []
         self.view.backgroundColor = .none
         self.view.addSubview(contentView)
+        contentView.constrain(to: self.view,
+                              constraints: [.top(.zero), .leading(.zero),
+                                            .trailing(.zero), .bottom(.zero)])
     }
 
-    private func setupConstraintsForContentView() {
-        NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-        ])
+    private func setupDelegates() {
+        contentView.scoresTableView.delegate = self
+        contentView.scoresTableView.dataSource = self
+    }
+
+    // MARK: PLUS BUTTON FUNCTION
+
+    @objc private func myScoresPlusButtonClicked(_ selector: UIBarButtonItem) {
+        NSLog("Print Button Clicked:\n")
+        navigationController?.pushViewController(ScoreInputViewController(), animated: true)
     }
 
     // MARK: SPINNING INDICATOR
-
-    var activityView = UIActivityIndicatorView(style: .large)
 
     func showActivityIndicator() {
         activityView.center = self.view.center
@@ -95,22 +88,31 @@ class MyScoresViewController: UIViewController {
     }
 }
 
-extension MyScoresViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.scoresData.count
-    }
+// MARK: TABLE VIEW DELEGATE
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: ScoresTableViewCell = tableView.dequeueReusableCell(withIdentifier: "scoresTableViewCell",
-                                                                            for: indexPath) as? ScoresTableViewCell else {
-            return UITableViewCell()
-        }
-        cell.setupCellData(with: viewModel.scoresData[indexPath.row])
-        return cell
-    }
-
+extension MyScoresViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
 }
 
+extension MyScoresViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.userScoreArray.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "scoresTableViewCell",
+                                                       for: indexPath) as? ScoresTableViewCell,
+              let courseID = viewModel.getCourseID(for: indexPath.row),
+              let courseInfo = viewModel.getCourseInfo(for: courseID)
+        else { return UITableViewCell() }
+
+        cell.setupCellData(dateAdded: "MM/DD/YY",
+                           courseName: courseInfo.name,
+                           courseRating: courseInfo.rating,
+                           courseSlope: courseInfo.slope,
+                           handicapValue: "T.E")
+        return cell
+    }
+}
