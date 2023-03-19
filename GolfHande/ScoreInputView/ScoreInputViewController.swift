@@ -4,7 +4,7 @@ class ScoreInputViewController: UIViewController {
 
     private let contentView: ScoreInputView
     private let viewModel: ScoreInputViewModel
-
+    // MARK: INITIAZLIER
     public init() {
         viewModel = ScoreInputViewModel()
         contentView = ScoreInputView()
@@ -51,17 +51,21 @@ class ScoreInputViewController: UIViewController {
 
     @objc private func submitButtonAction() {
         guard let courseName = contentView.courseNameTextField.text,
-              let totalScore = contentView.userScoreTextField.text,
+              let userScore = contentView.userScoreTextField.text,
               let courseSlope = contentView.courseSlopeTextField.text,
-              let courseRating = contentView.courseRatingTextField.text
+              let courseRating = contentView.courseRatingTextField.text,
+              let scoreHandicap = viewModel.calculateHandicap(userScore: userScore,
+                                                              courseRating: courseRating,
+                                                              courseSlope: courseSlope)
         else {
             NSLog("A text field with empty string got passed")
             return
         }
+        let userScoreData = UserScoreData(score: userScore, handicap: scoreHandicap)
         let courseData = GolfCourseData(name: courseName,
                                         rating: courseRating,
                                         slope: courseSlope)
-        ServiceCalls.addScore(score: totalScore, courseData: courseData)
+        ServiceCalls.addScore(userScoreData: userScoreData, courseData: courseData)
         navigationController?.popToRootViewController(animated: true)
     }
 }

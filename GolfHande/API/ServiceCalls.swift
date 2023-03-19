@@ -65,7 +65,7 @@ class ServiceCalls {
      - parameter score: [String] The user's score they shot.
      - parameter courseData: [GolfCourseDataModel] The golf course data the user played at.
      */
-    static func addScore(score: String, courseData: GolfCourseData) {
+    static func addScore(userScoreData: UserScoreData, courseData: GolfCourseData) {
         let courseRef = ref.child("courses").childByAutoId()
         let scoresRef = ref.child("scores").childByAutoId()
 
@@ -74,12 +74,21 @@ class ServiceCalls {
             "rating": courseData.rating,
             "slope": courseData.slope
         ]
+
         let scoreRefValues: [String: String] = [
             "courseID": courseRef.key!,
-            "score": score
+            "dateAdded": Self.getCurrentDateAsString(),
+            "score": userScoreData.score,
+            "handicap": userScoreData.handicap
         ]
 
         courseRef.setValue(courseRefValues)
         scoresRef.setValue(scoreRefValues)
+    }
+
+    private static func getCurrentDateAsString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        return dateFormatter.string(from: Date())
     }
 }
