@@ -2,6 +2,20 @@ import UIKit
 
 extension UITextField {
 
+    func addDoneKeyboardButton() {
+        let bar = UIToolbar()
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace , target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self,
+                                         action: #selector(dismissMyKeyboard))
+        bar.items = [flexibleSpace, doneButton]
+        bar.sizeToFit()
+        self.inputAccessoryView = bar
+    }
+
+    @objc private func dismissMyKeyboard() {
+        self.endEditing(true)
+    }
+
     func showError(with displayErrorString: String) {
         // Constraints UILabel to UITextField.
         let errorLabel = UILabel()

@@ -19,7 +19,8 @@ struct CoreUI {
         return label
     }
 
-    static func textFieldView(informationButtonIsEnabled: Bool = false, buttonAction: Selector? = nil) -> UITextField {
+    static func textFieldView(informationButtonIsEnabled: Bool = false,
+                              buttonAction: Selector? = nil) -> UITextField {
         let textField = UITextField(frame: .zero)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.textAlignment = .left
@@ -28,6 +29,7 @@ struct CoreUI {
         textField.keyboardType = UIKeyboardType.default
         textField.returnKeyType = UIReturnKeyType.done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
+        textField.addDoneKeyboardButton()
 
         if informationButtonIsEnabled {
             guard let buttonAction = buttonAction else {

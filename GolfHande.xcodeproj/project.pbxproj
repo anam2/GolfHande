@@ -31,6 +31,7 @@
 		7285F65E29BD2FA400B95589 /* GolfCourseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7285F65D29BD2FA400B95589 /* GolfCourseData.swift */; };
 		7285F66329C1315700B95589 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7285F66529C1315700B95589 /* Localizable.strings */; };
 		72C942A729C42B7600A913AB /* UserScoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C942A629C42B7600A913AB /* UserScoreData.swift */; };
+		72E1A3C329C8F09500768AE0 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E1A3C229C8F09500768AE0 /* UIViewControllerExtension.swift */; };
 		83039927C3B6E1D65EA96C70 /* Pods_GolfHande.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51598585A46C60E0AFFB191F /* Pods_GolfHande.framework */; };
 		90CB5C617B9838C2FEFA8706 /* Pods_GolfHandeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B681BD9E17B10EBB3D517D19 /* Pods_GolfHandeTests.framework */; };
 /* End PBXBuildFile section */
@@ -89,6 +90,7 @@
 		7285F65D29BD2FA400B95589 /* GolfCourseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GolfCourseData.swift; sourceTree = "<group>"; };
 		7285F66429C1315700B95589 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		72C942A629C42B7600A913AB /* UserScoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScoreData.swift; sourceTree = "<group>"; };
+		72E1A3C229C8F09500768AE0 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		B681BD9E17B10EBB3D517D19 /* Pods_GolfHandeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GolfHandeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E89EFB8DE1BB5C24E49C5A /* Pods-GolfHande-GolfHandeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GolfHande-GolfHandeUITests.debug.xcconfig"; path = "Target Support Files/Pods-GolfHande-GolfHandeUITests/Pods-GolfHande-GolfHandeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,6 +158,7 @@
 		7205CECE29B05C9A00316B08 /* GolfHande */ = {
 			isa = PBXGroup;
 			children = (
+				72E1A3C129C8F07B00768AE0 /* CoreUIExtensions */,
 				72671CA529BA50C700D8FBD3 /* API */,
 				72671CA029B6D57F00D8FBD3 /* DataModels */,
 				7228313729B2C4480099AC1A /* CommonViews */,
@@ -226,7 +229,6 @@
 			children = (
 				72671C9829B668C200D8FBD3 /* CoreUI.swift */,
 				72671C9C29B6AB0600D8FBD3 /* TabBar.swift */,
-				72671CA329BA495100D8FBD3 /* UITextFieldExtension.swift */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -254,6 +256,15 @@
 			children = (
 			);
 			path = Requests;
+			sourceTree = "<group>";
+		};
+		72E1A3C129C8F07B00768AE0 /* CoreUIExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				72671CA329BA495100D8FBD3 /* UITextFieldExtension.swift */,
+				72E1A3C229C8F09500768AE0 /* UIViewControllerExtension.swift */,
+			);
+			path = CoreUIExtensions;
 			sourceTree = "<group>";
 		};
 		B7547DD4092069B02DCF09DC /* Pods */ = {
@@ -510,6 +521,7 @@
 			files = (
 				7228312C29B192090099AC1A /* UIViewExtension.swift in Sources */,
 				7205CED429B05C9A00316B08 /* MyScoresViewController.swift in Sources */,
+				72E1A3C329C8F09500768AE0 /* UIViewControllerExtension.swift in Sources */,
 				72C942A729C42B7600A913AB /* UserScoreData.swift in Sources */,
 				7228313429B1C2100099AC1A /* MyScoresViewModel.swift in Sources */,
 				7228312F29B193F50099AC1A /* ScoreInputViewController.swift in Sources */,

@@ -4,6 +4,7 @@ class ScoreInputViewController: UIViewController {
 
     private let contentView: ScoreInputView
     private let viewModel: ScoreInputViewModel
+
     // MARK: INITIAZLIER
     public init() {
         viewModel = ScoreInputViewModel()
@@ -13,13 +14,18 @@ class ScoreInputViewController: UIViewController {
 
     @available (*, unavailable) required init?(coder aDecoder: NSCoder) { nil }
 
+    // MARK: LIFE CYCLE FUNCTIONS
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         setupUI()
         setupConstraintsForContentView()
         setupTextFieldDelegates()
         setupButtonAction()
     }
+
+    // MARK: SETUP FUNCTIONS
 
     private func setupUI() {
         self.edgesForExtendedLayout = []

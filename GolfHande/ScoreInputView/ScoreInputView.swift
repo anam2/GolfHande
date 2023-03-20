@@ -4,6 +4,65 @@ class ScoreInputView: UIView {
 
     var textFields = [UITextField]()
 
+    // MARK: UI COMPONENTS
+
+    private lazy var courseNameView: UIView = {
+        CoreUI.createLabelTextFieldView(labelText: "Course Name", textField: courseNameTextField)
+    }()
+
+    private lazy var userScoreView: UIView = {
+        CoreUI.createLabelTextFieldView(labelText: "Score", textField: userScoreTextField)
+    }()
+
+    private lazy var courseSlopeView: UIView = {
+        CoreUI.createLabelTextFieldView(labelText: "Course Slope", textField: courseSlopeTextField)
+    }()
+
+    private lazy var courseRatingView: UIView = {
+        CoreUI.createLabelTextFieldView(labelText: "Course Rating", textField: courseRatingTextField)
+    }()
+
+    lazy var courseNameTextField: UITextField = {
+        let textField = CoreUI.textFieldView()
+        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
+        return textField
+    }()
+
+
+    lazy var userScoreTextField: UITextField = {
+        let textField = CoreUI.textFieldView(informationButtonIsEnabled: true, buttonAction: #selector(testButtonClicked))
+        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
+        textField.keyboardType = .asciiCapableNumberPad
+        return textField
+    }()
+
+    lazy var courseSlopeTextField: UITextField = {
+        let textField = CoreUI.textFieldView(informationButtonIsEnabled: true, buttonAction: #selector(testButtonClicked))
+        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
+        textField.keyboardType = .asciiCapableNumberPad
+        return textField
+    }()
+
+    lazy var courseRatingTextField: UITextField = {
+        let textField = CoreUI.textFieldView(informationButtonIsEnabled: true, buttonAction: #selector(testButtonClicked))
+        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
+        textField.keyboardType = .decimalPad
+        return textField
+    }()
+
+    lazy var submitButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitleColor(UIColor.gray, for: .disabled)
+        button.isEnabled = false
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        button.backgroundColor = .blue
+        button.setTitle("Submit", for: .normal)
+        button.layer.cornerRadius = 5
+        return button
+    }()
+
     // MARK: INITIAZLIER
 
     init() {
@@ -25,14 +84,9 @@ class ScoreInputView: UIView {
         addSubview(courseNameView)
         courseNameView.constrain(to: self, constraints: [.top(20), .leading(20), .trailing(-20)])
 
-        addSubview(golfHoleButtonView)
-//        golfHoleButtonView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
-        golfHoleButtonView.constrain(to: self, constraints: [.centerX(.zero)])
-        golfHoleButtonView.constrain(to: courseNameView, constraints: [.topToBottom(30)])
-
         addSubview(userScoreView)
         userScoreView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
-        userScoreView.constrain(to: golfHoleButtonView, constraints: [.topToBottom(30)])
+        userScoreView.constrain(to: courseNameView, constraints: [.topToBottom(30)])
 
         addSubview(courseSlopeView)
         courseSlopeView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
@@ -47,107 +101,11 @@ class ScoreInputView: UIView {
         submitButton.constrain(to: self, constraints: [.centerX(.zero)])
     }
 
-    // MARK: UI COMPONENTS
-
-    private lazy var golfHoleButtonView: UIView = {
-        let buttonView = UIView()
-
-        buttonView.addSubview(eightTeenHoleButton)
-        eightTeenHoleButton.constrain(to: buttonView, constraints: [.top(.zero), .leading(.zero), .bottom(.zero)])
-
-        buttonView.addSubview(nineHoleButton)
-        nineHoleButton.constrain(to: buttonView, constraints: [.top(.zero), .trailing(.zero), .bottom(.zero)])
-        nineHoleButton.constrain(to: eightTeenHoleButton, constraints: [.leadingToTrailing(5)])
-        return buttonView
-    }()
-
-    private lazy var eightTeenHoleButton: UIButton = {
-        let button = CoreUI.selectionButton(text: "18 Hole", isSelected: true,
-                                            action: #selector(golfHoleSelectionClicked))
-        button.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        button.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        return button
-    }()
-
-    private lazy var nineHoleButton: UIButton = {
-        let button = CoreUI.selectionButton(text: "9 Hole", isSelected: false,
-                                            action: #selector(golfHoleSelectionClicked))
-        button.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        return button
-    }()
-
-    @objc private func golfHoleSelectionClicked(_ sender: UIButton) {
-        switch sender {
-        case eightTeenHoleButton:
-            sender.isEnabled = false
-            nineHoleButton.isEnabled = true
-            return
-        case nineHoleButton:
-            sender.isEnabled = false
-            eightTeenHoleButton.isEnabled = true
-            return
-        default:
-            return
-        }
-    }
-
-    private lazy var courseNameView: UIView = {
-        CoreUI.createLabelTextFieldView(labelText: "Course Name", textField: courseNameTextField)
-    }()
-
-    private lazy var userScoreView: UIView = {
-        CoreUI.createLabelTextFieldView(labelText: "Score", textField: userScoreTextField)
-    }()
-
-    private lazy var courseSlopeView: UIView = {
-        CoreUI.createLabelTextFieldView(labelText: "Course Slope", textField: courseSlopeTextField)
-    }()
-
-    private lazy var courseRatingView: UIView = {
-        CoreUI.createLabelTextFieldView(labelText: "Course Rating", textField: courseRatingTextField)
-    }()
+    // MARK: @OBJC FUNCTIONS
 
     @objc private func testButtonClicked(_ sender: UIButton) {
         print("Information button clicked")
     }
-
-    lazy var courseNameTextField: UITextField = {
-        let textField = CoreUI.textFieldView()
-        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
-        return textField
-    }()
-
-
-    lazy var userScoreTextField: UITextField = {
-        let textField = CoreUI.textFieldView(informationButtonIsEnabled: true, buttonAction: #selector(testButtonClicked))
-        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
-        return textField
-    }()
-
-    lazy var courseSlopeTextField: UITextField = {
-        let textField = CoreUI.textFieldView(informationButtonIsEnabled: true, buttonAction: #selector(testButtonClicked))
-        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
-        return textField
-    }()
-
-    lazy var courseRatingTextField: UITextField = {
-        let textField = CoreUI.textFieldView(informationButtonIsEnabled: true, buttonAction: #selector(testButtonClicked))
-        textField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
-        return textField
-    }()
-
-    lazy var submitButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.setTitleColor(UIColor.gray, for: .disabled)
-        button.isEnabled = false
-        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        button.backgroundColor = .blue
-        button.setTitle("Submit", for: .normal)
-        button.layer.cornerRadius = 5
-        return button
-    }()
 
     @objc func textFieldsIsNotEmpty(_ sender: UITextField) {
         guard let courseName = courseNameTextField.text, !courseName.isEmpty,
@@ -167,6 +125,8 @@ class ScoreInputView: UIView {
         sender.hideError()
         self.submitButton.isEnabled = true
     }
+
+    // MARK: TEXT FIELD ERROR HANDLING
 
     private func showEmptyTextFieldError(for textField: UITextField) {
         textField.hideError()
@@ -215,7 +175,6 @@ class ScoreInputView: UIView {
         }
     }
 
-
     private func intIsInbetween(range: ClosedRange<Int>, for num: String) -> Bool {
         guard let intNum = Int(num),
               range.contains(intNum) else { return false }
@@ -227,5 +186,4 @@ class ScoreInputView: UIView {
               range.contains(doubleNum) else { return false }
         return true
     }
-
 }
