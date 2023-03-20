@@ -18,7 +18,7 @@ class MyScoresViewModel {
         ServiceCalls.readScores { [weak self] userScores in
             defer { dispatchGroup.leave() }
             guard let userScores = userScores else { return }
-            self?.userScoreArray = userScores
+            self?.userScoreArray = userScores.sorted(by: { $0.dateAdded > $1.dateAdded })
         }
 
         dispatchGroup.enter()
