@@ -42,6 +42,7 @@ class MyScoresViewController: UIViewController {
         super.viewWillAppear(animated)
         self.showActivityIndicator()
         viewModel.loadViewModel {
+            self.contentView.handicapValueLabel.text = self.viewModel.getUsersHandicap()
             self.contentView.scoresTableView.reloadData()
             self.hideActivityIndicator()
         }
@@ -93,6 +94,21 @@ extension MyScoresViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0,
+                                              width: tableView.frame.width-10,
+                                              height: tableView.frame.height))
+        headerView.addSubview(contentView.handicapLabel)
+        contentView.handicapLabel.constrain(to: headerView, constraints: [.top(10), .centerX(.zero)])
+
+        headerView.addSubview(contentView.handicapValueLabel)
+        contentView.handicapValueLabel.constrain(to: headerView,
+                                                 constraints: [.centerX(.zero), .bottom(-10)])
+        contentView.handicapValueLabel.constrain(to: contentView.handicapLabel,
+                                                 constraints: [.topToBottom(5)])
+        return headerView
+    }
 }
 
 extension MyScoresViewController: UITableViewDataSource {
@@ -111,7 +127,7 @@ extension MyScoresViewController: UITableViewDataSource {
                            courseName: courseInfo.name,
                            courseRating: courseInfo.rating,
                            courseSlope: courseInfo.slope,
-                           handicapValue: viewModel.userScoreArray[indexPath.row].handicap)
+                           userScoreValue: viewModel.userScoreArray[indexPath.row].score)
         return cell
     }
 }

@@ -12,12 +12,12 @@ class ScoresTableViewCell: UITableViewCell {
                        courseName: String,
                        courseRating: String,
                        courseSlope: String,
-                       handicapValue: String) {
+                       userScoreValue: String) {
         dateAddedLabel.text = dateAdded
         courseNameLabel.text = courseName
         courseRatingLabel.text = "Rating: " + courseRating
         courseSlopeLabel.text = "Slope: " + courseSlope
-        handicapValueLabel.text = handicapValue
+        userScoreValueLabel.text = userScoreValue
         setupUI()
     }
 
@@ -84,22 +84,22 @@ class ScoresTableViewCell: UITableViewCell {
 
     private lazy var handicapContainer: UIView = {
         let container = UIView()
-        container.addSubview(handicapLabel)
-        handicapLabel.constrain(to: container, constraints: [.top(0), .leading(0), .trailing(0)])
-        container.addSubview(handicapValueLabel)
-        handicapValueLabel.constrain(to: container, constraints: [.centerX(), .bottom(0)])
-        handicapValueLabel.constrain(to: handicapLabel, constraints: [.topToBottom(5)])
+        container.addSubview(userScoreLabel)
+        userScoreLabel.constrain(to: container, constraints: [.top(0), .leading(0), .trailing(0)])
+        container.addSubview(userScoreValueLabel)
+        userScoreValueLabel.constrain(to: container, constraints: [.centerX(), .bottom(0)])
+        userScoreValueLabel.constrain(to: userScoreLabel, constraints: [.topToBottom(5)])
         return container
     }()
 
-    private lazy var handicapLabel: UILabel = {
+    private lazy var userScoreLabel: UILabel = {
         let label = UILabel()
-        label.text = "Handicap"
+        label.text = "Score"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
 
-    private lazy var handicapValueLabel: UILabel = {
+    private lazy var userScoreValueLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(18)
         return label
