@@ -18,7 +18,8 @@ class ScoreInputViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
+        hideKeyboardWhenTappedAround()
+        setupNavbar()
         setupUI()
         setupConstraintsForContentView()
         setupTextFieldDelegates()
@@ -28,18 +29,22 @@ class ScoreInputViewController: UIViewController {
     // MARK: SETUP FUNCTIONS
 
     private func setupUI() {
-        self.edgesForExtendedLayout = []
-        self.view.backgroundColor = .white
-        self.view.addSubview(contentView)
+        edgesForExtendedLayout = []
+        view.backgroundColor = .white
+        view.addSubview(contentView)
     }
 
     private func setupConstraintsForContentView() {
         NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
+    }
+
+    private func setupNavbar() {
+        navigationItem.title = "Add Score"
     }
 
     private func setupTextFieldDelegates() {
@@ -106,7 +111,7 @@ extension ScoreInputViewController: UITextFieldDelegate {
         case contentView.courseRatingTextField:
             // Need to define case that only allows one ".".
             // Maybe some formatting as well.
-            let allowedChars =  setAllowedChars(as: "1234567890.", inputString: string)
+            let allowedChars = setAllowedChars(as: "1234567890.", inputString: string)
             let limitStringLength = limitTextFieldLength(maxLength: 4,
                                                          textField: textField,
                                                          range: range,
