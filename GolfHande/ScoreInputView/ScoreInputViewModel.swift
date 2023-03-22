@@ -26,7 +26,7 @@ class ScoreInputViewModel {
     
     func getCurrentDateAsString() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy"
+        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
         return dateFormatter.string(from: Date())
     }
 }
