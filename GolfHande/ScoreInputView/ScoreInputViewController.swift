@@ -67,10 +67,15 @@ class ScoreInputViewController: UIViewController {
             NSLog("A text field with empty string got passed")
             return
         }
-        let userScoreData = UserScoreData(dateAdded: viewModel.getCurrentDateAsString(),
+        let scoreID = UUID().uuidString
+        let courseID = UUID().uuidString
+        let userScoreData = UserScoreData(id: scoreID,
+                                          courseID: courseID,
+                                          dateAdded: viewModel.getCurrentDateAsString(),
                                           score: userScore,
                                           handicap: scoreHandicap)
-        let courseData = GolfCourseData(name: courseName,
+        let courseData = GolfCourseData(id: courseID,
+                                        name: courseName,
                                         rating: courseRating,
                                         slope: courseSlope)
         ServiceCalls.addScore(userScoreData: userScoreData, courseData: courseData)

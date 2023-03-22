@@ -1,10 +1,14 @@
 struct GolfCourseData {
-    var id: String = ""
+    var id: String
     var name: String
     var rating: String
     var slope: String
 
-    init(name: String, rating: String, slope: String) {
+    init(id: String,
+         name: String,
+         rating: String,
+         slope: String) {
+        self.id = id
         self.name = name
         self.rating = rating
         self.slope = slope
