@@ -46,13 +46,20 @@ class MyScoresViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadViewModel()
+    }
+
+    private func loadViewModel() {
         self.showActivityIndicator()
         viewModel.loadViewModel { status in
-
-            if self.viewModel.userScoreArray.isEmpty {
-                self.editButton.isEnabled = false
-            } else {
-                self.editButton.isEnabled = true
+            DispatchQueue.main.async {
+                if self.viewModel.userScoreArray.isEmpty {
+                    self.editButton.title = "Edit"
+                    self.editButton.isEnabled = false
+                    self.contentView.scoresTableView.isEditing = false
+                } else {
+                    self.editButton.isEnabled = true
+                }
             }
             self.contentView.handicapValueLabel.text = self.viewModel.getUsersHandicap()
             self.contentView.scoresTableView.reloadData()
@@ -158,17 +165,7 @@ extension MyScoresViewController: UITableViewDelegate {
                     NSLog("Failed to delete score.")
                     return
                 }
-                self.showActivityIndicator()
-                self.viewModel.loadViewModel { status in
-                    if status == .error {
-                        NSLog("Error deleting \(self.viewModel.userScoreArray[indexPath.row])")
-                        return
-                    }
-                    self.contentView.handicapValueLabel.text = self.viewModel.getUsersHandicap()
-                    self.contentView.scoresTableView.reloadData()
-                    self.hideActivityIndicator()
-                    return
-                }
+                self.loadViewModel()
             }
         }
     }
