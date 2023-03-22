@@ -9,9 +9,9 @@ class ServiceCalls {
 
         scoresRef.observeSingleEvent(of: .value) { scoresSnapshotData in
             guard let scoreDict = scoresSnapshotData.value as? [String: Any] else { return }
-            for (_, value) in scoreDict {
+            for (key, value) in scoreDict {
                 guard let currentScoreDict = value as? [String: String],
-                      let userScoreData = UserScoreData(scoreDataDict: currentScoreDict)
+                      let userScoreData = UserScoreData(scoreID: key, scoreDataDict: currentScoreDict)
                 else {
                     completion(nil)
                     return
@@ -51,7 +51,8 @@ class ServiceCalls {
         coursesRef.observeSingleEvent(of: .value) { snapshotData in
             guard let coursesDict = snapshotData.value as? [String: Any],
                   let specificCourseDict = coursesDict[courseID] as? [String: String],
-                  let specificCourse = GolfCourseData(courseID: courseID, courseDataDict: specificCourseDict)
+                  let specificCourse = GolfCourseData(courseID: courseID,
+                                                      courseDataDict: specificCourseDict)
             else {
                 completion(nil)
                 return
@@ -66,8 +67,8 @@ class ServiceCalls {
      - parameter courseData: [GolfCourseDataModel] The golf course data the user played at.
      */
     static func addScore(userScoreData: UserScoreData, courseData: GolfCourseData) {
-        let courseRef = ref.child("courses").childByAutoId()
-        let scoresRef = ref.child("scores").childByAutoId()
+        let courseRef = ref.child("courses").child(courseData.id)
+        let scoresRef = ref.child("scores").child(userScoreData.id)
 
         let courseRefValues: [String: String] = [
             "name": courseData.name,
@@ -76,7 +77,7 @@ class ServiceCalls {
         ]
 
         let scoreRefValues: [String: String] = [
-            "courseID": courseRef.key ?? "",
+            "courseID": courseData.id,
             "dateAdded": userScoreData.dateAdded,
             "score": userScoreData.score,
             "handicap": userScoreData.handicap
@@ -84,5 +85,14 @@ class ServiceCalls {
 
         courseRef.setValue(courseRefValues)
         scoresRef.setValue(scoreRefValues)
+    }
+
+    static func deleteScore(for scoreID: String,
+                            completion: @escaping ( Bool) -> Void) {
+        let scoreIDRef = ref.child("scores").child(scoreID)
+        scoreIDRef.observeSingleEvent(of: .value) { snapshot in
+            snapshot.ref.removeValue()
+            completion(true)
+        }
     }
 }
