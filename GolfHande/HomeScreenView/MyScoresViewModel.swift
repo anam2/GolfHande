@@ -56,18 +56,18 @@ class MyScoresViewModel {
         case let count where count <= 3:
             print("Less than 3 rounds")
             let lowestNumbers = getLowestNumbers(forHowMany: 1, forArray: usersHandicap)
-            let handicap = lowestNumbers[0] - 2.0
-            return String(handicap)
+            let handicap = (lowestNumbers[0] - 2.0)
+            return String(round(handicap * 10) / 10)
         case let count where count <= 4:
             print("Less than 4 rounds")
             let lowestNumbers = getLowestNumbers(forHowMany: 1, forArray: usersHandicap)
             let handicap = lowestNumbers[0] - 1.0
-            return String(handicap)
+            return String(round(handicap * 10) / 10)
         case let count where count <= 5:
             print("less than 5 rounds")
             let lowestNumbers = getLowestNumbers(forHowMany: 1, forArray: usersHandicap)
             let handicap = lowestNumbers[0]
-            return String(handicap)
+            return String(round(handicap * 10) / 10)
         case let count where count <= 6:
             print("Less than 6 rounds")
             let lowestNumbers = getLowestNumbers(forHowMany: 2, forArray: usersHandicap)

@@ -9,13 +9,6 @@ class MyScoresViewController: UIViewController {
 
     private var activityView = UIActivityIndicatorView(style: .large)
 
-    private lazy var MyScoresPlusButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
-                                            target: self,
-                                            action: #selector(myScoresPlusButtonClicked(_:)))
-        return barButtonItem
-    }()
-
     // MARK: INITIALIZER
 
     public init() {
@@ -50,10 +43,6 @@ class MyScoresViewController: UIViewController {
 
     // MARK: SETUP UI
 
-    private func setupNavigationBar() {
-        navigationItem.rightBarButtonItem = MyScoresPlusButton
-    }
-
     private func setupUI() {
         self.edgesForExtendedLayout = []
         self.view.backgroundColor = .none
@@ -68,11 +57,33 @@ class MyScoresViewController: UIViewController {
         contentView.scoresTableView.dataSource = self
     }
 
-    // MARK: PLUS BUTTON FUNCTION
+    // MARK: NAV BAR SETUP
 
-    @objc private func myScoresPlusButtonClicked(_ selector: UIBarButtonItem) {
+    private func setupNavigationBar() {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add,
+                                        target: self,
+                                        action: #selector(addButtonClicked(_:)))
+        let editButton = UIBarButtonItem(title: "Edit",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(editButtonClicked(_:)))
+        navigationItem.rightBarButtonItems = [editButton, addButton]
+    }
+
+    @objc private func addButtonClicked(_ selector: UIBarButtonItem) {
         NSLog("Print Button Clicked:\n")
         navigationController?.pushViewController(ScoreInputViewController(), animated: true)
+    }
+
+    @objc private func editButtonClicked(_ selector: UIBarButtonItem) {
+        NSLog("Edit button clicked")
+        contentView.scoresTableView.isEditing = !contentView.scoresTableView.isEditing
+
+        if self.contentView.scoresTableView.isEditing {
+            selector.title = "Done"
+        } else {
+            selector.title = "Edit"
+        }
     }
 
     // MARK: SPINNING INDICATOR
@@ -108,6 +119,35 @@ extension MyScoresViewController: UITableViewDelegate {
         contentView.handicapValueLabel.constrain(to: contentView.handicapLabel,
                                                  constraints: [.topToBottom(5)])
         return headerView
+    }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        // Specify the editing style for each row
+        return .delete
+    }
+
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        // Perform the corresponding action for each row when editing is enabled
+        if editingStyle == .delete {
+            NSLog("Delete action?")
+            print(viewModel.userScoreArray[indexPath.row])
+            let scoreID = viewModel.userScoreArray[indexPath.row].id
+            ServiceCalls.deleteScore(for: scoreID) { success in
+                if !success {
+                    NSLog("Failed to delete score.")
+                    return
+                }
+                self.showActivityIndicator()
+                self.viewModel.loadViewModel {
+                    self.contentView.handicapValueLabel.text = self.viewModel.getUsersHandicap()
+                    self.contentView.scoresTableView.reloadData()
+                    self.hideActivityIndicator()
+                    return
+                }
+            }
+        }
     }
 }
 
