@@ -1,5 +1,11 @@
 import FirebaseDatabase
 
+enum ViewModelStatus: String {
+    case success
+    case error
+    case empty
+}
+
 class MyScoresViewModel {
 
     private let database = Database.database().reference()
@@ -11,14 +17,17 @@ class MyScoresViewModel {
      Loads the viewModel. Need to be called when after being initialized.
      - Parameter completion: [() -> Void] The closure function that will execute after viewModel has been populated.
      */
-    func loadViewModel(completion: @escaping () -> Void) {
+    func loadViewModel(completion: @escaping (ViewModelStatus) -> Void) {
         let dispatchGroup = DispatchGroup()
 
         dispatchGroup.enter()
         ServiceCalls.readScores { [weak self] userScores in
             defer { dispatchGroup.leave() }
-            guard let userScores = userScores else { return }
+            guard let userScores = userScores else {
+                return
+            }
             self?.userScoreArray = userScores.sorted(by: { $0.dateAdded > $1.dateAdded })
+            return
         }
 
         dispatchGroup.enter()
@@ -26,10 +35,11 @@ class MyScoresViewModel {
             defer { dispatchGroup.leave() }
             guard let golfCourseArray = golfCourses else { return }
             self?.golfCourseArray = golfCourseArray
+            return
         }
         
         dispatchGroup.notify(queue: .main) {
-            completion()
+            completion(.success)
         }
     }
 
@@ -53,6 +63,8 @@ class MyScoresViewModel {
         let usersHandicap = usersHandicapString.compactMap(Double.init)
 
         switch usersHandicap.count {
+        case let count where count == 0:
+            return "No Scores"
         case let count where count <= 3:
             print("Less than 3 rounds")
             let lowestNumbers = getLowestNumbers(forHowMany: 1, forArray: usersHandicap)

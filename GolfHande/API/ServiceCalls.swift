@@ -8,7 +8,10 @@ class ServiceCalls {
         var scoresArray = [UserScoreData]()
 
         scoresRef.observeSingleEvent(of: .value) { scoresSnapshotData in
-            guard let scoreDict = scoresSnapshotData.value as? [String: Any] else { return }
+            guard let scoreDict = scoresSnapshotData.value as? [String: Any] else {
+                completion([])
+                return
+            }
             for (key, value) in scoreDict {
                 guard let currentScoreDict = value as? [String: String],
                       let userScoreData = UserScoreData(scoreID: key, scoreDataDict: currentScoreDict)

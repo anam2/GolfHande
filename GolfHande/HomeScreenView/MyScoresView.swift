@@ -34,6 +34,8 @@ class MyScoresView: UIView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(ScoresTableViewCell.self,
                            forCellReuseIdentifier: "scoresTableViewCell")
+        tableView.register(EmptyCell.self,
+                           forCellReuseIdentifier: "emptyCell")
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .black
         tableView.showsVerticalScrollIndicator = false

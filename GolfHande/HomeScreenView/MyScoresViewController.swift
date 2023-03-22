@@ -34,7 +34,7 @@ class MyScoresViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.showActivityIndicator()
-        viewModel.loadViewModel {
+        viewModel.loadViewModel { status in
             self.contentView.handicapValueLabel.text = self.viewModel.getUsersHandicap()
             self.contentView.scoresTableView.reloadData()
             self.hideActivityIndicator()
@@ -103,6 +103,9 @@ class MyScoresViewController: UIViewController {
 
 extension MyScoresViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if viewModel.userScoreArray.isEmpty {
+            return tableView.frame.height
+        }
         return UITableView.automaticDimension
     }
 
@@ -140,7 +143,11 @@ extension MyScoresViewController: UITableViewDelegate {
                     return
                 }
                 self.showActivityIndicator()
-                self.viewModel.loadViewModel {
+                self.viewModel.loadViewModel { status in
+                    if status == .error {
+                        NSLog("Error deleting \(self.viewModel.userScoreArray[indexPath.row])")
+                        return
+                    }
                     self.contentView.handicapValueLabel.text = self.viewModel.getUsersHandicap()
                     self.contentView.scoresTableView.reloadData()
                     self.hideActivityIndicator()
@@ -153,10 +160,18 @@ extension MyScoresViewController: UITableViewDelegate {
 
 extension MyScoresViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.userScoreArray.count
+        viewModel.userScoreArray.isEmpty ? 1 : viewModel.userScoreArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if viewModel.userScoreArray.isEmpty {
+            guard let emptyCell = tableView.dequeueReusableCell(withIdentifier: "emptyCell",
+                                                                for: indexPath) as? EmptyCell
+            else { return UITableViewCell() }
+
+            return emptyCell
+        }
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "scoresTableViewCell",
                                                        for: indexPath) as? ScoresTableViewCell,
               let courseID = viewModel.getCourseID(for: indexPath.row),
