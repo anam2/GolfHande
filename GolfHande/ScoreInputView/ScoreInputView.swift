@@ -98,7 +98,7 @@ class ScoreInputView: UIView {
 
         addSubview(submitButton)
         submitButton.constrain(to: courseRatingView, constraints: [.topToBottom(40)])
-        submitButton.constrain(to: self, constraints: [.centerX(.zero)])
+        submitButton.constrain(to: self, constraints: [.centerX(.zero), .bottom(-20)])
     }
 
     // MARK: @OBJC FUNCTIONS
