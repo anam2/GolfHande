@@ -9,6 +9,19 @@ class MyScoresViewController: UIViewController {
 
     private var activityView = UIActivityIndicatorView(style: .large)
 
+    private lazy var addButton: UIBarButtonItem = {
+        return UIBarButtonItem(barButtonSystemItem: .add,
+                               target: self,
+                               action: #selector(addButtonClicked(_:)))
+    }()
+
+    private lazy var editButton: UIBarButtonItem = {
+        return UIBarButtonItem(title: "Edit",
+                               style: .plain,
+                               target: self,
+                               action: #selector(editButtonClicked(_:)))
+    }()
+
     // MARK: INITIALIZER
 
     public init() {
@@ -24,17 +37,23 @@ class MyScoresViewController: UIViewController {
     /// Called ONCE when view is first loaded.
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigationBar()
-        self.setupUI()
-        self.setupDelegates()
+        setupNavigationBar()
+        setupUI()
+        setupDelegates()
         // Make service calls to populate view model.
-        self.showActivityIndicator()
+        showActivityIndicator()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.showActivityIndicator()
         viewModel.loadViewModel { status in
+
+            if self.viewModel.userScoreArray.isEmpty {
+                self.editButton.isEnabled = false
+            } else {
+                self.editButton.isEnabled = true
+            }
             self.contentView.handicapValueLabel.text = self.viewModel.getUsersHandicap()
             self.contentView.scoresTableView.reloadData()
             self.hideActivityIndicator()
@@ -47,9 +66,13 @@ class MyScoresViewController: UIViewController {
         self.edgesForExtendedLayout = []
         self.view.backgroundColor = .none
         self.view.addSubview(contentView)
-        contentView.constrain(to: self.view,
-                              constraints: [.top(.zero), .leading(.zero),
-                                            .trailing(.zero), .bottom(.zero)])
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            contentView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            contentView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            contentView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+        ])
     }
 
     private func setupDelegates() {
@@ -60,13 +83,6 @@ class MyScoresViewController: UIViewController {
     // MARK: NAV BAR SETUP
 
     private func setupNavigationBar() {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add,
-                                        target: self,
-                                        action: #selector(addButtonClicked(_:)))
-        let editButton = UIBarButtonItem(title: "Edit",
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(editButtonClicked(_:)))
         navigationItem.rightBarButtonItems = [editButton, addButton]
     }
 
@@ -125,7 +141,7 @@ extension MyScoresViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        // Specify the editing style for each row
+        if viewModel.userScoreArray.isEmpty { return .none }
         return .delete
     }
 

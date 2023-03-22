@@ -17,23 +17,13 @@ class TabBar: UITabBarController {
         ]
     }
 
-    @objc private func myScoresPlusButtonClicked(_ sender: UIBarButtonItem) {
-
-    }
-
     fileprivate func createNavController(for rootViewController: UIViewController,
                                          title: String,
-                                         image: UIImage,
-                                         rightBarButtonItem: UIBarButtonItem? = nil) -> UIViewController {
+                                         image: UIImage) -> UIViewController {
         let navController = UINavigationController(rootViewController: rootViewController)
         navController.tabBarItem.title = title
         navController.tabBarItem.image = image
         rootViewController.navigationItem.title = title
-
-        if let rightBarButtonItem = rightBarButtonItem {
-            navigationItem.rightBarButtonItem = rightBarButtonItem
-        }
-
         return navController
     }
 }
