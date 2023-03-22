@@ -93,15 +93,8 @@ class ScoreInputViewController: UIViewController {
 extension ScoreInputViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         switch textField {
-        // Can ONLY be numbers
-        case contentView.courseSlopeTextField:
-            let containsNumbersOnly = containsDecimalDigitOnly(inputString: string)
-            let limitStringLength = limitTextFieldLength(maxLength: 3,
-                                                         textField: textField,
-                                                         range: range,
-                                                         inputString: string)
-            return containsNumbersOnly && limitStringLength ? true : false
-        case contentView.userScoreTextField:
+        case contentView.courseSlopeTextField, contentView.userScoreTextField:
+            // Can only be numbers and have a max length of 3.
             let containsNumbersOnly = containsDecimalDigitOnly(inputString: string)
             let limitStringLength = limitTextFieldLength(maxLength: 3,
                                                          textField: textField,
@@ -109,8 +102,7 @@ extension ScoreInputViewController: UITextFieldDelegate {
                                                          inputString: string)
             return containsNumbersOnly && limitStringLength ? true : false
         case contentView.courseRatingTextField:
-            // Need to define case that only allows one ".".
-            // Maybe some formatting as well.
+            // Can only be numbers with decimal point and have a max length of 4.
             let allowedChars = setAllowedChars(as: "1234567890.", inputString: string)
             let limitStringLength = limitTextFieldLength(maxLength: 4,
                                                          textField: textField,
