@@ -13,7 +13,7 @@ class CourseListViewController: UIViewController {
 
     @objc private func addButtonClicked(_ sender: UIBarButtonItem) {
         NSLog("Add course button clicked")
-        navigationController?.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: <#T##Bool#>)
+        navigationController?.pushViewController(CourseInputViewController(), animated: true)
     }
 
     init() {
@@ -26,6 +26,7 @@ class CourseListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigation()
         loadViewModel()
         setupDelegates()
         setupUI()
@@ -40,7 +41,7 @@ class CourseListViewController: UIViewController {
     }
 
     private func setupNavigation() {
-        navigationItem.rightBarButtonItem = [addButton]
+        navigationItem.rightBarButtonItem = addButton
     }
 
     private func setupDelegates() {

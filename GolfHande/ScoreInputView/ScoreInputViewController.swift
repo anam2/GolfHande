@@ -71,7 +71,6 @@ class ScoreInputViewController: UIViewController {
             scrollView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
         scrollView.addSubview(contentView)
-        contentView.frame = scrollView.frame
     }
 
     private func setupConstraintsForContentView() {
