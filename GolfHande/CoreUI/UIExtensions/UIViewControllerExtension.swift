@@ -10,4 +10,22 @@ extension UIViewController {
     }
 
     @objc func dismissKeyboard() { view.endEditing(true) }
+
+    func showActivityIndicator() {
+        let activityView = UIActivityIndicatorView()
+        activityView.center = self.view.center
+        self.view.addSubview(activityView)
+        activityView.startAnimating()
+    }
+
+    func hideActivityIndicator(){
+        DispatchQueue.main.async {
+            for subview in self.view.subviews {
+                if let activityIndicator = subview as? UIActivityIndicatorView {
+                    activityIndicator.stopAnimating()
+                    activityIndicator.removeFromSuperview()
+                }
+            }
+        }
+    }
 }

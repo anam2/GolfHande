@@ -63,6 +63,18 @@ class ScoreInputView: UIView {
         return button
     }()
 
+    lazy var courseListButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitleColor(UIColor.gray, for: .disabled)
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        button.backgroundColor = .blue
+        button.setTitle("Course List", for: .normal)
+        button.layer.cornerRadius = 5
+        return button
+    }()
+
     // MARK: INITIAZLIER
 
     init() {
@@ -84,9 +96,13 @@ class ScoreInputView: UIView {
         addSubview(courseNameView)
         courseNameView.constrain(to: self, constraints: [.top(20), .leading(20), .trailing(-20)])
 
+        addSubview(courseListButton)
+        courseListButton.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
+        courseListButton.constrain(to: courseNameView, constraints: [.topToBottom(30)])
+
         addSubview(userScoreView)
         userScoreView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])
-        userScoreView.constrain(to: courseNameView, constraints: [.topToBottom(30)])
+        userScoreView.constrain(to: courseListButton, constraints: [.topToBottom(30)])
 
         addSubview(courseSlopeView)
         courseSlopeView.constrain(to: self, constraints: [.leading(20), .trailing(-20)])

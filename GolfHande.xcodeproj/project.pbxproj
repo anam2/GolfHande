@@ -32,6 +32,11 @@
 		7285F66329C1315700B95589 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7285F66529C1315700B95589 /* Localizable.strings */; };
 		72C942A729C42B7600A913AB /* UserScoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C942A629C42B7600A913AB /* UserScoreData.swift */; };
 		72E106C629CABE0E005D6FD5 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106C529CABE0E005D6FD5 /* EmptyCell.swift */; };
+		72E106D029CC08A3005D6FD5 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106CF29CC08A3005D6FD5 /* CourseListViewController.swift */; };
+		72E106D229CC0A70005D6FD5 /* CourseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106D129CC0A70005D6FD5 /* CourseListView.swift */; };
+		72E106D429CC0FF7005D6FD5 /* CourseListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106D329CC0FF7005D6FD5 /* CourseListCell.swift */; };
+		72E106D629CC36D4005D6FD5 /* CourseListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106D529CC36D4005D6FD5 /* CourseListViewModel.swift */; };
+		72E106D929CC4E78005D6FD5 /* CourseInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106D829CC4E78005D6FD5 /* CourseInputViewController.swift */; };
 		72E1A3C329C8F09500768AE0 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E1A3C229C8F09500768AE0 /* UIViewControllerExtension.swift */; };
 		83039927C3B6E1D65EA96C70 /* Pods_GolfHande.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51598585A46C60E0AFFB191F /* Pods_GolfHande.framework */; };
 		90CB5C617B9838C2FEFA8706 /* Pods_GolfHandeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B681BD9E17B10EBB3D517D19 /* Pods_GolfHandeTests.framework */; };
@@ -92,6 +97,11 @@
 		7285F66429C1315700B95589 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		72C942A629C42B7600A913AB /* UserScoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScoreData.swift; sourceTree = "<group>"; };
 		72E106C529CABE0E005D6FD5 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EmptyCell.swift; path = ../../../../../Code/EmptyCell.swift; sourceTree = "<group>"; };
+		72E106CF29CC08A3005D6FD5 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
+		72E106D129CC0A70005D6FD5 /* CourseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListView.swift; sourceTree = "<group>"; };
+		72E106D329CC0FF7005D6FD5 /* CourseListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListCell.swift; sourceTree = "<group>"; };
+		72E106D529CC36D4005D6FD5 /* CourseListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewModel.swift; sourceTree = "<group>"; };
+		72E106D829CC4E78005D6FD5 /* CourseInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInputViewController.swift; sourceTree = "<group>"; };
 		72E1A3C229C8F09500768AE0 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		B681BD9E17B10EBB3D517D19 /* Pods_GolfHandeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GolfHandeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E89EFB8DE1BB5C24E49C5A /* Pods-GolfHande-GolfHandeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GolfHande-GolfHandeUITests.debug.xcconfig"; path = "Target Support Files/Pods-GolfHande-GolfHandeUITests/Pods-GolfHande-GolfHandeUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -160,6 +170,8 @@
 		7205CECE29B05C9A00316B08 /* GolfHande */ = {
 			isa = PBXGroup;
 			children = (
+				72E106D729CC4E58005D6FD5 /* CourseInputView */,
+				72E106CE29CC0895005D6FD5 /* CourseListView */,
 				72E1A3C129C8F07B00768AE0 /* CoreUI */,
 				72671CA529BA50C700D8FBD3 /* API */,
 				72671CA029B6D57F00D8FBD3 /* DataModels */,
@@ -274,6 +286,25 @@
 				72671C9C29B6AB0600D8FBD3 /* TabBar.swift */,
 			);
 			path = CommonViews;
+			sourceTree = "<group>";
+		};
+		72E106CE29CC0895005D6FD5 /* CourseListView */ = {
+			isa = PBXGroup;
+			children = (
+				72E106CF29CC08A3005D6FD5 /* CourseListViewController.swift */,
+				72E106D129CC0A70005D6FD5 /* CourseListView.swift */,
+				72E106D329CC0FF7005D6FD5 /* CourseListCell.swift */,
+				72E106D529CC36D4005D6FD5 /* CourseListViewModel.swift */,
+			);
+			path = CourseListView;
+			sourceTree = "<group>";
+		};
+		72E106D729CC4E58005D6FD5 /* CourseInputView */ = {
+			isa = PBXGroup;
+			children = (
+				72E106D829CC4E78005D6FD5 /* CourseInputViewController.swift */,
+			);
+			path = CourseInputView;
 			sourceTree = "<group>";
 		};
 		72E1A3C129C8F07B00768AE0 /* CoreUI */ = {
@@ -539,6 +570,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7228312C29B192090099AC1A /* UIViewExtension.swift in Sources */,
+				72E106D029CC08A3005D6FD5 /* CourseListViewController.swift in Sources */,
 				7205CED429B05C9A00316B08 /* MyScoresViewController.swift in Sources */,
 				72E1A3C329C8F09500768AE0 /* UIViewControllerExtension.swift in Sources */,
 				72C942A729C42B7600A913AB /* UserScoreData.swift in Sources */,
@@ -546,6 +578,10 @@
 				7228312F29B193F50099AC1A /* ScoreInputViewController.swift in Sources */,
 				7205CED029B05C9A00316B08 /* AppDelegate.swift in Sources */,
 				72671C9F29B6C0C300D8FBD3 /* ServiceCalls.swift in Sources */,
+				72E106D229CC0A70005D6FD5 /* CourseListView.swift in Sources */,
+				72E106D929CC4E78005D6FD5 /* CourseInputViewController.swift in Sources */,
+				72E106D429CC0FF7005D6FD5 /* CourseListCell.swift in Sources */,
+				72E106D629CC36D4005D6FD5 /* CourseListViewModel.swift in Sources */,
 				7285F65E29BD2FA400B95589 /* GolfCourseData.swift in Sources */,
 				72671CA429BA495100D8FBD3 /* UITextFieldExtension.swift in Sources */,
 				72671C9529B2DAD700D8FBD3 /* ScoresTableViewCell.swift in Sources */,

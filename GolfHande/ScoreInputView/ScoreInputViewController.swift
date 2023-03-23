@@ -97,9 +97,14 @@ class ScoreInputViewController: UIViewController {
 
     private func setupButtonAction() {
         contentView.submitButton.addTarget(self, action: #selector(submitButtonAction), for: .touchUpInside)
+        contentView.courseListButton.addTarget(self, action: #selector(courseListButtonAction), for: .touchUpInside)
     }
 
     // MARK: ACTIONS
+
+    @objc private func courseListButtonAction() {
+        navigationController?.pushViewController(CourseListViewController(), animated: true)
+    }
 
     @objc private func submitButtonAction() {
         guard let courseName = contentView.courseNameTextField.text,

@@ -108,18 +108,6 @@ class MyScoresViewController: UIViewController {
             selector.title = "Edit"
         }
     }
-
-    // MARK: SPINNING INDICATOR
-
-    func showActivityIndicator() {
-        activityView.center = self.view.center
-        self.view.addSubview(activityView)
-        activityView.startAnimating()
-    }
-
-    func hideActivityIndicator(){
-        activityView.stopAnimating()
-    }
 }
 
 // MARK: TABLE VIEW DELEGATE
