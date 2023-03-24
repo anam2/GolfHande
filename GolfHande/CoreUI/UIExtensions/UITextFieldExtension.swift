@@ -26,12 +26,12 @@ extension UITextField {
         self.addSubview(errorLabel)
         errorLabel.constrain(to: self, constraints: [.leading(.zero),
                                                      .trailing(.zero),
-                                                     .topToBottom(5)])
-
+                                                     .topToBottom(1)])
         // Makes border of text field red.
         self.borderStyle = .roundedRect
         self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor.red.cgColor
+        layoutSubviews()
     }
 
     func hideError() {
