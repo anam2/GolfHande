@@ -3,6 +3,11 @@ import FirebaseDatabase
 class ServiceCalls {
     private static let ref = Database.database().reference()
 
+    private static let coursesParam = "courses"
+    private static let scoresParam = "scores"
+
+    // MARK: READ
+
     static func readScores(completion: @escaping (_: [UserScoreData]?) -> Void) {
         let scoresRef = ref.child("scores")
         var scoresArray = [UserScoreData]()
@@ -64,6 +69,8 @@ class ServiceCalls {
         }
     }
 
+    // MARK: ADD
+
     /**
      Adds user score AND golf course data to firebase.
      - parameter score: [String] The user's score they shot.
@@ -89,6 +96,19 @@ class ServiceCalls {
         courseRef.setValue(courseRefValues)
         scoresRef.setValue(scoreRefValues)
     }
+
+    static func addCourse(courseData: GolfCourseData, completion: @escaping (Bool) -> Void) {
+        let courseRef = ref.child(Self.coursesParam).child(courseData.id)
+        let courseRefValues: [String: String] = [
+            "name": courseData.name,
+            "rating": courseData.rating,
+            "slope": courseData.slope
+        ]
+        courseRef.setValue(courseRefValues)
+        completion(true)
+    }
+
+    // MARK: DELETE
 
     static func deleteScore(for scoreID: String,
                             completion: @escaping ( Bool) -> Void) {

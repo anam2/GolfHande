@@ -38,14 +38,16 @@ class CourseInputViewController: UIViewController {
         view.backgroundColor = .white
 
         view.addSubview(scrollView)
-        scrollView.constrain(to: view, constraints: [.top(.zero), .leading(.zero), .trailing(.zero), .bottom(.zero)])
+        scrollView.constrain(to: view,
+                             constraints: [.top(.zero), .leading(.zero), .trailing(.zero), .bottom(.zero)])
         NSLayoutConstraint.activate([
             scrollView.heightAnchor.constraint(equalTo: view.heightAnchor),
             scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
         ])
 
         scrollView.addSubview(contentView)
-        contentView.constrain(to: scrollView, constraints: [.top(.zero), .leading(.zero), .trailing(.zero), .bottom(.zero)])
+        contentView.constrain(to: scrollView,
+                              constraints: [.top(.zero), .leading(.zero), .trailing(.zero), .bottom(.zero)])
         contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
 
@@ -69,7 +71,18 @@ class CourseInputViewController: UIViewController {
     // MARK: SUBMIT BUTTON
 
     @objc private func submitButtonPressed(_ sender: UIButton) {
-        print("Submit Button Pressed")
+        guard let courseName = contentView.courseNameTextField.text,
+              let courseSlope = contentView.courseSlopeTextField.text,
+              let courseRating = contentView.courseRatingTextField.text
+        else { return }
+        let courseData = GolfCourseData(id: UUID().uuidString,
+                                        name: courseName.capitalized,
+                                        rating: courseRating,
+                                        slope: courseSlope)
+        ServiceCalls.addCourse(courseData: courseData) { success in
+            if !success { return }
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 
     // MARK: KEYBOARD FUNCTIONS
