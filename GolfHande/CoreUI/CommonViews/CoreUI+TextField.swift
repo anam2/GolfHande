@@ -8,9 +8,8 @@ extension CoreUI {
         return label
     }
 
-    static func createTextField(delegate: UITextFieldDelegate) -> UITextField {
+    static func createTextField() -> UITextField {
         let textField = UITextField()
-        textField.delegate = delegate
         textField.textAlignment = .left
         textField.borderStyle = .roundedRect
         textField.layer.borderColor = UIColor.lightGrayBackground.cgColor
