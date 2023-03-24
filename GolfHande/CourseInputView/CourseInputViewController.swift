@@ -2,7 +2,6 @@ import UIKit
 
 class CourseInputViewController: UIViewController {
     private let contentView: CourseInputView
-    private let viewModel: CourseInputViewModel
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -11,7 +10,6 @@ class CourseInputViewController: UIViewController {
     }()
 
     init() {
-        viewModel = CourseInputViewModel()
         contentView = CourseInputView()
         super.init(nibName: nil, bundle: nil)
     }

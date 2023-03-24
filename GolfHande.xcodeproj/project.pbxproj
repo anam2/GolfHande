@@ -38,7 +38,6 @@
 		72E106D629CC36D4005D6FD5 /* CourseListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106D529CC36D4005D6FD5 /* CourseListViewModel.swift */; };
 		72E106D929CC4E78005D6FD5 /* CourseInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106D829CC4E78005D6FD5 /* CourseInputViewController.swift */; };
 		72E106DB29CC4FAD005D6FD5 /* CourseInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106DA29CC4FAD005D6FD5 /* CourseInputView.swift */; };
-		72E106DD29CC4FBB005D6FD5 /* CourseInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106DC29CC4FBB005D6FD5 /* CourseInputViewModel.swift */; };
 		72E106DF29CC5AD6005D6FD5 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106DE29CC5AD6005D6FD5 /* UIColorExtension.swift */; };
 		72E106E129CD184B005D6FD5 /* CoreUI+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106E029CD184B005D6FD5 /* CoreUI+TextField.swift */; };
 		72E1A3C329C8F09500768AE0 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E1A3C229C8F09500768AE0 /* UIViewControllerExtension.swift */; };
@@ -107,7 +106,6 @@
 		72E106D529CC36D4005D6FD5 /* CourseListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewModel.swift; sourceTree = "<group>"; };
 		72E106D829CC4E78005D6FD5 /* CourseInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInputViewController.swift; sourceTree = "<group>"; };
 		72E106DA29CC4FAD005D6FD5 /* CourseInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInputView.swift; sourceTree = "<group>"; };
-		72E106DC29CC4FBB005D6FD5 /* CourseInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseInputViewModel.swift; sourceTree = "<group>"; };
 		72E106DE29CC5AD6005D6FD5 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		72E106E029CD184B005D6FD5 /* CoreUI+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreUI+TextField.swift"; sourceTree = "<group>"; };
 		72E1A3C229C8F09500768AE0 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -312,7 +310,6 @@
 			isa = PBXGroup;
 			children = (
 				72E106D829CC4E78005D6FD5 /* CourseInputViewController.swift */,
-				72E106DC29CC4FBB005D6FD5 /* CourseInputViewModel.swift */,
 				72E106DA29CC4FAD005D6FD5 /* CourseInputView.swift */,
 			);
 			path = CourseInputView;
@@ -581,7 +578,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72E106DD29CC4FBB005D6FD5 /* CourseInputViewModel.swift in Sources */,
 				72E106DB29CC4FAD005D6FD5 /* CourseInputView.swift in Sources */,
 				7228312C29B192090099AC1A /* UIViewExtension.swift in Sources */,
 				72E106D029CC08A3005D6FD5 /* CourseListViewController.swift in Sources */,
