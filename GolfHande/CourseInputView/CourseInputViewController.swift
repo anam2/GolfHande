@@ -22,6 +22,8 @@ class CourseInputViewController: UIViewController {
         super.viewDidLoad()
         setupKeyboard()
         setupNavbar()
+        setupDelegates()
+        setupAddTargets()
         setupUI()
     }
 
@@ -53,7 +55,7 @@ class CourseInputViewController: UIViewController {
         contentView.courseRatingTextField.delegate = self
     }
 
-    private func setupSelectors() {
+    private func setupAddTargets() {
         contentView.courseNameTextField.addTarget(self, action: #selector(textFieldsIsNotEmpty),
                                                   for: .editingChanged)
         contentView.courseSlopeTextField.addTarget(self, action: #selector(textFieldsIsNotEmpty),
