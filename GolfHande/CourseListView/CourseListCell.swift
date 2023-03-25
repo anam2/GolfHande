@@ -31,7 +31,7 @@ class CourseListCell: UITableViewCell {
 
     private lazy var courseNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 18.0)
+        label.font = label.font.withSize(18.0)
         return label
     }()
 

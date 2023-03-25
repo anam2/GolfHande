@@ -1,7 +1,10 @@
 import UIKit
 
 class CourseInputViewController: UIViewController {
+
     private let contentView: CourseInputView
+
+    // MARK: UI COMPONENTS
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
