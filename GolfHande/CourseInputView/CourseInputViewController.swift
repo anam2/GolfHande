@@ -3,6 +3,7 @@ import UIKit
 class CourseInputViewController: UIViewController {
 
     private let contentView: CourseInputView
+    private let courseList: [GolfCourseData]
 
     // MARK: UI COMPONENTS
 
@@ -12,7 +13,10 @@ class CourseInputViewController: UIViewController {
         return scrollView
     }()
 
-    init() {
+    // MARK: INITIALIZER
+
+    init(courseList: [GolfCourseData]) {
+        self.courseList = courseList
         contentView = CourseInputView()
         super.init(nibName: nil, bundle: nil)
     }

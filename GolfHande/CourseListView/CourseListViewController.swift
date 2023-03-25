@@ -74,7 +74,8 @@ class CourseListViewController: UIViewController {
 
     @objc private func addButtonClicked(_ sender: UIBarButtonItem) {
         NSLog("Add course button clicked")
-        navigationController?.pushViewController(CourseInputViewController(), animated: true)
+        navigationController?.pushViewController(CourseInputViewController(courseList: viewModel.courseList),
+                                                 animated: true)
     }
 }
 
