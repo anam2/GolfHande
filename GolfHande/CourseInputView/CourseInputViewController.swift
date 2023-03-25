@@ -63,11 +63,11 @@ class CourseInputViewController: UIViewController {
     }
 
     private func setupAddTargets() {
-        contentView.courseNameTextField.addTarget(self, action: #selector(textFieldsIsNotEmpty),
+        contentView.courseNameTextField.addTarget(self, action: #selector(validationForSubmitButton),
                                                   for: .editingChanged)
-        contentView.courseSlopeTextField.addTarget(self, action: #selector(textFieldsIsNotEmpty),
+        contentView.courseSlopeTextField.addTarget(self, action: #selector(validationForSubmitButton),
                                                   for: .editingChanged)
-        contentView.courseRatingTextField.addTarget(self, action: #selector(textFieldsIsNotEmpty),
+        contentView.courseRatingTextField.addTarget(self, action: #selector(validationForSubmitButton),
                                                   for: .editingChanged)
         contentView.submitButton.addTarget(self, action: #selector(submitButtonPressed),
                                            for: .touchUpInside)
@@ -121,7 +121,7 @@ class CourseInputViewController: UIViewController {
 // MARK: TEXT FIELD METHODS
 
 extension CourseInputViewController: UITextFieldDelegate {
-    @objc func textFieldsIsNotEmpty(_ sender: UITextField) {
+    @objc func validationForSubmitButton(_ sender: UITextField) {
         guard let courseName = contentView.courseNameTextField.text, !courseName.isEmpty,
               let courseSlope = contentView.courseSlopeTextField.text, !courseSlope.isEmpty,
               let courseRating = contentView.courseRatingTextField.text, !courseRating.isEmpty,
@@ -183,6 +183,20 @@ extension CourseInputViewController: UITextFieldDelegate {
         return true
     }
 
+    // Checks if text field is empty and will display error if it is empty.
+    private func checkEmptyTextField(textField: UITextField) {
+        textField.hideError()
+        if let textFieldText = textField.text, !textFieldText.isEmpty {
+            contentView.submitButton.isEnabled = true
+            return
+        }
+        contentView.submitButton.isEnabled = false
+        textField.showError(with: "Cannot be empty")
+        return
+    }
+
+    /// Delegate function that gets executed when there is a character change in the textField.
+    /// Makes sure that textField is character limited and character length limited.
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         switch textField {
         case contentView.courseSlopeTextField:
