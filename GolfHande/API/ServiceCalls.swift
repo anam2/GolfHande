@@ -76,24 +76,14 @@ class ServiceCalls {
      - parameter score: [String] The user's score they shot.
      - parameter courseData: [GolfCourseDataModel] The golf course data the user played at.
      */
-    static func addScore(userScoreData: UserScoreData, courseData: GolfCourseData) {
-        let courseRef = ref.child("courses").child(courseData.id)
+    static func addScore(userScoreData: UserScoreData) {
         let scoresRef = ref.child("scores").child(userScoreData.id)
-
-        let courseRefValues: [String: String] = [
-            "name": courseData.name,
-            "rating": courseData.rating,
-            "slope": courseData.slope
-        ]
-
         let scoreRefValues: [String: String] = [
-            "courseID": courseData.id,
+            "courseID": userScoreData.courseID,
             "dateAdded": userScoreData.dateAdded,
             "score": userScoreData.score,
             "handicap": userScoreData.handicap
         ]
-
-        courseRef.setValue(courseRefValues)
         scoresRef.setValue(scoreRefValues)
     }
 

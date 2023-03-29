@@ -13,9 +13,9 @@ class ScoreInputViewController: UIViewController {
 
     // MARK: INITIAZLIER
 
-    public init() {
-        viewModel = ScoreInputViewModel()
-        contentView = ScoreInputView()
+    public init(_ viewModel: ScoreInputViewModel) {
+        self.viewModel = viewModel
+        self.contentView = ScoreInputView()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -40,19 +40,6 @@ class ScoreInputViewController: UIViewController {
         setupConstraintsForContentView()
         setupTextFieldDelegates()
         setupButtonAction()
-    }
-
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-        let contentInsets = UIEdgeInsets.zero
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
     }
 
     // MARK: SETUP FUNCTIONS
@@ -88,48 +75,104 @@ class ScoreInputViewController: UIViewController {
     }
 
     private func setupTextFieldDelegates() {
-        contentView.courseNameTextField.delegate = self
-        contentView.courseRatingTextField.delegate = self
-        contentView.courseSlopeTextField.delegate = self
         contentView.userScoreTextField.delegate = self
     }
 
     private func setupButtonAction() {
         contentView.submitButton.addTarget(self, action: #selector(submitButtonAction), for: .touchUpInside)
         contentView.courseListButton.addTarget(self, action: #selector(courseListButtonAction), for: .touchUpInside)
+        contentView.userScoreTextField.addTarget(self, action: #selector(validationForSubmitButton),
+                                                 for: .editingChanged)
     }
 
-    // MARK: ACTIONS
+    // MARK: BUTTON FUNCTIONS
+
+    @objc private func testButtonClicked(_ sender: UIButton) {
+        print("Information button clicked")
+    }
+
+    @objc func validationForSubmitButton(_ sender: UITextField) {
+        guard let userScore = contentView.userScoreTextField.text,
+              !userScore.isEmpty,
+              viewModel.intIsInbetween(range: (40...140), for: userScore),
+              !viewModel.selectedCourseID.isEmpty
+        else {
+            showEmptyTextFieldError(for: sender)
+            showTextFieldError(for: sender)
+            contentView.submitButton.isEnabled = false
+            return
+        }
+        // Hide any error and enable submit button if all UITextField is populated.
+        sender.hideError()
+        contentView.submitButton.isEnabled = true
+    }
 
     @objc private func courseListButtonAction() {
         navigationController?.pushViewController(CourseListViewController(), animated: true)
     }
 
     @objc private func submitButtonAction() {
-        guard let courseName = contentView.courseNameTextField.text,
-              let userScore = contentView.userScoreTextField.text,
-              let courseSlope = contentView.courseSlopeTextField.text,
-              let courseRating = contentView.courseRatingTextField.text,
-              let scoreHandicap = viewModel.calculateHandicap(userScore: userScore,
-                                                              courseRating: courseRating,
-                                                              courseSlope: courseSlope)
+        guard let userScore = contentView.userScoreTextField.text,
+              !viewModel.selectedCourseID.isEmpty,
+              let scoreHandicap = viewModel.calculateHandicap(courseID: viewModel.selectedCourseID,
+                                                              userScore: userScore)
         else {
             NSLog("A text field with empty string got passed")
             return
         }
         let scoreID = UUID().uuidString
-        let courseID = UUID().uuidString
         let userScoreData = UserScoreData(id: scoreID,
-                                          courseID: courseID,
+                                          courseID: viewModel.selectedCourseID,
                                           dateAdded: viewModel.getCurrentDateAsString(),
                                           score: userScore,
                                           handicap: scoreHandicap)
-        let courseData = GolfCourseData(id: courseID,
-                                        name: courseName,
-                                        rating: courseRating,
-                                        slope: courseSlope)
-        ServiceCalls.addScore(userScoreData: userScoreData, courseData: courseData)
+        ServiceCalls.addScore(userScoreData: userScoreData)
         navigationController?.popToRootViewController(animated: true)
+    }
+
+    // MARK: TEXT FIELD ERROR HANDLING
+
+    private func showEmptyTextFieldError(for textField: UITextField) {
+        textField.hideError()
+        if let textFieldText = textField.text, textFieldText.isEmpty {
+            textField.showError(with: "Cannot be empty")
+        }
+    }
+
+    private func showTextFieldError(for textField: UITextField) {
+        // Hide any previous errors.
+        textField.hideError()
+        switch textField {
+        case contentView.userScoreTextField:
+            guard let userScoreString = contentView.userScoreTextField.text,
+                  let userScoreInt = Int(userScoreString) else {
+                textField.showError(with: "Input needs to be a number")
+                return
+            }
+            if !(40...140).contains(userScoreInt) {
+                textField.showError(with: "Score needs to be between 40 and 140")
+                return
+            }
+        default:
+            textField.hideError()
+            return
+        }
+    }
+
+    // MARK: KEYBOARD FUNCTIONS
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else { return }
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        let contentInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
     }
 }
 
@@ -138,7 +181,7 @@ class ScoreInputViewController: UIViewController {
 extension ScoreInputViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         switch textField {
-        case contentView.courseSlopeTextField, contentView.userScoreTextField:
+        case contentView.userScoreTextField:
             // Can only be numbers and have a max length of 3.
             let containsNumbersOnly = containsDecimalDigitOnly(inputString: string)
             let limitStringLength = limitTextFieldLength(maxLength: 3,
@@ -146,14 +189,6 @@ extension ScoreInputViewController: UITextFieldDelegate {
                                                          range: range,
                                                          inputString: string)
             return containsNumbersOnly && limitStringLength ? true : false
-        case contentView.courseRatingTextField:
-            // Can only be numbers with decimal point and have a max length of 4.
-            let allowedChars = setAllowedChars(as: "1234567890.", inputString: string)
-            let limitStringLength = limitTextFieldLength(maxLength: 4,
-                                                         textField: textField,
-                                                         range: range,
-                                                         inputString: string)
-            return allowedChars && limitStringLength ? true : false
         default:
             return true
         }

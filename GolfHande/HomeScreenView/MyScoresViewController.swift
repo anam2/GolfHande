@@ -95,7 +95,9 @@ class MyScoresViewController: UIViewController {
 
     @objc private func addButtonClicked(_ selector: UIBarButtonItem) {
         NSLog("Print Button Clicked:\n")
-        navigationController?.pushViewController(ScoreInputViewController(), animated: true)
+        let scoreInputViewModel = ScoreInputViewModel(golfCourses: viewModel.golfCourseArray)
+        navigationController?.pushViewController(ScoreInputViewController(scoreInputViewModel),
+                                                 animated: true)
     }
 
     @objc private func editButtonClicked(_ selector: UIBarButtonItem) {

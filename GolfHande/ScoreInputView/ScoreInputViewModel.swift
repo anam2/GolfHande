@@ -12,12 +12,30 @@ class ScoreInputViewModel {
     var courseName: String = ""
     var teePosition: String = ""
 
-    func calculateHandicap(userScore: String,
-                           courseRating: String,
-                           courseSlope: String) -> String? {
+    let golfCourses: [GolfCourseData]
+    var selectedCourseID = ""
+
+    var selectedCourse: GolfCourseData? {
+        return getCourseData(for: selectedCourseID)
+    }
+
+    // MARK: INIT
+
+    init(golfCourses: [GolfCourseData]) {
+        self.golfCourses = golfCourses
+    }
+
+    func getCourseData(for courseID: String) -> GolfCourseData? {
+        return golfCourses.first(where: { $0.id == courseID })
+    }
+
+    func calculateHandicap(courseID: String, userScore: String) -> String? {
         guard let userScore = Double(userScore),
-              let courseRating = Double(courseRating),
-              let courseSlope = Double(courseSlope) else { return nil }
+              let courseData = self.getCourseData(for: courseID),
+              let courseRating = Double(courseData.rating),
+              let courseSlope = Double(courseData.rating)
+        else { return nil }
+
         let numerator = (userScore - courseRating) * 113
         let denominator = courseSlope
         let handicap = round((numerator/denominator) * 10) / 10.0
@@ -28,5 +46,17 @@ class ScoreInputViewModel {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy HH:mm"
         return dateFormatter.string(from: Date())
+    }
+
+    func intIsInbetween(range: ClosedRange<Int>, for num: String) -> Bool {
+        guard let intNum = Int(num),
+              range.contains(intNum) else { return false }
+        return true
+    }
+
+    func doubleIsInbetween(range: ClosedRange<Double>, for num: String) -> Bool {
+        guard let doubleNum = Double(num),
+              range.contains(doubleNum) else { return false }
+        return true
     }
 }
