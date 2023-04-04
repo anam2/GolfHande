@@ -13,18 +13,23 @@ class CourseListView: UIView {
 
     // MARK: UI COMPONENTS
 
+    private lazy var footerView: UIView = {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        return footerView
+    }()
+
     lazy var courseListTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(CourseListCell.self, forCellReuseIdentifier: "courseListCell")
-        tableView.separatorStyle = .none
+        tableView.register(EmptyCell.self, forCellReuseIdentifier: "emptyCell")
+        tableView.separatorStyle = .singleLine
+        tableView.tableFooterView = footerView
         return tableView
     }()
 
     // MARK: SETUP UI
 
     private func setupUI() {
-        addSubview(courseListTableView)
-        courseListTableView.constrain(to: self,
-                                      constraints: [.top(20), .leading(20), .trailing(-20), .bottom(-20)])
+        addSubview(courseListTableView, constraints: [.top(20), .leading(20), .trailing(-20), .bottom(-20)])
     }
 }

@@ -83,10 +83,17 @@ class CourseListViewController: UIViewController {
 
 extension CourseListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.courseList.count
+        if viewModel.courseList.isEmpty { return 1 }
+        return viewModel.courseList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if viewModel.courseList.isEmpty {
+            guard let emptyCell: EmptyCell = tableView.dequeueReusableCell(withIdentifier: "emptyCell",
+                                                                           for: indexPath) as? EmptyCell
+            else { return UITableViewCell() }
+            return emptyCell
+        }
         guard let cell: CourseListCell = tableView.dequeueReusableCell(withIdentifier: "courseListCell",
                                                                        for: indexPath) as? CourseListCell
         else { return UITableViewCell()}
@@ -111,5 +118,24 @@ extension CourseListViewController: UITableViewDelegate {
         let selectedCourseID = viewModel.courseList[indexPath.row].id
         navigationController.popViewController(animated: true)
         scoreInputViewController.setSelectedCourseID(selectedCourseID: selectedCourseID)
+    }
+
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            showActivityIndicator()
+            ServiceCalls.deleteCourse(for: viewModel.courseList[indexPath.row].id) { success in
+                if !success {
+                    self.hideActivityIndicator()
+                    return
+                }
+                self.viewModel.loadViewModel { success in
+                    self.contentView.courseListTableView.reloadData()
+                    self.hideActivityIndicator()
+                    return
+                }
+            }
+        }
     }
 }

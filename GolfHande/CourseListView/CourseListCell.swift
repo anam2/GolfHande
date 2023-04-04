@@ -3,6 +3,7 @@ import UIKit
 class CourseListCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         setupUI()
     }
 
@@ -10,42 +11,10 @@ class CourseListCell: UITableViewCell {
 
     // MARK: UI COMPONENTS
 
-    private lazy var mainContainer: UIView = {
-        let container = UIView()
-        container.backgroundColor = .lightGrayBackground
-
-        container.addSubview(courseNameLabel)
-        courseNameLabel.constrain(to: container, constraints: [.top(10), .leading(10), .trailing(-10)])
-
-        container.addSubview(courseInfoView)
-        courseInfoView.constrain(to: container, constraints: [.centerX(.zero), .bottom(-10)])
-        courseInfoView.constrain(to: courseNameLabel, constraints: [.topToBottom(10)])
-
-        NSLayoutConstraint.activate([
-            courseInfoView.leadingAnchor.constraint(greaterThanOrEqualTo: container.leadingAnchor, constant: 10),
-            courseInfoView.trailingAnchor.constraint(lessThanOrEqualTo: container.trailingAnchor, constant: -10)
-        ])
-
-        return container
-    }()
-
     private lazy var courseNameLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(18.0)
+        label.font = label.font.withSize(16.0)
         return label
-    }()
-
-    private lazy var courseInfoView: UIView = {
-        let courseInfoView = UIView()
-        courseInfoView.addSubview(courseSlopeView)
-        courseInfoView.addSubview(courseRatingView)
-
-        courseSlopeView.constrain(to: courseInfoView,
-                                  constraints: [.top(.zero), .leading(.zero), .bottom(.zero)])
-        courseRatingView.constrain(to: courseInfoView,
-                                   constraints: [.top(.zero), .trailing(.zero), .bottom(.zero)])
-        courseRatingView.constrain(to: courseSlopeView, constraints: [.leadingToTrailing(20)])
-        return courseInfoView
     }()
 
     private lazy var courseSlopeView: UIView = {
@@ -68,6 +37,33 @@ class CourseListCell: UITableViewCell {
         return label
     }()
 
+    private lazy var courseInfoView: UIView = {
+        let courseInfoView = UIView()
+        courseInfoView.addSubview(courseSlopeView)
+        courseInfoView.addSubview(courseRatingView)
+
+        courseSlopeView.constrain(to: courseInfoView,
+                                  constraints: [.top(.zero), .leading(.zero), .bottom(.zero)])
+        courseRatingView.constrain(to: courseInfoView,
+                                   constraints: [.top(.zero), .trailing(.zero), .bottom(.zero)])
+        courseRatingView.constrain(to: courseSlopeView, constraints: [.leadingToTrailing(20)])
+        return courseInfoView
+    }()
+
+    private lazy var mainContainer: UIView = {
+        let container = UIView()
+        container.addSubview(courseNameLabel)
+        courseNameLabel.constrain(to: container, constraints: [.top(10), .leading(10), .trailing(-10)])
+        container.addSubview(courseInfoView)
+        courseInfoView.constrain(to: container, constraints: [.centerX(.zero), .bottom(-10)])
+        courseInfoView.constrain(to: courseNameLabel, constraints: [.topToBottom(10)])
+        NSLayoutConstraint.activate([
+            courseInfoView.leadingAnchor.constraint(greaterThanOrEqualTo: container.leadingAnchor, constant: 10),
+            courseInfoView.trailingAnchor.constraint(lessThanOrEqualTo: container.trailingAnchor, constant: -10)
+        ])
+        return container
+    }()
+
     // MARK: SETUP
 
     func setupCell(courseName: String, courseRating: String, courseSlope: String) {
@@ -78,21 +74,21 @@ class CourseListCell: UITableViewCell {
 
     private func setupUI() {
         contentView.addSubview(mainContainer)
-        mainContainer.constrain(to: contentView, constraints: [.top(10), .leading(0), .trailing(0), .bottom(-10)])
+        mainContainer.constrain(to: contentView, constraints: [.top(0), .leading(0), .trailing(0), .bottom(0)])
     }
 
     // MARK: CREATE UI VIEW FUNCS
 
     private func createDetailTitleLabel() -> UILabel {
         let detailLabel = UILabel()
-        detailLabel.font = detailLabel.font.withSize(14.0)
+        detailLabel.font = detailLabel.font.withSize(12.0)
         detailLabel.textAlignment = .center
         return detailLabel
     }
 
     private func createDetailSubtitleLabel() -> UILabel {
         let subtitleLabel = UILabel()
-        subtitleLabel.font = subtitleLabel.font.withSize(16.0)
+        subtitleLabel.font = subtitleLabel.font.withSize(12.0)
         subtitleLabel.textAlignment = .center
         return subtitleLabel
     }
@@ -101,6 +97,7 @@ class CourseListCell: UITableViewCell {
                                   valueLabelView: UILabel) -> UIView {
         let ratingView = UIView()
         ratingView.layer.borderWidth = 2.0
+        ratingView.layer.borderColor = UIColor.lightGrayBackground.cgColor
         ratingView.layer.cornerRadius = 10.0
         let ratingLabel = createDetailTitleLabel()
         ratingLabel.text = labelText

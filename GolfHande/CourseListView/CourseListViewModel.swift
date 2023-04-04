@@ -8,10 +8,11 @@ class CourseListViewModel {
     func loadViewModel(completion: @escaping (Bool) -> Void) {
         ServiceCalls.readAllCourses { golfCourseData in
             guard let golfCourseData = golfCourseData else {
+                self.courseList = []
                 completion(false)
                 return
             }
-            self.courseList = golfCourseData
+            self.courseList = golfCourseData.sorted { $0.name < $1.name }
             completion(true)
         }
     }

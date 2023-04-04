@@ -35,7 +35,11 @@ class ServiceCalls {
         var coursesArray = [GolfCourseData]()
 
         coursesRef.observeSingleEvent(of: .value) { coursesSnapshotData in
-            guard let courseDict = coursesSnapshotData.value as? [String: Any] else { return }
+            guard let courseDict = coursesSnapshotData.value as? [String: Any]
+            else {
+                completion(nil)
+                return
+            }
             for (key, value) in courseDict {
                 guard let courseDataDict = value as? [String: String],
                       let courseData = GolfCourseData(courseID: key, courseDataDict: courseDataDict)
@@ -101,9 +105,18 @@ class ServiceCalls {
     // MARK: DELETE
 
     static func deleteScore(for scoreID: String,
-                            completion: @escaping ( Bool) -> Void) {
+                            completion: @escaping (Bool) -> Void) {
         let scoreIDRef = ref.child("scores").child(scoreID)
         scoreIDRef.observeSingleEvent(of: .value) { snapshot in
+            snapshot.ref.removeValue()
+            completion(true)
+        }
+    }
+
+    static func deleteCourse(for courseID: String,
+                             completion: @escaping (Bool) -> Void) {
+        let courseIDRef = ref.child("courses").child(courseID)
+        courseIDRef.observeSingleEvent(of: .value) { snapshot in
             snapshot.ref.removeValue()
             completion(true)
         }
