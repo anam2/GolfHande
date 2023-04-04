@@ -19,13 +19,16 @@ class ScoreInputViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     @available (*, unavailable) required init?(coder aDecoder: NSCoder) { nil }
 
     // MARK: LIFE CYCLE FUNCTIONS
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -37,18 +40,25 @@ class ScoreInputViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         setupNavbar()
         setupUI()
-        setupConstraintsForContentView()
         setupTextFieldDelegates()
         setupButtonAction()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        validationForSubmitButton()
+    }
+
     // MARK: SETUP FUNCTIONS
+
+    private func setupNavbar() {
+        navigationItem.title = "Add Score"
+    }
 
     private func setupUI() {
         edgesForExtendedLayout = []
         view.backgroundColor = .white
         view.addSubview(scrollView)
-
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -58,9 +68,6 @@ class ScoreInputViewController: UIViewController {
             scrollView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
         scrollView.addSubview(contentView)
-    }
-
-    private func setupConstraintsForContentView() {
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -70,44 +77,58 @@ class ScoreInputViewController: UIViewController {
         ])
     }
 
-    private func setupNavbar() {
-        navigationItem.title = "Add Score"
-    }
-
     private func setupTextFieldDelegates() {
         contentView.userScoreTextField.delegate = self
     }
 
     private func setupButtonAction() {
+        let courseInfoViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(courseInfoViewAction))
+        let emptyCourseInfoViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(emptyCourseListAction))
+        contentView.courseInfoView.addGestureRecognizer(courseInfoViewTapGesture)
+        contentView.emptyCourseInfoView.addGestureRecognizer(emptyCourseInfoViewTapGesture)
         contentView.submitButton.addTarget(self, action: #selector(submitButtonAction), for: .touchUpInside)
-        contentView.courseListButton.addTarget(self, action: #selector(courseListButtonAction), for: .touchUpInside)
-        contentView.userScoreTextField.addTarget(self, action: #selector(validationForSubmitButton),
-                                                 for: .editingChanged)
+        contentView.userScoreTextField.addTarget(self, action: #selector(validationForScoreTextField), for: .editingChanged)
+    }
+
+    // MARK: INTERNAL FUNCTIONS
+
+    func setSelectedCourseID(selectedCourseID: String) {
+        viewModel.selectedCourseID = selectedCourseID
+        guard let selectedCourse = viewModel.selectedCourse else { return }
+        contentView.setCourseInfoText(courseName: selectedCourse.name,
+                                      courseRating: selectedCourse.rating,
+                                      courseSlope: selectedCourse.slope)
     }
 
     // MARK: BUTTON FUNCTIONS
 
-    @objc private func testButtonClicked(_ sender: UIButton) {
-        print("Information button clicked")
+    @objc func validationForSubmitButton() {
+        if let userScore = contentView.userScoreTextField.text,
+           !userScore.isEmpty,
+           viewModel.intIsInbetween(range: (40...140), for: userScore),
+           viewModel.selectedCourse != nil {
+            contentView.submitButton.isEnabled = true
+        } else {
+            contentView.submitButton.isEnabled = false
+        }
     }
 
-    @objc func validationForSubmitButton(_ sender: UITextField) {
+    @objc func validationForScoreTextField(_ sender: UITextField) {
         guard let userScore = contentView.userScoreTextField.text,
               !userScore.isEmpty,
-              viewModel.intIsInbetween(range: (40...140), for: userScore),
-              !viewModel.selectedCourseID.isEmpty
+              viewModel.intIsInbetween(range: (40...140), for: userScore)
         else {
             showEmptyTextFieldError(for: sender)
             showTextFieldError(for: sender)
-            contentView.submitButton.isEnabled = false
+            validationForSubmitButton()
             return
         }
         // Hide any error and enable submit button if all UITextField is populated.
         sender.hideError()
-        contentView.submitButton.isEnabled = true
+        validationForSubmitButton()
     }
 
-    @objc private func courseListButtonAction() {
+    @objc private func emptyCourseListAction() {
         navigationController?.pushViewController(CourseListViewController(), animated: true)
     }
 
@@ -128,6 +149,10 @@ class ScoreInputViewController: UIViewController {
                                           handicap: scoreHandicap)
         ServiceCalls.addScore(userScoreData: userScoreData)
         navigationController?.popToRootViewController(animated: true)
+    }
+
+    @objc private func courseInfoViewAction(_ sender: UITapGestureRecognizer) {
+        navigationController?.pushViewController(CourseListViewController(), animated: true)
     }
 
     // MARK: TEXT FIELD ERROR HANDLING

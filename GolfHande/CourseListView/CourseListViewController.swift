@@ -101,5 +101,15 @@ extension CourseListViewController: UITableViewDataSource {
 }
 
 extension CourseListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let navigationController = self.navigationController,
+              let scoreInputViewController
+                = navigationController.viewControllers[navigationController.viewControllers.count - 2]
+                as? ScoreInputViewController
+        else { return }
 
+        let selectedCourseID = viewModel.courseList[indexPath.row].id
+        navigationController.popViewController(animated: true)
+        scoreInputViewController.setSelectedCourseID(selectedCourseID: selectedCourseID)
+    }
 }

@@ -21,8 +21,9 @@ class ScoreInputViewModel {
 
     // MARK: INIT
 
-    init(golfCourses: [GolfCourseData]) {
+    init(golfCourses: [GolfCourseData], selectedCourseID: String = "") {
         self.golfCourses = golfCourses
+        self.selectedCourseID = selectedCourseID
     }
 
     func getCourseData(for courseID: String) -> GolfCourseData? {

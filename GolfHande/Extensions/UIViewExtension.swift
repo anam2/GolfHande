@@ -50,4 +50,17 @@ extension UIView {
         }
         NSLayoutConstraint.activate(layoutConstraints)
     }
+
+    // self.addSubview(userScoreView, constraints: [.leading(20), .trailing(-20)])
+
+    func addSubview(_ childView: UIView, constraints: [Constraint]) {
+        childView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(childView)
+        var layoutConstraints = [NSLayoutConstraint]()
+        for constraint in constraints {
+            layoutConstraints.append(constraint.constrainView(mainView: childView,
+                                                              parentView: self))
+        }
+        NSLayoutConstraint.activate(layoutConstraints)
+    }
 }
