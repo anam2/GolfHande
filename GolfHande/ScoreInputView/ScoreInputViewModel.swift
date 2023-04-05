@@ -1,29 +1,34 @@
-import FirebaseDatabase
+import Foundation
+
+struct ScoreInputDataModel {
+    let golfCourses: [GolfCourseData]
+    var selectedScoreData: SelectedScoreInput?
+}
+
+struct SelectedScoreInput {
+    var scoreID: String = ""
+    var courseID: String = ""
+    var userScore: String = ""
+}
 
 class ScoreInputViewModel {
-
-    private var ref = Database.database().reference()
-
+    var dataModel: ScoreInputDataModel
     private let userChildString: String = NSLocalizedString("childString", comment: "childString")
 
-    let golfCourses: [GolfCourseData]
-    var selectedCourseID = ""
-    var userScore = ""
-
     var selectedCourse: GolfCourseData? {
-        return getCourseData(for: selectedCourseID)
+        guard let selectedScoreInput = dataModel.selectedScoreData else { return nil }
+        return getCourseData(for: selectedScoreInput.courseID)
     }
 
     // MARK: INIT
 
-    init(golfCourses: [GolfCourseData], selectedCourseID: String = "", userScore: String = "") {
-        self.golfCourses = golfCourses
-        self.selectedCourseID = selectedCourseID
-        self.userScore = userScore
+    init(_ dataModel: ScoreInputDataModel) {
+        self.dataModel = dataModel
     }
 
     func getCourseData(for courseID: String) -> GolfCourseData? {
-        return golfCourses.first(where: { $0.id == courseID })
+        guard let selectedScoreInput = dataModel.selectedScoreData else { return nil }
+        return dataModel.golfCourses.first(where: { $0.id == selectedScoreInput.courseID })
     }
 
     func calculateHandicap(courseID: String, userScore: String) -> String? {

@@ -95,7 +95,8 @@ class MyScoresViewController: UIViewController {
 
     @objc private func addButtonClicked(_ selector: UIBarButtonItem) {
         NSLog("Print Button Clicked:\n")
-        let scoreInputViewModel = ScoreInputViewModel(golfCourses: viewModel.golfCourseArray)
+        let scoreInputDataModel = ScoreInputDataModel(golfCourses: viewModel.golfCourseArray)
+        let scoreInputViewModel = ScoreInputViewModel(scoreInputDataModel)
         navigationController?.pushViewController(ScoreInputViewController(scoreInputViewModel),
                                                  animated: true)
     }
@@ -191,9 +192,12 @@ extension MyScoresViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedScore = viewModel.userScoreArray[indexPath.row]
-        let scoreInputViewModel = ScoreInputViewModel(golfCourses: viewModel.golfCourseArray,
-                                                      selectedCourseID: selectedScore.courseID,
-                                                      userScore: selectedScore.score)
+        let selectedScoreData = SelectedScoreInput(scoreID: selectedScore.id,
+                                                   courseID: selectedScore.courseID,
+                                                   userScore: selectedScore.score)
+        let scoreInputDataModel = ScoreInputDataModel(golfCourses: viewModel.golfCourseArray,
+                                                      selectedScoreData: selectedScoreData)
+        let scoreInputViewModel = ScoreInputViewModel(scoreInputDataModel)
         let scoreInputViewController = ScoreInputViewController(scoreInputViewModel, viewControllerState: .edit)
         scoreInputViewController.setSelectedCourseID(selectedCourseID: selectedScore.courseID)
         navigationController?.pushViewController(scoreInputViewController, animated: true)

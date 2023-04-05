@@ -2,17 +2,24 @@ import FirebaseDatabase
 
 class ServiceCalls {
     static let shared = ServiceCalls()
-    private let ref = Database.database().reference()
+    private let ref: DatabaseReference
 
-    private static let coursesParam = "courses"
-    private static let scoresParam = "scores"
+    private let coursesRef: DatabaseReference
+    private let scoresRef: DatabaseReference
 
-    private init() { }
+//    private static let coursesParam = "courses"
+//    private static let scoresParam = "scores"
+
+    private init() {
+        ref = Database.database().reference()
+        coursesRef = ref.ref.child("courses")
+        scoresRef = ref.ref.child("scores")
+    }
 
     // MARK: READ
 
     func readScores(completion: @escaping (_: [UserScoreData]?) -> Void) {
-        let scoresRef = ref.child("scores")
+//        let scoresRef = ref.child("scores")
         var scoresArray = [UserScoreData]()
 
         scoresRef.observeSingleEvent(of: .value) { scoresSnapshotData in
@@ -34,7 +41,7 @@ class ServiceCalls {
     }
 
     func readAllCourses(completion: @escaping (_: [GolfCourseData]?) -> Void) {
-        let coursesRef = ref.child("courses")
+//        let coursesRef = ref.child("courses")
         var coursesArray = [GolfCourseData]()
 
         coursesRef.observeSingleEvent(of: .value) { coursesSnapshotData in
@@ -62,7 +69,7 @@ class ServiceCalls {
      - parameter completion: [ (GolfCourseData?) -> Void ] Going to pass in the golf course data.
      */
     func readSpecificCourse(courseID: String, completion: @escaping (GolfCourseData?) -> Void) {
-        let coursesRef = ref.child("courses")
+//        let coursesRef = ref.child("courses")
         coursesRef.observeSingleEvent(of: .value) { snapshotData in
             guard let coursesDict = snapshotData.value as? [String: Any],
                   let specificCourseDict = coursesDict[courseID] as? [String: String],
@@ -84,7 +91,7 @@ class ServiceCalls {
      - parameter courseData: [GolfCourseDataModel] The golf course data the user played at.
      */
     func addScore(userScoreData: UserScoreData) {
-        let scoresRef = ref.child("scores").child(userScoreData.id)
+        let scoresRef = scoresRef.child(userScoreData.id)
         let scoreRefValues: [String: String] = [
             "courseID": userScoreData.courseID,
             "dateAdded": userScoreData.dateAdded,
@@ -95,7 +102,7 @@ class ServiceCalls {
     }
 
     func addCourse(courseData: GolfCourseData, completion: @escaping (Bool) -> Void) {
-        let courseRef = ref.child(Self.coursesParam).child(courseData.id)
+        let courseRef = coursesRef.child(courseData.id)
         let courseRefValues: [String: String] = [
             "name": courseData.name,
             "rating": courseData.rating,
@@ -107,8 +114,13 @@ class ServiceCalls {
 
     // MARK: EDIT
 
-    func editScore() {
-
+    func editScore(selectedScoreData: SelectedScoreInput) {
+        scoresRef.child(selectedScoreData.scoreID).updateChildValues([
+            // TODO: Need to add a `Date Edited` field.
+            "courseID": selectedScoreData.courseID,
+            "handicap": "0",
+            "score": selectedScoreData.userScore
+        ])
     }
 
     // MARK: DELETE
