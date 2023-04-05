@@ -1,9 +1,15 @@
 import UIKit
 
+enum ScoreInputViewControllerState: String {
+    case edit
+    case add
+}
+
 class ScoreInputViewController: UIViewController {
 
     private let contentView: ScoreInputView
     private let viewModel: ScoreInputViewModel
+    private let viewControllerState: ScoreInputViewControllerState
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -13,9 +19,11 @@ class ScoreInputViewController: UIViewController {
 
     // MARK: INITIAZLIER
 
-    public init(_ viewModel: ScoreInputViewModel) {
+    public init(_ viewModel: ScoreInputViewModel,
+                viewControllerState: ScoreInputViewControllerState = .add) {
         self.viewModel = viewModel
         self.contentView = ScoreInputView()
+        self.viewControllerState = viewControllerState
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -40,8 +48,10 @@ class ScoreInputViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         setupNavbar()
         setupUI()
+        setupButtons(viewControllerState: viewControllerState)
         setupTextFieldDelegates()
         setupButtonAction()
+        setupInputViewForEdit()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +60,12 @@ class ScoreInputViewController: UIViewController {
     }
 
     // MARK: SETUP FUNCTIONS
+
+    private func setupInputViewForEdit() {
+        if viewControllerState == .edit, viewModel.selectedCourse != nil && viewModel.userScore != "" {
+            contentView.userScoreTextField.text = viewModel.userScore
+        }
+    }
 
     private func setupNavbar() {
         navigationItem.title = "Add Score"
@@ -77,6 +93,23 @@ class ScoreInputViewController: UIViewController {
         ])
     }
 
+    private func setupButtons(viewControllerState: ScoreInputViewControllerState) {
+        switch viewControllerState {
+        case .add:
+            contentView.scoreInputViewButton.setTitle("Submit", for: .normal)
+            contentView.scoreInputViewButton.addTarget(self,
+                                                       action: #selector(submitButtonAction),
+                                                       for: .touchUpInside)
+            return
+        case .edit:
+            contentView.scoreInputViewButton.setTitle("Edit", for: .normal)
+            contentView.scoreInputViewButton.addTarget(self,
+                                                       action: #selector(editButtonAction),
+                                                       for: .touchUpInside)
+            return
+        }
+    }
+
     private func setupTextFieldDelegates() {
         contentView.userScoreTextField.delegate = self
     }
@@ -86,7 +119,6 @@ class ScoreInputViewController: UIViewController {
         let emptyCourseInfoViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(emptyCourseListAction))
         contentView.courseInfoView.addGestureRecognizer(courseInfoViewTapGesture)
         contentView.emptyCourseInfoView.addGestureRecognizer(emptyCourseInfoViewTapGesture)
-        contentView.submitButton.addTarget(self, action: #selector(submitButtonAction), for: .touchUpInside)
         contentView.userScoreTextField.addTarget(self, action: #selector(validationForScoreTextField), for: .editingChanged)
     }
 
@@ -107,9 +139,9 @@ class ScoreInputViewController: UIViewController {
            !userScore.isEmpty,
            viewModel.intIsInbetween(range: (40...140), for: userScore),
            viewModel.selectedCourse != nil {
-            contentView.submitButton.isEnabled = true
+            contentView.scoreInputViewButton.isEnabled = true
         } else {
-            contentView.submitButton.isEnabled = false
+            contentView.scoreInputViewButton.isEnabled = false
         }
     }
 
@@ -149,6 +181,10 @@ class ScoreInputViewController: UIViewController {
                                           handicap: scoreHandicap)
         ServiceCalls.addScore(userScoreData: userScoreData)
         navigationController?.popToRootViewController(animated: true)
+    }
+
+    @objc private func editButtonAction() {
+        print("Edit button clicked")
     }
 
     @objc private func courseInfoViewAction(_ sender: UITapGestureRecognizer) {

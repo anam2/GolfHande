@@ -188,4 +188,14 @@ extension MyScoresViewController: UITableViewDataSource {
                            userScoreValue: viewModel.userScoreArray[indexPath.row].score)
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedScore = viewModel.userScoreArray[indexPath.row]
+        let scoreInputViewModel = ScoreInputViewModel(golfCourses: viewModel.golfCourseArray,
+                                                      selectedCourseID: selectedScore.courseID,
+                                                      userScore: selectedScore.score)
+        let scoreInputViewController = ScoreInputViewController(scoreInputViewModel, viewControllerState: .edit)
+        scoreInputViewController.setSelectedCourseID(selectedCourseID: selectedScore.courseID)
+        navigationController?.pushViewController(scoreInputViewController, animated: true)
+    }
 }

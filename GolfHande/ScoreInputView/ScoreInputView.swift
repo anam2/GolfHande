@@ -55,18 +55,17 @@ class ScoreInputView: UIView {
         return userScoreView
     }()
 
-    lazy var submitButton: UIButton = {
+    lazy var scoreInputViewButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        button.layer.cornerRadius = 5
+        button.backgroundColor = .blue
         button.setTitleColor(UIColor.white, for: .normal)
         button.setTitleColor(UIColor.gray, for: .disabled)
         button.isEnabled = false
-        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
-        button.backgroundColor = .blue
-        button.setTitle("Submit", for: .normal)
-        button.layer.cornerRadius = 5
         return button
     }()
+
 
     // MARK: INITIAZLIER
 
@@ -89,17 +88,28 @@ class ScoreInputView: UIView {
         addSubview(emptyCourseInfoView, constraints: [.top(20), .leading(20), .trailing(-20)])
         addSubview(userScoreView, constraints: [.leading(20), .trailing(-20)])
         userScoreView.constrain(to: emptyCourseInfoView, constraints: [.topToBottom(20)])
-        addSubview(submitButton, constraints: [.centerX(.zero), .bottom(-20)])
-        submitButton.constrain(to: userScoreView, constraints: [.topToBottom(30)])
+
+        addSubview(scoreInputViewButton, constraints: [.centerX(.zero), .bottom(-20)])
+        scoreInputViewButton.constrain(to: userScoreView, constraints: [.topToBottom(30)])
     }
 
     // MARK: FUNCTIONS
 
+    /**
+      Set's the course information text of the selected course by user.
+     - Parameters:
+        - courseName: [String] Course name text that is going to be displayed.
+        - courseRating: [String] Coursse rating text that is going to be displayed.
+        - courseSlope: [String] Course slope text that is going to be displayed.
+     */
     func setCourseInfoText(courseName: String, courseRating: String, courseSlope: String) {
         courseNameLabel.text = "\(courseName) (\(courseRating) | \(courseSlope))"
         replaceEmptyCourseInfoView()
     }
 
+    /**
+     Replaces the EmptyCourseInfoView and replaced it with CourseInfoView.
+     */
     private func replaceEmptyCourseInfoView() {
         addSubview(courseInfoView, constraints: [.top(20), .leading(20), .trailing(-20)])
         userScoreView.constrain(to: courseInfoView, constraints: [.topToBottom(20)])

@@ -6,14 +6,9 @@ class ScoreInputViewModel {
 
     private let userChildString: String = NSLocalizedString("childString", comment: "childString")
 
-    var courseRating: String = ""
-    var slopeRating: String = ""
-    var totalScore: String = ""
-    var courseName: String = ""
-    var teePosition: String = ""
-
     let golfCourses: [GolfCourseData]
     var selectedCourseID = ""
+    var userScore = ""
 
     var selectedCourse: GolfCourseData? {
         return getCourseData(for: selectedCourseID)
@@ -21,9 +16,10 @@ class ScoreInputViewModel {
 
     // MARK: INIT
 
-    init(golfCourses: [GolfCourseData], selectedCourseID: String = "") {
+    init(golfCourses: [GolfCourseData], selectedCourseID: String = "", userScore: String = "") {
         self.golfCourses = golfCourses
         self.selectedCourseID = selectedCourseID
+        self.userScore = userScore
     }
 
     func getCourseData(for courseID: String) -> GolfCourseData? {

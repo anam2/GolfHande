@@ -102,6 +102,12 @@ class ServiceCalls {
         completion(true)
     }
 
+    // MARK: EDIT
+
+    static func editScore() {
+        
+    }
+
     // MARK: DELETE
 
     static func deleteScore(for scoreID: String,

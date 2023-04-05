@@ -32,6 +32,7 @@ class MyScoresView: UIView {
 
     lazy var scoresTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.backgroundColor = .white
         tableView.register(ScoresTableViewCell.self,
                            forCellReuseIdentifier: "scoresTableViewCell")
         tableView.register(EmptyCell.self,
