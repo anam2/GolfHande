@@ -125,7 +125,7 @@ extension CourseListViewController: UITableViewDelegate {
                    forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             showActivityIndicator()
-            ServiceCalls.deleteCourse(for: viewModel.courseList[indexPath.row].id) { success in
+            ServiceCalls.shared.deleteCourse(for: viewModel.courseList[indexPath.row].id) { success in
                 if !success {
                     self.hideActivityIndicator()
                     return

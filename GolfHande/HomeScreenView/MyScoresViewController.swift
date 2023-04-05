@@ -150,7 +150,7 @@ extension MyScoresViewController: UITableViewDelegate {
             NSLog("Delete action?")
             print(viewModel.userScoreArray[indexPath.row])
             let scoreID = viewModel.userScoreArray[indexPath.row].id
-            ServiceCalls.deleteScore(for: scoreID) { success in
+            ServiceCalls.shared.deleteScore(for: scoreID) { success in
                 if !success {
                     NSLog("Failed to delete score.")
                     return

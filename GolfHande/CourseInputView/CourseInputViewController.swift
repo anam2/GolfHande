@@ -84,7 +84,7 @@ class CourseInputViewController: UIViewController {
                                         name: courseName.capitalized,
                                         rating: courseRating,
                                         slope: courseSlope)
-        ServiceCalls.addCourse(courseData: courseData) { success in
+        ServiceCalls.shared.addCourse(courseData: courseData) { success in
             if !success { return }
             self.navigationController?.popViewController(animated: true)
         }

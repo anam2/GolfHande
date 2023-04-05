@@ -1,14 +1,17 @@
 import FirebaseDatabase
 
 class ServiceCalls {
-    private static let ref = Database.database().reference()
+    static let shared = ServiceCalls()
+    private let ref = Database.database().reference()
 
     private static let coursesParam = "courses"
     private static let scoresParam = "scores"
 
+    private init() { }
+
     // MARK: READ
 
-    static func readScores(completion: @escaping (_: [UserScoreData]?) -> Void) {
+    func readScores(completion: @escaping (_: [UserScoreData]?) -> Void) {
         let scoresRef = ref.child("scores")
         var scoresArray = [UserScoreData]()
 
@@ -30,7 +33,7 @@ class ServiceCalls {
         }
     }
 
-    static func readAllCourses(completion: @escaping (_: [GolfCourseData]?) -> Void) {
+    func readAllCourses(completion: @escaping (_: [GolfCourseData]?) -> Void) {
         let coursesRef = ref.child("courses")
         var coursesArray = [GolfCourseData]()
 
@@ -58,7 +61,7 @@ class ServiceCalls {
      - parameter courseID: [String] The courseID of the course you want to find.
      - parameter completion: [ (GolfCourseData?) -> Void ] Going to pass in the golf course data.
      */
-    static func readSpecificCourse(courseID: String, completion: @escaping (GolfCourseData?) -> Void) {
+    func readSpecificCourse(courseID: String, completion: @escaping (GolfCourseData?) -> Void) {
         let coursesRef = ref.child("courses")
         coursesRef.observeSingleEvent(of: .value) { snapshotData in
             guard let coursesDict = snapshotData.value as? [String: Any],
@@ -80,7 +83,7 @@ class ServiceCalls {
      - parameter score: [String] The user's score they shot.
      - parameter courseData: [GolfCourseDataModel] The golf course data the user played at.
      */
-    static func addScore(userScoreData: UserScoreData) {
+    func addScore(userScoreData: UserScoreData) {
         let scoresRef = ref.child("scores").child(userScoreData.id)
         let scoreRefValues: [String: String] = [
             "courseID": userScoreData.courseID,
@@ -91,7 +94,7 @@ class ServiceCalls {
         scoresRef.setValue(scoreRefValues)
     }
 
-    static func addCourse(courseData: GolfCourseData, completion: @escaping (Bool) -> Void) {
+    func addCourse(courseData: GolfCourseData, completion: @escaping (Bool) -> Void) {
         let courseRef = ref.child(Self.coursesParam).child(courseData.id)
         let courseRefValues: [String: String] = [
             "name": courseData.name,
@@ -104,13 +107,13 @@ class ServiceCalls {
 
     // MARK: EDIT
 
-    static func editScore() {
-        
+    func editScore() {
+
     }
 
     // MARK: DELETE
 
-    static func deleteScore(for scoreID: String,
+    func deleteScore(for scoreID: String,
                             completion: @escaping (Bool) -> Void) {
         let scoreIDRef = ref.child("scores").child(scoreID)
         scoreIDRef.observeSingleEvent(of: .value) { snapshot in
@@ -119,7 +122,7 @@ class ServiceCalls {
         }
     }
 
-    static func deleteCourse(for courseID: String,
+    func deleteCourse(for courseID: String,
                              completion: @escaping (Bool) -> Void) {
         let courseIDRef = ref.child("courses").child(courseID)
         courseIDRef.observeSingleEvent(of: .value) { snapshot in

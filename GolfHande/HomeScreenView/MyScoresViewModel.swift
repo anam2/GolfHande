@@ -21,7 +21,7 @@ class MyScoresViewModel {
         let dispatchGroup = DispatchGroup()
 
         dispatchGroup.enter()
-        ServiceCalls.readScores { [weak self] userScores in
+        ServiceCalls.shared.readScores { [weak self] userScores in
             defer { dispatchGroup.leave() }
             guard let userScores = userScores else {
                 return
@@ -31,7 +31,7 @@ class MyScoresViewModel {
         }
 
         dispatchGroup.enter()
-        ServiceCalls.readAllCourses { [weak self] golfCourses in
+        ServiceCalls.shared.readAllCourses { [weak self] golfCourses in
             defer { dispatchGroup.leave() }
             guard let golfCourseArray = golfCourses else { return }
             self?.golfCourseArray = golfCourseArray

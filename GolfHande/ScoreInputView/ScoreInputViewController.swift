@@ -179,7 +179,7 @@ class ScoreInputViewController: UIViewController {
                                           dateAdded: viewModel.getCurrentDateAsString(),
                                           score: userScore,
                                           handicap: scoreHandicap)
-        ServiceCalls.addScore(userScoreData: userScoreData)
+        ServiceCalls.shared.addScore(userScoreData: userScoreData)
         navigationController?.popToRootViewController(animated: true)
     }
 

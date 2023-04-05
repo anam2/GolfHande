@@ -6,7 +6,7 @@ class CourseListViewModel {
     init() { }
 
     func loadViewModel(completion: @escaping (Bool) -> Void) {
-        ServiceCalls.readAllCourses { golfCourseData in
+        ServiceCalls.shared.readAllCourses { golfCourseData in
             guard let golfCourseData = golfCourseData else {
                 self.courseList = []
                 completion(false)
