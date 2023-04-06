@@ -65,9 +65,8 @@ class ScoreInputViewController: UIViewController {
     // MARK: SETUP FUNCTIONS
 
     private func setupInputViewForEdit() {
-        if let selectedScoreData = viewModel.dataModel.selectedScoreData,
-           viewControllerState == .edit {
-            contentView.userScoreTextField.text = selectedScoreData.userScore
+        if viewControllerState == .edit {
+            contentView.userScoreTextField.text = viewModel.dataModel.selectedScoreData.userScore
         }
     }
 
@@ -128,8 +127,12 @@ class ScoreInputViewController: UIViewController {
 
     // MARK: INTERNAL FUNCTIONS
 
+    func updateGolfCourses(golfCourses: [GolfCourseData]) {
+        viewModel.dataModel.golfCourses = golfCourses
+    }
+
     func setSelectedCourseID(selectedCourseID: String) {
-        viewModel.dataModel.selectedScoreData?.courseID = selectedCourseID
+        viewModel.dataModel.selectedScoreData.courseID = selectedCourseID
         guard let selectedCourseData = viewModel.selectedCourse else { return }
         contentView.setCourseInfoText(courseName: selectedCourseData.name,
                                       courseRating: selectedCourseData.rating,
@@ -170,8 +173,7 @@ class ScoreInputViewController: UIViewController {
 
     @objc private func submitButtonAction() {
         guard let userScore = contentView.userScoreTextField.text,
-              let selectedScoreData = viewModel.dataModel.selectedScoreData,
-              let scoreHandicap = viewModel.calculateHandicap(courseID: selectedScoreData.courseID,
+              let scoreHandicap = viewModel.calculateHandicap(courseID: viewModel.dataModel.selectedScoreData.courseID,
                                                               userScore: userScore)
         else {
             NSLog("A text field with empty string got passed")
@@ -179,7 +181,7 @@ class ScoreInputViewController: UIViewController {
         }
         let scoreID = UUID().uuidString
         let userScoreData = UserScoreData(id: scoreID,
-                                          courseID: selectedScoreData.courseID,
+                                          courseID: viewModel.dataModel.selectedScoreData.courseID,
                                           dateAdded: viewModel.getCurrentDateAsString(),
                                           score: userScore,
                                           handicap: scoreHandicap)
@@ -189,12 +191,11 @@ class ScoreInputViewController: UIViewController {
 
     @objc private func editButtonAction() {
         NSLog("Edit Button Clicked")
-        guard let selectedScoreData = viewModel.dataModel.selectedScoreData,
-              let userInputScore = contentView.userScoreTextField.text else { return }
-        let updatedHandicapValue = viewModel.calculateHandicap(courseID: selectedScoreData.courseID,
+        guard let userInputScore = contentView.userScoreTextField.text else { return }
+        let updatedHandicapValue = viewModel.calculateHandicap(courseID: viewModel.dataModel.selectedScoreData.courseID,
                                                                userScore: userInputScore)
-        let editedScoreData = SelectedScoreInput(scoreID: selectedScoreData.scoreID,
-                                                 courseID: selectedScoreData.courseID,
+        let editedScoreData = SelectedScoreInput(scoreID: viewModel.dataModel.selectedScoreData.scoreID,
+                                                 courseID: viewModel.dataModel.selectedScoreData.courseID,
                                                  userScore: userInputScore)
         ServiceCalls.shared.editScore(selectedScoreData: editedScoreData,
                                       updatedHandicapValue: updatedHandicapValue ?? "")

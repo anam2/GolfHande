@@ -117,6 +117,7 @@ extension CourseListViewController: UITableViewDelegate {
 
         let selectedCourseID = viewModel.courseList[indexPath.row].id
         navigationController.popViewController(animated: true)
+        scoreInputViewController.updateGolfCourses(golfCourses: viewModel.courseList)
         scoreInputViewController.setSelectedCourseID(selectedCourseID: selectedCourseID)
     }
 

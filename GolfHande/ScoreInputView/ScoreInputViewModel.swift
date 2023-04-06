@@ -1,8 +1,8 @@
 import Foundation
 
 struct ScoreInputDataModel {
-    let golfCourses: [GolfCourseData]
-    var selectedScoreData: SelectedScoreInput?
+    var golfCourses: [GolfCourseData]
+    var selectedScoreData: SelectedScoreInput
 }
 
 struct SelectedScoreInput {
@@ -16,8 +16,7 @@ class ScoreInputViewModel {
     private let userChildString: String = NSLocalizedString("childString", comment: "childString")
 
     var selectedCourse: GolfCourseData? {
-        guard let selectedScoreInput = dataModel.selectedScoreData else { return nil }
-        return getCourseData(for: selectedScoreInput.courseID)
+        return getCourseData(for: dataModel.selectedScoreData.courseID)
     }
 
     // MARK: INIT
@@ -27,8 +26,7 @@ class ScoreInputViewModel {
     }
 
     func getCourseData(for courseID: String) -> GolfCourseData? {
-        guard let selectedScoreInput = dataModel.selectedScoreData else { return nil }
-        return dataModel.golfCourses.first(where: { $0.id == selectedScoreInput.courseID })
+        return dataModel.golfCourses.first(where: { $0.id == dataModel.selectedScoreData.courseID })
     }
 
     func calculateHandicap(courseID: String, userScore: String) -> String? {
