@@ -114,11 +114,12 @@ class ServiceCalls {
 
     // MARK: EDIT
 
-    func editScore(selectedScoreData: SelectedScoreInput) {
+    func editScore(selectedScoreData: SelectedScoreInput,
+                   updatedHandicapValue: String) {
         scoresRef.child(selectedScoreData.scoreID).updateChildValues([
             // TODO: Need to add a `Date Edited` field.
             "courseID": selectedScoreData.courseID,
-            "handicap": "0",
+            "handicap": updatedHandicapValue,
             "score": selectedScoreData.userScore
         ])
     }

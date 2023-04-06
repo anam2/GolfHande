@@ -10,6 +10,7 @@ class ScoreInputViewController: UIViewController {
     private let contentView: ScoreInputView
     private let viewModel: ScoreInputViewModel
     private let viewControllerState: ScoreInputViewControllerState
+    private let navigationTitle: String
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
@@ -19,8 +20,10 @@ class ScoreInputViewController: UIViewController {
 
     // MARK: INITIAZLIER
 
-    public init(_ viewModel: ScoreInputViewModel,
+    public init(navigationTitle: String,
+                _ viewModel: ScoreInputViewModel,
                 viewControllerState: ScoreInputViewControllerState = .add) {
+        self.navigationTitle = navigationTitle
         self.viewModel = viewModel
         self.contentView = ScoreInputView()
         self.viewControllerState = viewControllerState
@@ -69,7 +72,7 @@ class ScoreInputViewController: UIViewController {
     }
 
     private func setupNavbar() {
-        navigationItem.title = "Add Score"
+        navigationItem.title = navigationTitle
     }
 
     private func setupUI() {
@@ -188,10 +191,13 @@ class ScoreInputViewController: UIViewController {
         NSLog("Edit Button Clicked")
         guard let selectedScoreData = viewModel.dataModel.selectedScoreData,
               let userInputScore = contentView.userScoreTextField.text else { return }
+        let updatedHandicapValue = viewModel.calculateHandicap(courseID: selectedScoreData.courseID,
+                                                               userScore: userInputScore)
         let editedScoreData = SelectedScoreInput(scoreID: selectedScoreData.scoreID,
                                                  courseID: selectedScoreData.courseID,
                                                  userScore: userInputScore)
-        ServiceCalls.shared.editScore(selectedScoreData: editedScoreData)
+        ServiceCalls.shared.editScore(selectedScoreData: editedScoreData,
+                                      updatedHandicapValue: updatedHandicapValue ?? "")
         navigationController?.popViewController(animated: true)
     }
 
