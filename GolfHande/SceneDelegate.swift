@@ -1,11 +1,5 @@
-//
-//  SceneDelegate.swift
-//  GolfHande
-//
-//  Created by Andy Nam on 3/1/23.
-//
-
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,8 +12,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: UIScreen.main.bounds)
-        let home = TabBar()
-        self.window?.rootViewController = home
+
+        let navigationController = UINavigationController(rootViewController: LoginViewController())
+        self.window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         window?.windowScene = windowScene
 
@@ -30,6 +25,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            self.window?.rootViewController = navViewController
 //            self.window?.makeKeyAndVisible()
 //        }
+    }
+
+    fileprivate func createNavController(for rootViewController: UIViewController,
+                                         title: String,
+                                         image: UIImage) -> UIViewController {
+        let navController = UINavigationController(rootViewController: rootViewController)
+        navController.tabBarItem.title = title
+        navController.tabBarItem.image = image
+        rootViewController.navigationItem.title = title
+        return navController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

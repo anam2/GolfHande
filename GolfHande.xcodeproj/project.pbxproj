@@ -16,13 +16,16 @@
 		7205CEDF29B05C9B00316B08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7205CEDD29B05C9B00316B08 /* LaunchScreen.storyboard */; };
 		7205CEEA29B05C9B00316B08 /* GolfHandeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7205CEE929B05C9B00316B08 /* GolfHandeTests.swift */; };
 		7205CEF529B05C9B00316B08 /* GolfHandeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7205CEF429B05C9B00316B08 /* GolfHandeUITests.swift */; };
-		7228312729B05E650099AC1A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7228312629B05E650099AC1A /* GoogleService-Info.plist */; };
 		7228312929B063CC0099AC1A /* MyScoresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7228312829B063CC0099AC1A /* MyScoresView.swift */; };
 		7228312C29B192090099AC1A /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7228312B29B192090099AC1A /* UIViewExtension.swift */; };
 		7228312F29B193F50099AC1A /* ScoreInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7228312E29B193F50099AC1A /* ScoreInputViewController.swift */; };
 		7228313129B1BF5B0099AC1A /* ScoreInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7228313029B1BF5B0099AC1A /* ScoreInputView.swift */; };
 		7228313429B1C2100099AC1A /* MyScoresViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7228313329B1C2100099AC1A /* MyScoresViewModel.swift */; };
 		7228313629B1C7FF0099AC1A /* ScoreInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7228313529B1C7FF0099AC1A /* ScoreInputViewModel.swift */; };
+		723E987B29DF363000D0D563 /* LoginHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E987A29DF363000D0D563 /* LoginHandler.swift */; };
+		723E988029DF48B500D0D563 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E987F29DF48B500D0D563 /* LoginView.swift */; };
+		723E988229DF9B7100D0D563 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 723E988129DF9B7100D0D563 /* GoogleService-Info.plist */; };
+		723E988629DFF54D00D0D563 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E988529DFF54D00D0D563 /* LoginViewController.swift */; };
 		72671C9529B2DAD700D8FBD3 /* ScoresTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671C9429B2DAD700D8FBD3 /* ScoresTableViewCell.swift */; };
 		72671C9929B668C200D8FBD3 /* CoreUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671C9829B668C200D8FBD3 /* CoreUI.swift */; };
 		72671C9D29B6AB0600D8FBD3 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671C9C29B6AB0600D8FBD3 /* TabBar.swift */; };
@@ -84,13 +87,16 @@
 		7205CEF029B05C9B00316B08 /* GolfHandeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GolfHandeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7205CEF429B05C9B00316B08 /* GolfHandeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GolfHandeUITests.swift; sourceTree = "<group>"; };
 		7205CEF629B05C9B00316B08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7228312629B05E650099AC1A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7228312829B063CC0099AC1A /* MyScoresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyScoresView.swift; sourceTree = "<group>"; };
 		7228312B29B192090099AC1A /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		7228312E29B193F50099AC1A /* ScoreInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreInputViewController.swift; sourceTree = "<group>"; };
 		7228313029B1BF5B0099AC1A /* ScoreInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreInputView.swift; sourceTree = "<group>"; };
 		7228313329B1C2100099AC1A /* MyScoresViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyScoresViewModel.swift; sourceTree = "<group>"; };
 		7228313529B1C7FF0099AC1A /* ScoreInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreInputViewModel.swift; sourceTree = "<group>"; };
+		723E987A29DF363000D0D563 /* LoginHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHandler.swift; sourceTree = "<group>"; };
+		723E987F29DF48B500D0D563 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		723E988129DF9B7100D0D563 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		723E988529DFF54D00D0D563 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		72671C9429B2DAD700D8FBD3 /* ScoresTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoresTableViewCell.swift; sourceTree = "<group>"; };
 		72671C9829B668C200D8FBD3 /* CoreUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreUI.swift; sourceTree = "<group>"; };
 		72671C9C29B6AB0600D8FBD3 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
@@ -176,16 +182,18 @@
 		7205CECE29B05C9A00316B08 /* GolfHande */ = {
 			isa = PBXGroup;
 			children = (
+				723E987C29DF480300D0D563 /* TestViews */,
+				723E987929DF362500D0D563 /* Login */,
 				72E106D729CC4E58005D6FD5 /* CourseInputView */,
 				72E106CE29CC0895005D6FD5 /* CourseListView */,
 				72E1A3C129C8F07B00768AE0 /* CoreUI */,
 				72671CA529BA50C700D8FBD3 /* API */,
 				72671CA029B6D57F00D8FBD3 /* DataModels */,
-				7228313229B1BF690099AC1A /* HomeScreenView */,
+				7228313229B1BF690099AC1A /* MyScoresView */,
 				7228312D29B193D50099AC1A /* ScoreInputView */,
 				7228312A29B191E90099AC1A /* Extensions */,
-				7228312629B05E650099AC1A /* GoogleService-Info.plist */,
 				7205CECF29B05C9A00316B08 /* AppDelegate.swift */,
+				723E988129DF9B7100D0D563 /* GoogleService-Info.plist */,
 				7205CED129B05C9A00316B08 /* SceneDelegate.swift */,
 				7205CEDB29B05C9B00316B08 /* Assets.xcassets */,
 				7205CEDD29B05C9B00316B08 /* LaunchScreen.storyboard */,
@@ -232,7 +240,7 @@
 			path = ScoreInputView;
 			sourceTree = "<group>";
 		};
-		7228313229B1BF690099AC1A /* HomeScreenView */ = {
+		7228313229B1BF690099AC1A /* MyScoresView */ = {
 			isa = PBXGroup;
 			children = (
 				7205CED329B05C9A00316B08 /* MyScoresViewController.swift */,
@@ -240,7 +248,24 @@
 				7228313329B1C2100099AC1A /* MyScoresViewModel.swift */,
 				72671C9429B2DAD700D8FBD3 /* ScoresTableViewCell.swift */,
 			);
-			path = HomeScreenView;
+			path = MyScoresView;
+			sourceTree = "<group>";
+		};
+		723E987929DF362500D0D563 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				723E987F29DF48B500D0D563 /* LoginView.swift */,
+				723E987A29DF363000D0D563 /* LoginHandler.swift */,
+				723E988529DFF54D00D0D563 /* LoginViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		723E987C29DF480300D0D563 /* TestViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TestViews;
 			sourceTree = "<group>";
 		};
 		72671CA029B6D57F00D8FBD3 /* DataModels */ = {
@@ -448,8 +473,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7205CEDF29B05C9B00316B08 /* LaunchScreen.storyboard in Resources */,
+				723E988229DF9B7100D0D563 /* GoogleService-Info.plist in Resources */,
 				7285F66329C1315700B95589 /* Localizable.strings in Resources */,
-				7228312729B05E650099AC1A /* GoogleService-Info.plist in Resources */,
 				7205CEDC29B05C9B00316B08 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -593,8 +618,10 @@
 				72E106D929CC4E78005D6FD5 /* CourseInputViewController.swift in Sources */,
 				72E106D429CC0FF7005D6FD5 /* CourseListCell.swift in Sources */,
 				72E106DF29CC5AD6005D6FD5 /* UIColorExtension.swift in Sources */,
+				723E987B29DF363000D0D563 /* LoginHandler.swift in Sources */,
 				72E106D629CC36D4005D6FD5 /* CourseListViewModel.swift in Sources */,
 				7285F65E29BD2FA400B95589 /* GolfCourseData.swift in Sources */,
+				723E988629DFF54D00D0D563 /* LoginViewController.swift in Sources */,
 				72671CA429BA495100D8FBD3 /* UITextFieldExtension.swift in Sources */,
 				72671C9529B2DAD700D8FBD3 /* ScoresTableViewCell.swift in Sources */,
 				7205CEDA29B05C9A00316B08 /* GolfHande.xcdatamodeld in Sources */,
@@ -604,6 +631,7 @@
 				7228313129B1BF5B0099AC1A /* ScoreInputView.swift in Sources */,
 				7228313629B1C7FF0099AC1A /* ScoreInputViewModel.swift in Sources */,
 				72671C9D29B6AB0600D8FBD3 /* TabBar.swift in Sources */,
+				723E988029DF48B500D0D563 /* LoginView.swift in Sources */,
 				7205CED229B05C9A00316B08 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -30,5 +30,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:745799381274:ios:11cfc483cf4e02aba83ca3</string>
+	<key>DATABASE_URL</key>
+	<string>https://golfhande-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

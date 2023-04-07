@@ -90,6 +90,8 @@ class MyScoresViewController: UIViewController {
     // MARK: NAV BAR SETUP
 
     private func setupNavigationBar() {
+        navigationController?.view.backgroundColor = .systemBackground
+        navigationItem.title = "Scores View"
         navigationItem.rightBarButtonItems = [editButton, addButton]
     }
 
