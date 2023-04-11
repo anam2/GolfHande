@@ -10,13 +10,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(frame: UIScreen.main.bounds)
-
-        let navigationController = UINavigationController(rootViewController: LoginViewController())
-        self.window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
-        window?.windowScene = windowScene
+//        guard let windowScene = (scene as? UIWindowScene) else { return }
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//
+//        let navigationController = UINavigationController(rootViewController: LoginViewController())
+//        self.window?.rootViewController = navigationController
+//        window?.makeKeyAndVisible()
+//        window?.windowScene = windowScene
 
 //        let viewController = MainViewController()
 //        let navViewController = UINavigationController(rootViewController: viewController)
@@ -25,6 +25,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            self.window?.rootViewController = navViewController
 //            self.window?.makeKeyAndVisible()
 //        }
+
+        // Create an instance of your app's root view
+        let contentView = LoginView()
+        
+        // Create a new UIWindow using the windowScene constructor
+        if let windowScene = scene as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+            
+            // Set the root view controller of the window to a UIHostingController with your app's root view
+            window.rootViewController = UIHostingController(rootView: contentView)
+            
+            // Set the window's background color
+//            window.backgroundColor = .white
+            
+            // Set the window to be the main window and visible
+            self.window = window
+            window.makeKeyAndVisible()
+        }
     }
 
     fileprivate func createNavController(for rootViewController: UIViewController,

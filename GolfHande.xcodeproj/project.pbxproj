@@ -28,6 +28,9 @@
 		723E988629DFF54D00D0D563 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E988529DFF54D00D0D563 /* LoginViewController.swift */; };
 		723E988A29DFFD9900D0D563 /* LoginViewUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E988929DFFD9900D0D563 /* LoginViewUITest.swift */; };
 		723E988C29DFFEF100D0D563 /* ScoreInputUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E988B29DFFEF100D0D563 /* ScoreInputUnitTest.swift */; };
+		723E988E29E0034400D0D563 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E988D29E0034400D0D563 /* UserData.swift */; };
+		723E989129E4D20800D0D563 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E989029E4D20800D0D563 /* SignUpView.swift */; };
+		723E989329E4D21100D0D563 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E989229E4D21100D0D563 /* SignUpViewModel.swift */; };
 		72671C9529B2DAD700D8FBD3 /* ScoresTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671C9429B2DAD700D8FBD3 /* ScoresTableViewCell.swift */; };
 		72671C9929B668C200D8FBD3 /* CoreUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671C9829B668C200D8FBD3 /* CoreUI.swift */; };
 		72671C9D29B6AB0600D8FBD3 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671C9C29B6AB0600D8FBD3 /* TabBar.swift */; };
@@ -101,6 +104,9 @@
 		723E988529DFF54D00D0D563 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		723E988929DFFD9900D0D563 /* LoginViewUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewUITest.swift; sourceTree = "<group>"; };
 		723E988B29DFFEF100D0D563 /* ScoreInputUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreInputUnitTest.swift; sourceTree = "<group>"; };
+		723E988D29E0034400D0D563 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		723E989029E4D20800D0D563 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		723E989229E4D21100D0D563 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		72671C9429B2DAD700D8FBD3 /* ScoresTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoresTableViewCell.swift; sourceTree = "<group>"; };
 		72671C9829B668C200D8FBD3 /* CoreUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreUI.swift; sourceTree = "<group>"; };
 		72671C9C29B6AB0600D8FBD3 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
@@ -273,6 +279,7 @@
 		723E988729DFFBB800D0D563 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				723E988F29E4D1FC00D0D563 /* SignUpView */,
 				723E987929DF362500D0D563 /* LoginView */,
 				72E106D729CC4E58005D6FD5 /* CourseInputView */,
 				72E106CE29CC0895005D6FD5 /* CourseListView */,
@@ -290,12 +297,21 @@
 			path = PersonalTest;
 			sourceTree = "<group>";
 		};
+		723E988F29E4D1FC00D0D563 /* SignUpView */ = {
+			isa = PBXGroup;
+			children = (
+				723E989029E4D20800D0D563 /* SignUpView.swift */,
+				723E989229E4D21100D0D563 /* SignUpViewModel.swift */,
+			);
+			path = SignUpView;
+			sourceTree = "<group>";
+		};
 		72671CA029B6D57F00D8FBD3 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
-				72C942A829C6C9EF00A913AB /* Requests */,
 				7285F65D29BD2FA400B95589 /* GolfCourseData.swift */,
 				72C942A629C42B7600A913AB /* UserScoreData.swift */,
+				723E988D29E0034400D0D563 /* UserData.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -306,13 +322,6 @@
 				72671C9E29B6C0C300D8FBD3 /* ServiceCalls.swift */,
 			);
 			path = API;
-			sourceTree = "<group>";
-		};
-		72C942A829C6C9EF00A913AB /* Requests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Requests;
 			sourceTree = "<group>";
 		};
 		72E106C429CABE02005D6FD5 /* CommonCells */ = {
@@ -644,6 +653,7 @@
 				72E106D629CC36D4005D6FD5 /* CourseListViewModel.swift in Sources */,
 				7285F65E29BD2FA400B95589 /* GolfCourseData.swift in Sources */,
 				723E988629DFF54D00D0D563 /* LoginViewController.swift in Sources */,
+				723E988E29E0034400D0D563 /* UserData.swift in Sources */,
 				72671CA429BA495100D8FBD3 /* UITextFieldExtension.swift in Sources */,
 				72671C9529B2DAD700D8FBD3 /* ScoresTableViewCell.swift in Sources */,
 				7205CEDA29B05C9A00316B08 /* GolfHande.xcdatamodeld in Sources */,
@@ -652,8 +662,10 @@
 				7228312929B063CC0099AC1A /* MyScoresView.swift in Sources */,
 				7228313129B1BF5B0099AC1A /* ScoreInputView.swift in Sources */,
 				7228313629B1C7FF0099AC1A /* ScoreInputViewModel.swift in Sources */,
+				723E989129E4D20800D0D563 /* SignUpView.swift in Sources */,
 				72671C9D29B6AB0600D8FBD3 /* TabBar.swift in Sources */,
 				723E988029DF48B500D0D563 /* LoginView.swift in Sources */,
+				723E989329E4D21100D0D563 /* SignUpViewModel.swift in Sources */,
 				7205CED229B05C9A00316B08 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

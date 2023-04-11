@@ -1,5 +1,21 @@
-import FirebaseDatabase
 import UIKit
+import SwiftUI
+import FirebaseDatabase
+import FirebaseAuth
+
+/*
+ Pushing a UIViewController into SwiftUI NavigationView stack
+ */
+//struct MyScoresSwiftUIView: UIViewControllerRepresentable {
+//    typealias UIViewControllerType = MyScoresViewController
+//    func makeUIViewController(context: Context) -> MyScoresViewController {
+//            return MyScoresViewController()
+//        }
+//
+//        func updateUIViewController(_ uiViewController: MyScoresViewController, context: Context) {
+//            // Updates the state of the specified view controller with new information from SwiftUI.
+//        }
+//}
 
 class MyScoresViewController: UIViewController {
     private var viewModel: MyScoresViewModel
@@ -8,6 +24,13 @@ class MyScoresViewController: UIViewController {
     // MARK: UI COMPONENTS
 
     private var activityView = UIActivityIndicatorView(style: .large)
+
+    private lazy var logOutButton: UIBarButtonItem = {
+        return UIBarButtonItem(title: "Log Out",
+                               style: .plain,
+                               target: self,
+                               action: #selector(logOutButtonClicked(_:)))
+    }()
 
     private lazy var addButton: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .add,
@@ -92,7 +115,22 @@ class MyScoresViewController: UIViewController {
     private func setupNavigationBar() {
         navigationController?.view.backgroundColor = .systemBackground
         navigationItem.title = "Scores View"
+        navigationItem.leftBarButtonItem = logOutButton
         navigationItem.rightBarButtonItems = [editButton, addButton]
+    }
+
+    @objc private func logOutButtonClicked(_ selector: UIBarButtonItem) {
+        NSLog("Log out button clicked")
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            if let window = UIApplication.shared.windows.first {
+                window.rootViewController = UIHostingController(rootView: LoginView())
+                window.makeKeyAndVisible()
+            }
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
     }
 
     @objc private func addButtonClicked(_ selector: UIBarButtonItem) {
