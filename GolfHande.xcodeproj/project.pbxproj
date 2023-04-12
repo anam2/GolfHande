@@ -25,7 +25,6 @@
 		723E987B29DF363000D0D563 /* LoginHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E987A29DF363000D0D563 /* LoginHandler.swift */; };
 		723E988029DF48B500D0D563 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E987F29DF48B500D0D563 /* LoginView.swift */; };
 		723E988229DF9B7100D0D563 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 723E988129DF9B7100D0D563 /* GoogleService-Info.plist */; };
-		723E988629DFF54D00D0D563 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E988529DFF54D00D0D563 /* LoginViewController.swift */; };
 		723E988A29DFFD9900D0D563 /* LoginViewUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E988929DFFD9900D0D563 /* LoginViewUITest.swift */; };
 		723E988C29DFFEF100D0D563 /* ScoreInputUnitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E988B29DFFEF100D0D563 /* ScoreInputUnitTest.swift */; };
 		723E988E29E0034400D0D563 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723E988D29E0034400D0D563 /* UserData.swift */; };
@@ -37,7 +36,8 @@
 		72671C9F29B6C0C300D8FBD3 /* ServiceCalls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671C9E29B6C0C300D8FBD3 /* ServiceCalls.swift */; };
 		72671CA429BA495100D8FBD3 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72671CA329BA495100D8FBD3 /* UITextFieldExtension.swift */; };
 		7285F65E29BD2FA400B95589 /* GolfCourseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7285F65D29BD2FA400B95589 /* GolfCourseData.swift */; };
-		7285F66329C1315700B95589 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7285F66529C1315700B95589 /* Localizable.strings */; };
+		72B0108729E7331D0073CAFF /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B0108629E7331D0073CAFF /* LoginViewModel.swift */; };
+		72B0108929E75CDD0073CAFF /* CoreSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B0108829E75CDD0073CAFF /* CoreSwiftUI.swift */; };
 		72C942A729C42B7600A913AB /* UserScoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C942A629C42B7600A913AB /* UserScoreData.swift */; };
 		72E106C629CABE0E005D6FD5 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106C529CABE0E005D6FD5 /* EmptyCell.swift */; };
 		72E106D029CC08A3005D6FD5 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E106CF29CC08A3005D6FD5 /* CourseListViewController.swift */; };
@@ -101,7 +101,6 @@
 		723E987A29DF363000D0D563 /* LoginHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHandler.swift; sourceTree = "<group>"; };
 		723E987F29DF48B500D0D563 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		723E988129DF9B7100D0D563 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		723E988529DFF54D00D0D563 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		723E988929DFFD9900D0D563 /* LoginViewUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewUITest.swift; sourceTree = "<group>"; };
 		723E988B29DFFEF100D0D563 /* ScoreInputUnitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreInputUnitTest.swift; sourceTree = "<group>"; };
 		723E988D29E0034400D0D563 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -113,7 +112,8 @@
 		72671C9E29B6C0C300D8FBD3 /* ServiceCalls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCalls.swift; sourceTree = "<group>"; };
 		72671CA329BA495100D8FBD3 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		7285F65D29BD2FA400B95589 /* GolfCourseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GolfCourseData.swift; sourceTree = "<group>"; };
-		7285F66429C1315700B95589 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		72B0108629E7331D0073CAFF /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		72B0108829E75CDD0073CAFF /* CoreSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreSwiftUI.swift; sourceTree = "<group>"; };
 		72C942A629C42B7600A913AB /* UserScoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScoreData.swift; sourceTree = "<group>"; };
 		72E106C529CABE0E005D6FD5 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EmptyCell.swift; path = ../../../../../Code/EmptyCell.swift; sourceTree = "<group>"; };
 		72E106CF29CC08A3005D6FD5 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
@@ -243,7 +243,6 @@
 				7228312E29B193F50099AC1A /* ScoreInputViewController.swift */,
 				7228313029B1BF5B0099AC1A /* ScoreInputView.swift */,
 				7228313529B1C7FF0099AC1A /* ScoreInputViewModel.swift */,
-				7285F66529C1315700B95589 /* Localizable.strings */,
 			);
 			path = ScoreInputView;
 			sourceTree = "<group>";
@@ -264,7 +263,7 @@
 			children = (
 				723E987F29DF48B500D0D563 /* LoginView.swift */,
 				723E987A29DF363000D0D563 /* LoginHandler.swift */,
-				723E988529DFF54D00D0D563 /* LoginViewController.swift */,
+				72B0108629E7331D0073CAFF /* LoginViewModel.swift */,
 			);
 			path = LoginView;
 			sourceTree = "<group>";
@@ -279,8 +278,8 @@
 		723E988729DFFBB800D0D563 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				723E988F29E4D1FC00D0D563 /* SignUpView */,
 				723E987929DF362500D0D563 /* LoginView */,
+				723E988F29E4D1FC00D0D563 /* SignUpView */,
 				72E106D729CC4E58005D6FD5 /* CourseInputView */,
 				72E106CE29CC0895005D6FD5 /* CourseListView */,
 				7228313229B1BF690099AC1A /* MyScoresView */,
@@ -347,6 +346,7 @@
 				72671C9829B668C200D8FBD3 /* CoreUI.swift */,
 				72671C9C29B6AB0600D8FBD3 /* TabBar.swift */,
 				72E106E029CD184B005D6FD5 /* CoreUI+TextField.swift */,
+				72B0108829E75CDD0073CAFF /* CoreSwiftUI.swift */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -505,7 +505,6 @@
 			files = (
 				7205CEDF29B05C9B00316B08 /* LaunchScreen.storyboard in Resources */,
 				723E988229DF9B7100D0D563 /* GoogleService-Info.plist in Resources */,
-				7285F66329C1315700B95589 /* Localizable.strings in Resources */,
 				7205CEDC29B05C9B00316B08 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -636,7 +635,9 @@
 			files = (
 				72E106DB29CC4FAD005D6FD5 /* CourseInputView.swift in Sources */,
 				7228312C29B192090099AC1A /* UIViewExtension.swift in Sources */,
+				72B0108729E7331D0073CAFF /* LoginViewModel.swift in Sources */,
 				72E106D029CC08A3005D6FD5 /* CourseListViewController.swift in Sources */,
+				72B0108929E75CDD0073CAFF /* CoreSwiftUI.swift in Sources */,
 				7205CED429B05C9A00316B08 /* MyScoresViewController.swift in Sources */,
 				72E1A3C329C8F09500768AE0 /* UIViewControllerExtension.swift in Sources */,
 				72C942A729C42B7600A913AB /* UserScoreData.swift in Sources */,
@@ -652,7 +653,6 @@
 				723E987B29DF363000D0D563 /* LoginHandler.swift in Sources */,
 				72E106D629CC36D4005D6FD5 /* CourseListViewModel.swift in Sources */,
 				7285F65E29BD2FA400B95589 /* GolfCourseData.swift in Sources */,
-				723E988629DFF54D00D0D563 /* LoginViewController.swift in Sources */,
 				723E988E29E0034400D0D563 /* UserData.swift in Sources */,
 				72671CA429BA495100D8FBD3 /* UITextFieldExtension.swift in Sources */,
 				72671C9529B2DAD700D8FBD3 /* ScoresTableViewCell.swift in Sources */,
@@ -712,14 +712,6 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		7285F66529C1315700B95589 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7285F66429C1315700B95589 /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -727,6 +719,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -789,6 +782,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
