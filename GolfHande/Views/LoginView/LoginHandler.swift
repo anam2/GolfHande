@@ -3,16 +3,13 @@ import FirebaseAuth
 class LoginHandler {
     public static var shared = LoginHandler()
 
-    // Provides FB how to construct email link.
-    func setupActionCodeSettings() -> ActionCodeSettings {
-        let actionCodeSettings = ActionCodeSettings()
-        actionCodeSettings.url = URL(string: "https://www.example.com")
-        // The sign-in operation has to always be completed in the app.
-        actionCodeSettings.handleCodeInApp = true
-        actionCodeSettings.setIOSBundleID(Bundle.main.bundleIdentifier!)
-        return actionCodeSettings
-    }
-
+    /**
+     Creates new account for GolfHandE.
+     - Parameters:
+        - email: [String] Email user has entered.
+        - password: [String] Password user has entered
+        - completion: [() -> Void] Closure that gets executed after account has been created.
+     */
     func createNewAccount(email: String, password: String, completion: @escaping () -> Void) {
         Auth.auth().createUser(withEmail: email.trimmingCharacters(in: .whitespaces),
                                password: password) { authResult, error in
@@ -25,18 +22,51 @@ class LoginHandler {
         }
     }
 
+    /**
+     Signs user in to GolfHandE.
+     - Parameters:
+        - email: [String] Email user has entered.
+        - password: [String] Password user has entered
+        - completion: [() -> Void] Closure that gets executed after call to sign user in is made.
+     */
     func signIn(email: String,
                 password: String,
-                completion: @escaping (_ success: Bool) -> Void) {
+                completion: @escaping (_ success: Bool, _ errorMessage: Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             if let error = error {
-                NSLog("Sign In Failed \(error.localizedDescription)")
-                completion(false)
+                NSLog("Sign In Failed \(error)")
+                completion(false, error)
             } else {
                 NSLog("Sign In Success")
-                completion(true)
+                completion(true, nil)
             }
         }
+    }
+
+    /**
+     Signs user out of GolfHandE.
+     */
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            NSLog(signOutError.localizedDescription)
+        }
+    }
+
+    /*
+     Emailing for verification when creating account
+     */
+
+    // Provides FB how to construct email link.
+    private func setupActionCodeSettings() -> ActionCodeSettings {
+        let actionCodeSettings = ActionCodeSettings()
+        actionCodeSettings.url = URL(string: "https://www.example.com")
+        // The sign-in operation has to always be completed in the app.
+        actionCodeSettings.handleCodeInApp = true
+        actionCodeSettings.setIOSBundleID(Bundle.main.bundleIdentifier!)
+        return actionCodeSettings
     }
 
     /**
@@ -65,15 +95,6 @@ class LoginHandler {
                 print(user)
                 print(error)
             }
-        }
-    }
-
-    func signOut() {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-        } catch let signOutError as NSError {
-            NSLog(signOutError.localizedDescription)
         }
     }
 }

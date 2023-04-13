@@ -8,23 +8,9 @@ struct LoginView: View {
     var loginButton: some View {
         CoreSwiftUI.button(text: "Login") {
             NSLog("Login Button Clicked")
-            LoginHandler.shared.signIn(email: viewModel.email,
-                                       password: viewModel.password) { success in
-                guard success else {
-                    NSLog("Need to dispatch error pass/username error and prevent sign in")
-                    return
-                }
-                NSLog("Login Success")
-                dispatchMyScoresViewController()
-            }
+            viewModel.signInUser(email: viewModel.email,
+                                 password: viewModel.password)
         }
-    }
-
-    private func dispatchMyScoresViewController() {
-        guard let window = UIApplication.shared.windows.first else { return }
-        let navigationController = UINavigationController(rootViewController: MyScoresViewController())
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
     }
 
     var signupButton: some View {
@@ -38,6 +24,7 @@ struct LoginView: View {
 
 
     // MARK: CONTAINER VIEWS
+
     var userInputContainer: some View {
         VStack {
             TextField("Email", text: $viewModel.email)
@@ -62,7 +49,7 @@ struct LoginView: View {
     var errorMessageView: some View {
         HStack {
             Image(systemName: "exclamationmark.circle")
-            Text("Invalid username / password. Please try again.")
+            Text(viewModel.displayErrorText)
                 .font(.system(size: 14))
             Spacer()
         }
@@ -84,16 +71,24 @@ struct LoginView: View {
                     .opacity(viewModel.displayError ? 1 : 0)
                 userInputContainer
                 buttonContainer
-
-                CoreSwiftUI.button(text: "Button") {
-                    viewModel.displayError.toggle()
-                }
-
                 Spacer()
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarTitle("Login")
+            .onChange(of: viewModel.dispatchMyScoresVC) { newValue in
+                self.dispatchMyScoresViewController(newValue)
+            }
         }
+    }
+
+    // MARK: PRIVATE FUNC
+
+    private func dispatchMyScoresViewController(_ dispatch: Bool) {
+        guard dispatch,
+              let window = UIApplication.shared.windows.first else { return }
+        let navigationController = UINavigationController(rootViewController: MyScoresViewController())
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
     }
 }
 
