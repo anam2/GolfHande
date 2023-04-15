@@ -10,15 +10,18 @@ class LoginHandler {
         - password: [String] Password user has entered
         - completion: [() -> Void] Closure that gets executed after account has been created.
      */
-    func createNewAccount(email: String, password: String, completion: @escaping () -> Void) {
+    func createNewAccount(email: String,
+                          password: String,
+                          completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         Auth.auth().createUser(withEmail: email.trimmingCharacters(in: .whitespaces),
                                password: password) { authResult, error in
             if let error = error {
                 NSLog(error.localizedDescription)
+                completion(false, error)
                 return
             }
             NSLog("User with email: \(email) and password: \(password) was added successfully.")
-            completion()
+            completion(true, nil)
         }
     }
 

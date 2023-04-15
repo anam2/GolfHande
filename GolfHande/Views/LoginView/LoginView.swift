@@ -1,7 +1,9 @@
 import SwiftUI
 
 struct LoginView: View {
-    @ObservedObject var viewModel =  LoginViewModel()
+
+    @ObservedObject var viewModel = LoginViewModel()
+    @State var showSignUpSheet: Bool = false
 
     // MARK: UI COMPONENTS
 
@@ -15,10 +17,7 @@ struct LoginView: View {
 
     var signupButton: some View {
         CoreSwiftUI.button(text: "Sign Up") {
-            NSLog("Signup Button Clicked")
-            LoginHandler.shared.createNewAccount(email: viewModel.email, password: viewModel.password) {
-                LoginHandler.shared.sendAuthLink(email: viewModel.email)
-            }
+            self.showSignUpSheet = true
         }
     }
 
@@ -27,12 +26,10 @@ struct LoginView: View {
 
     var userInputContainer: some View {
         VStack {
-            TextField("Email", text: $viewModel.email)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            CoreSwiftUI.textField(text: "Email", bindingText: $viewModel.email)
                 .padding([.top, .leading, .trailing])
                 .padding(.bottom, 10)
-            SecureField("Password", text: $viewModel.password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            CoreSwiftUI.secureField(text: "Password", bindingText: $viewModel.password)
                 .padding([.leading, .trailing, .bottom])
         }
     }
@@ -47,15 +44,7 @@ struct LoginView: View {
     }
 
     var errorMessageView: some View {
-        HStack {
-            Image(systemName: "exclamationmark.circle")
-            Text(viewModel.displayErrorText)
-                .font(.system(size: 14))
-            Spacer()
-        }
-        .padding()
-        .background(Color.red)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        CoreSwiftUI.createErrorDisplayView(text: viewModel.displayErrorText)
     }
 
     // MARK: MAIN VIEW
@@ -77,6 +66,9 @@ struct LoginView: View {
             .navigationBarTitle("Login")
             .onChange(of: viewModel.dispatchMyScoresVC) { newValue in
                 self.dispatchMyScoresViewController(newValue)
+            }
+            .sheet(isPresented: $showSignUpSheet) {
+                SignUpView(showSignUpSheet: self.$showSignUpSheet)
             }
         }
     }
