@@ -81,7 +81,7 @@ struct SignUpView: View {
             .padding([.top, .leading, .trailing], 20)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Sign Up")
-            .navigationBarItems(trailing: Button("Done",  action: {
+            .navigationBarItems(leading: Button("Done",  action: {
                 showSignUpSheet = false
             }))
             .overlay(CoreSwiftUI.loadingIndicatorView(isLoading: viewModel.isLoading))
