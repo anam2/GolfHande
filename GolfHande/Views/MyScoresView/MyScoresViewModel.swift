@@ -1,4 +1,5 @@
 import FirebaseDatabase
+import FirebaseAuth
 
 enum ViewModelStatus: String {
     case success
@@ -7,11 +8,20 @@ enum ViewModelStatus: String {
 }
 
 class MyScoresViewModel {
-
+    let userUID: String
     private let database = Database.database().reference()
 
     var userScoreArray = [UserScoreData]()
     var golfCourseArray = [GolfCourseData]()
+
+    init() {
+        guard let signedInUser = Auth.auth().currentUser else {
+            // TODO NEED TO HANDLE PROPERLY
+            self.userUID = ""
+            return
+        }
+        self.userUID = signedInUser.uid
+    }
 
     /**
      Loads the viewModel. Need to be called when after being initialized.

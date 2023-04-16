@@ -21,7 +21,6 @@ struct LoginView: View {
         }
     }
 
-
     // MARK: CONTAINER VIEWS
 
     var userInputContainer: some View {
@@ -39,12 +38,7 @@ struct LoginView: View {
             loginButton
                 .padding()
             signupButton
-                .padding(.bottom)
         }
-    }
-
-    var errorMessageView: some View {
-        CoreSwiftUI.createErrorDisplayView(text: viewModel.displayErrorText)
     }
 
     // MARK: MAIN VIEW
@@ -52,7 +46,7 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             VStack {
-                errorMessageView
+                InformationView(viewType: viewModel.displayErrorType ?? .error, displayText: viewModel.displayErrorText)
                     .frame(width: viewModel.displayError ? nil : .zero,
                            height: viewModel.displayError ? nil : .zero)
                     .padding([.top, .leading, .trailing],
@@ -60,16 +54,23 @@ struct LoginView: View {
                     .opacity(viewModel.displayError ? 1 : 0)
                 userInputContainer
                 buttonContainer
+                    .padding([.top], 60)
                 Spacer()
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarTitle("Login")
+            .sheet(isPresented: $showSignUpSheet) {
+                SignUpView(showSignUpSheet: self.$showSignUpSheet,
+                           displayInfo: self.$viewModel.displayError,
+                           displayInfoType: self.$viewModel.displayErrorType,
+                           displayInfoText: self.$viewModel.displayErrorText)
+            }
             .onChange(of: viewModel.dispatchMyScoresVC) { newValue in
                 self.dispatchMyScoresViewController(newValue)
             }
-            .sheet(isPresented: $showSignUpSheet) {
-                SignUpView(showSignUpSheet: self.$showSignUpSheet)
-            }
+            .overlay(
+                CoreSwiftUI.loadingIndicatorView(isLoading: viewModel.isLoading)
+            )
         }
     }
 

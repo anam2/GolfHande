@@ -1,4 +1,5 @@
 import FirebaseDatabase
+import FirebaseAuth
 
 class ServiceCalls {
     static let shared = ServiceCalls()
@@ -6,6 +7,7 @@ class ServiceCalls {
 
     private let coursesRef: DatabaseReference
     private let scoresRef: DatabaseReference
+    let usersRef: DatabaseReference
 
 //    private static let coursesParam = "courses"
 //    private static let scoresParam = "scores"
@@ -14,20 +16,22 @@ class ServiceCalls {
         ref = Database.database().reference()
         coursesRef = ref.ref.child("courses")
         scoresRef = ref.ref.child("scores")
+        usersRef = ref.ref.child("users")
     }
 
     // MARK: READ
 
     func readScores(completion: @escaping (_: [UserScoreData]?) -> Void) {
-//        let scoresRef = ref.child("scores")
+        let userID = Auth.auth().currentUser?.uid ?? ""
         var scoresArray = [UserScoreData]()
+        let userScoresQuery = scoresRef.queryOrdered(byChild: "userID").queryEqual(toValue: userID)
 
-        scoresRef.observeSingleEvent(of: .value) { scoresSnapshotData in
-            guard let scoreDict = scoresSnapshotData.value as? [String: Any] else {
+        userScoresQuery.observeSingleEvent(of: .value) { snapshot in
+            guard let scoresDict = snapshot.value as? [String: Any] else {
                 completion([])
                 return
             }
-            for (key, value) in scoreDict {
+            for (key, value) in scoresDict {
                 guard let currentScoreDict = value as? [String: String],
                       let userScoreData = UserScoreData(scoreID: key, scoreDataDict: currentScoreDict)
                 else {
@@ -91,8 +95,10 @@ class ServiceCalls {
      - parameter courseData: [GolfCourseDataModel] The golf course data the user played at.
      */
     func addScore(userScoreData: UserScoreData) {
+        let userUID = Auth.auth().currentUser?.uid ?? ""
         let scoresRef = scoresRef.child(userScoreData.id)
         let scoreRefValues: [String: String] = [
+            "userID": userUID,
             "courseID": userScoreData.courseID,
             "dateAdded": userScoreData.dateAdded,
             "score": userScoreData.score,

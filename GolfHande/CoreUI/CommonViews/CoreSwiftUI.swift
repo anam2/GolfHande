@@ -8,23 +8,10 @@
 import SwiftUI
 
 struct CoreSwiftUI {
-
-    static func createErrorDisplayView(text: String) -> some View {
-        HStack {
-            Image(systemName: "exclamationmark.circle")
-            Text(text)
-                .font(.system(size: 14))
-            Spacer()
-        }
-        .padding()
-        .background(Color.red)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-    }
-
     static func button(text: String, action: @escaping () -> Void) -> some View {
         return Button(action: action) {
             Text(text)
-                .frame(width: 80.0)
+                .frame(width: 150.0)
                 .font(.system(size: 12.0))
                 .foregroundColor(Color.white)
                 .padding()
@@ -47,5 +34,18 @@ struct CoreSwiftUI {
     static func secureField(text: String, bindingText: Binding<String>) -> some View {
         SecureField(text, text: bindingText)
             .textFieldStyle(RoundedBorderTextFieldStyle())
+    }
+
+    static func loadingIndicatorView(isLoading: Bool) -> some View {
+        ZStack {
+            if isLoading {
+                Color.black.opacity(0.1)
+                    .zIndex(0)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .disabled(true)
+                ProgressView()
+                    .zIndex(1)
+            }
+        }
     }
 }

@@ -15,11 +15,13 @@ class SignUpViewModel: ObservableObject {
 
     @Published var displayError: Bool = false
     @Published var errorDisplayText: String = ""
+    @Published var isLoading = false
 
     func createAccount(userInformation: UserInformation,
                        completion: @escaping (_ success: Bool, _ errorMessage: String?) -> Void) {
-        LoginHandler.shared.createNewAccount(email: userInformation.email,
-                                             password: userInformation.password) { success, error in
+        isLoading = true
+        LoginHandler.shared.createNewAccount(newUser: userInformation) { success, error in
+            self.isLoading = false
             if !success {
                 NSLog("Creating account for user: \(userInformation) has failed with error: \(error.debugDescription)")
                 self.errorDisplayText = error?.localizedDescription ?? ""

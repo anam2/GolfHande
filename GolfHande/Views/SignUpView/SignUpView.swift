@@ -3,13 +3,28 @@ import SwiftUI
 struct SignUpView: View {
     // Parameters
     @Binding var showSignUpSheet: Bool
+    @Binding var displayInfo: Bool
+    @Binding var displayInfoType: InformationViewType?
+    @Binding var displayInfoText: String
 
     // Variables
     @StateObject private var viewModel = SignUpViewModel()
     @State private var showOptionalViews: Bool = false
 
-    var errorDisplayView: some View {
-        CoreSwiftUI.createErrorDisplayView(text: viewModel.errorDisplayText)
+    var emailFieldView: some View {
+        VStack(alignment: .leading) {
+            Text("Email")
+                .font(.system(size: 16.0))
+            CoreSwiftUI.textField(text: "Email", bindingText: $viewModel.email)
+        }
+    }
+
+    var passwordFieldView: some View {
+        VStack(alignment: .leading) {
+            Text("Password")
+                .font(.system(size: 16.0))
+            CoreSwiftUI.secureField(text: "Password", bindingText: $viewModel.password)
+        }
     }
 
     var submitButton: some View {
@@ -24,6 +39,9 @@ struct SignUpView: View {
                     return
                 }
                 showSignUpSheet = false
+                displayInfo = true
+                displayInfoType = .success
+                displayInfoText = "Your account was successfully created! Please login."
             }
         }
     }
@@ -39,37 +57,26 @@ struct SignUpView: View {
             Text("Optional Fields")
                 .font(.system(size: 18.0))
         }
-        .onTapGesture {
-            showOptionalViews.toggle()
-        }
     }
 
-
+    // MARK: MAIN BODY
 
     var body: some View {
         NavigationView {
             VStack {
-                errorDisplayView
+                InformationView(viewType: .error, displayText: viewModel.errorDisplayText)
                     .frame(width: viewModel.displayError ? nil : .zero,
                            height: viewModel.displayError ? nil : .zero)
                     .opacity(viewModel.displayError ? 1 : 0)
-                VStack(alignment: .leading) {
-                    Text("Email")
-                        .font(.system(size: 16.0))
-                    CoreSwiftUI.textField(text: "Email", bindingText: $viewModel.email)
-                        .padding([.bottom])
-                }
-                VStack(alignment: .leading) {
-                    Text("Password")
-                        .font(.system(size: 16.0))
-                    CoreSwiftUI.secureField(text: "Password", bindingText: $viewModel.password)
-                }
+                emailFieldView
+                    .padding([.bottom])
+                passwordFieldView
                 Divider()
                     .padding()
                 optionalViews
-                submitButton
-                    .padding()
                 Spacer()
+                submitButton
+                    .padding([.bottom], 30)
             }
             .padding([.top, .leading, .trailing], 20)
             .navigationBarTitleDisplayMode(.inline)
@@ -77,16 +84,7 @@ struct SignUpView: View {
             .navigationBarItems(trailing: Button("Done",  action: {
                 showSignUpSheet = false
             }))
+            .overlay(CoreSwiftUI.loadingIndicatorView(isLoading: viewModel.isLoading))
         }
-    }
-
-    // MARK: PRIVATE FUNCS
-}
-
-struct SignUpView_Previews: PreviewProvider {
-    @State private static var showSignUpSheet: Bool = false
-
-    static var previews: some View {
-        SignUpView(showSignUpSheet: $showSignUpSheet)
     }
 }
