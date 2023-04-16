@@ -63,8 +63,6 @@ class MyScoresViewController: UIViewController {
         setupNavigationBar()
         setupUI()
         setupDelegates()
-        // Make service calls to populate view model.
-        showActivityIndicator()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -213,7 +211,6 @@ extension MyScoresViewController: UITableViewDataSource {
             guard let emptyCell = tableView.dequeueReusableCell(withIdentifier: "emptyCell",
                                                                 for: indexPath) as? EmptyCell
             else { return UITableViewCell() }
-
             return emptyCell
         }
 
