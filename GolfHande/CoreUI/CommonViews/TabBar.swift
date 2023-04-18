@@ -13,21 +13,19 @@ class TabBar: UITabBarController {
 
     func setupVCs() {
         // Converts SwiftUI View into UIViewController.
-        let loginTestVC = UIHostingController(rootView: LoginView())
-
-//        viewControllers = [
-//            createNavController(for: MyScoresViewController(), title: "My Scores", image: UIImage(systemName: "folder") ?? UIImage()),
-//            createNavController(for: loginTestVC, title: "Test View Controller", image: UIImage(systemName: "pencil") ?? UIImage())
-//        ]
+        // let loginTestVC = UIHostingController(rootView: LoginView())
+        let myScoresVC = MyScoresViewController()
+        viewControllers = [
+            createNavController(for: myScoresVC, title: "My Scores", image: UIImage(systemName: "pencil") ?? UIImage())
+        ]
     }
 
-//    fileprivate func createNavController(for rootViewController: UIViewController,
-//                                         title: String,
-//                                         image: UIImage) -> UIViewController {
-//        let navController = UINavigationController(rootViewController: rootViewController)
-//        navController.tabBarItem.title = title
-//        navController.tabBarItem.image = image
-//        rootViewController.navigationItem.title = title
-//        return navController
-//    }
+    fileprivate func createNavController(for rootViewController: UIViewController,
+                                         title: String,
+                                         image: UIImage) -> UIViewController {
+        let navController = UINavigationController(rootViewController: rootViewController)
+        navController.tabBarItem.title = title
+        navController.tabBarItem.image = image
+        return navController
+    }
 }

@@ -77,10 +77,10 @@ struct LoginView: View {
     // MARK: PRIVATE FUNC
 
     private func dispatchMyScoresViewController(_ dispatch: Bool) {
-        guard dispatch,
-              let window = UIApplication.shared.windows.first else { return }
-        let navigationController = UINavigationController(rootViewController: MyScoresViewController())
-        window.rootViewController = navigationController
+        guard dispatch, let window = UIApplication.shared.windows.first else { return }
+        let tabBarController = TabBar()
+        
+        window.rootViewController = tabBarController
         window.makeKeyAndVisible()
     }
 }

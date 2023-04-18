@@ -7,15 +7,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Create an instance of your app's root view
-        let contentView = LoginView()
-        
-        // Create a new UIWindow using the windowScene constructor
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = UIHostingController(rootView: contentView)
-        self.window = window
-        window.makeKeyAndVisible()
+        let isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
+
+        if isLoggedIn {
+            guard let windowScene = (scene as? UIWindowScene) else { return }
+            let window = UIWindow(windowScene: windowScene)
+            let tabBarController = UITabBarController()
+            tabBarController.viewControllers = [MyScoresViewController()]
+            window.rootViewController = tabBarController
+            self.window = window
+            window.makeKeyAndVisible()
+        } else {
+            guard let windowScene = (scene as? UIWindowScene) else { return }
+            let window = UIWindow(windowScene: windowScene)
+            let loginViewController = UIHostingController(rootView: LoginView())
+            window.rootViewController = loginViewController
+            self.window = window
+            window.makeKeyAndVisible()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
