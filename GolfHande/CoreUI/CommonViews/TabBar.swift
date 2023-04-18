@@ -12,11 +12,12 @@ class TabBar: UITabBarController {
     }
 
     func setupVCs() {
-        // Converts SwiftUI View into UIViewController.
-        // let loginTestVC = UIHostingController(rootView: LoginView())
         let myScoresVC = MyScoresViewController()
+        let courseView = CourseView()
+
         viewControllers = [
-            createNavController(for: myScoresVC, title: "My Scores", image: UIImage(systemName: "pencil") ?? UIImage())
+            createNavController(for: myScoresVC, title: "My Scores", image: UIImage(systemName: "pencil") ?? UIImage()),
+            createHostingController(for: courseView, title: "Course View", image: UIImage(systemName: "eye") ?? UIImage())
         ]
     }
 
@@ -27,5 +28,14 @@ class TabBar: UITabBarController {
         navController.tabBarItem.title = title
         navController.tabBarItem.image = image
         return navController
+    }
+
+    fileprivate func createHostingController<V: View>(for view: V,
+                                                      title: String,
+                                                      image: UIImage) -> UIViewController {
+        let hostingController = UIHostingController(rootView: view)
+        hostingController.tabBarItem.title = title
+        hostingController.tabBarItem.image = image
+        return hostingController
     }
 }
