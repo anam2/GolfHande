@@ -13,11 +13,11 @@ class TabBar: UITabBarController {
 
     func setupVCs() {
         let myScoresVC = MyScoresViewController()
-        let courseView = CourseView()
+        let courseView = CourseViewController()
 
         viewControllers = [
             createNavController(for: myScoresVC, title: "My Scores", image: UIImage(systemName: "pencil") ?? UIImage()),
-            createHostingController(for: courseView, title: "Course View", image: UIImage(systemName: "eye") ?? UIImage())
+            createNavController(for: courseView, title: "Course View", image: UIImage(systemName: "eye") ?? UIImage())
         ]
     }
 
