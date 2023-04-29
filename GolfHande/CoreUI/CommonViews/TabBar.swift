@@ -17,7 +17,8 @@ class TabBar: UITabBarController {
 
         viewControllers = [
             createNavController(for: myScoresVC, title: "My Scores", image: UIImage(systemName: "pencil") ?? UIImage()),
-            createNavController(for: courseView, title: "Course View", image: UIImage(systemName: "eye") ?? UIImage())
+            createNavController(for: courseView, title: "Course View", image: UIImage(systemName: "eye") ?? UIImage()),
+            createNavController(for: TestMapViewController(), title: "Test", image: UIImage(systemName: "pencil") ?? UIImage())
         ]
     }
 

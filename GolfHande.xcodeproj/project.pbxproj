@@ -53,6 +53,9 @@
 		72E1A3C329C8F09500768AE0 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E1A3C229C8F09500768AE0 /* UIViewControllerExtension.swift */; };
 		83039927C3B6E1D65EA96C70 /* Pods_GolfHande.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51598585A46C60E0AFFB191F /* Pods_GolfHande.framework */; };
 		841F6D5329FA5F6B00E8C134 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841F6D5229FA5F6B00E8C134 /* EmptyCell.swift */; };
+		84AD99BC29FC3C6800BD56D2 /* CourseViewController+MKMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD99BB29FC3C6800BD56D2 /* CourseViewController+MKMapViewDelegate.swift */; };
+		84AD99BF29FC3D6B00BD56D2 /* DistanceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD99BE29FC3D6B00BD56D2 /* DistanceType.swift */; };
+		84D0192129FCDE0500972BA8 /* TestMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D0192029FCDE0500972BA8 /* TestMapView.swift */; };
 		90CB5C617B9838C2FEFA8706 /* Pods_GolfHandeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B681BD9E17B10EBB3D517D19 /* Pods_GolfHandeTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -131,6 +134,9 @@
 		72E106E029CD184B005D6FD5 /* CoreUI+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreUI+TextField.swift"; sourceTree = "<group>"; };
 		72E1A3C229C8F09500768AE0 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		841F6D5229FA5F6B00E8C134 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
+		84AD99BB29FC3C6800BD56D2 /* CourseViewController+MKMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CourseViewController+MKMapViewDelegate.swift"; sourceTree = "<group>"; };
+		84AD99BE29FC3D6B00BD56D2 /* DistanceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceType.swift; sourceTree = "<group>"; };
+		84D0192029FCDE0500972BA8 /* TestMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMapView.swift; sourceTree = "<group>"; };
 		B681BD9E17B10EBB3D517D19 /* Pods_GolfHandeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GolfHandeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E89EFB8DE1BB5C24E49C5A /* Pods-GolfHande-GolfHandeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GolfHande-GolfHandeUITests.debug.xcconfig"; path = "Target Support Files/Pods-GolfHande-GolfHandeUITests/Pods-GolfHande-GolfHandeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				7201805E29EE1F43000EC55A /* CourseViewController.swift */,
+				84AD99BB29FC3C6800BD56D2 /* CourseViewController+MKMapViewDelegate.swift */,
 			);
 			path = CourseView;
 			sourceTree = "<group>";
@@ -206,7 +213,7 @@
 		7205CECE29B05C9A00316B08 /* GolfHande */ = {
 			isa = PBXGroup;
 			children = (
-				723E988829DFFBD300D0D563 /* PersonalTest */,
+				84AD99BD29FC3CEC00BD56D2 /* Enums */,
 				723E988729DFFBB800D0D563 /* Views */,
 				72E1A3C129C8F07B00768AE0 /* CoreUI */,
 				72671CA529BA50C700D8FBD3 /* API */,
@@ -282,16 +289,10 @@
 			path = LoginView;
 			sourceTree = "<group>";
 		};
-		723E987C29DF480300D0D563 /* TestViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = TestViews;
-			sourceTree = "<group>";
-		};
 		723E988729DFFBB800D0D563 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				84D0191F29FCDDFD00972BA8 /* TestMapView */,
 				7201805D29EE1F2D000EC55A /* CourseView */,
 				723E987929DF362500D0D563 /* LoginView */,
 				723E988F29E4D1FC00D0D563 /* SignUpView */,
@@ -301,14 +302,6 @@
 				7228312D29B193D50099AC1A /* ScoreInputView */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		723E988829DFFBD300D0D563 /* PersonalTest */ = {
-			isa = PBXGroup;
-			children = (
-				723E987C29DF480300D0D563 /* TestViews */,
-			);
-			path = PersonalTest;
 			sourceTree = "<group>";
 		};
 		723E988F29E4D1FC00D0D563 /* SignUpView */ = {
@@ -405,6 +398,22 @@
 				72E106DE29CC5AD6005D6FD5 /* UIColorExtension.swift */,
 			);
 			path = CoreUI;
+			sourceTree = "<group>";
+		};
+		84AD99BD29FC3CEC00BD56D2 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				84AD99BE29FC3D6B00BD56D2 /* DistanceType.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		84D0191F29FCDDFD00972BA8 /* TestMapView */ = {
+			isa = PBXGroup;
+			children = (
+				84D0192029FCDE0500972BA8 /* TestMapView.swift */,
+			);
+			path = TestMapView;
 			sourceTree = "<group>";
 		};
 		B7547DD4092069B02DCF09DC /* Pods */ = {
@@ -663,6 +672,7 @@
 				7228312C29B192090099AC1A /* UIViewExtension.swift in Sources */,
 				72B0108729E7331D0073CAFF /* LoginViewModel.swift in Sources */,
 				72E106D029CC08A3005D6FD5 /* CourseListViewController.swift in Sources */,
+				84D0192129FCDE0500972BA8 /* TestMapView.swift in Sources */,
 				72B0108929E75CDD0073CAFF /* CoreSwiftUI.swift in Sources */,
 				7205CED429B05C9A00316B08 /* MyScoresViewController.swift in Sources */,
 				72E1A3C329C8F09500768AE0 /* UIViewControllerExtension.swift in Sources */,
@@ -671,6 +681,7 @@
 				72B010AB29EA850C0073CAFF /* ServiceCalls+User.swift in Sources */,
 				72E106E129CD184B005D6FD5 /* CoreUI+TextField.swift in Sources */,
 				7228312F29B193F50099AC1A /* ScoreInputViewController.swift in Sources */,
+				84AD99BF29FC3D6B00BD56D2 /* DistanceType.swift in Sources */,
 				7205CED029B05C9A00316B08 /* AppDelegate.swift in Sources */,
 				72671C9F29B6C0C300D8FBD3 /* ServiceCalls.swift in Sources */,
 				72E106D229CC0A70005D6FD5 /* CourseListView.swift in Sources */,
@@ -686,6 +697,7 @@
 				72671C9529B2DAD700D8FBD3 /* ScoresTableViewCell.swift in Sources */,
 				72B010AE29EB6A7E0073CAFF /* InformationView.swift in Sources */,
 				7205CEDA29B05C9A00316B08 /* GolfHande.xcdatamodeld in Sources */,
+				84AD99BC29FC3C6800BD56D2 /* CourseViewController+MKMapViewDelegate.swift in Sources */,
 				72671C9929B668C200D8FBD3 /* CoreUI.swift in Sources */,
 				7228312929B063CC0099AC1A /* MyScoresView.swift in Sources */,
 				7228313129B1BF5B0099AC1A /* ScoreInputView.swift in Sources */,
